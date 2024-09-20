@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    #root {
+        @apply min-h-screen flex flex-col justify-between bg-rootBg font-Inter
+    }
+
+    .container {
+        @apply max-w-[1382px] mx-auto px-2
+    }
+
+    main {
+        @apply flex-1 mt-[65px] sm:mt-[100px] md:mt-[140px]
+    }
+
+    input {
+        outline: none;
+    }
+
+    .form_label {
+        @apply pl-5 pb-2 inline-block font-light leading-[19px] opacity-70
+    }
+
+    .form_input {
+        @apply rounded bg-[#2c30331a] text-[16px] py-[18px] px-5 cursor-pointer text-[#2C3033] leading-5 w-full
+    }
+
+    .form_active_input {
+        @apply border border-[#2c30331a] text-[16px] py-[18px] px-5 cursor-pointer text-[#2C3033] leading-5 w-full
+    }
+
+    .profileWrapper {
+        @apply grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-x-[60px] gap-10 sm:gap-y-[40px]
+    }
+}
+
+@layer base {
+    :root {
+
+        --radius: 0.5rem
+    }
+}

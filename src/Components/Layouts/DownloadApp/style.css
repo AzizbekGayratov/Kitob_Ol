@@ -1,0 +1,19 @@
+.wrapper{
+    max-width: 800px;
+}
+
+@media screen and (max-width: 1240px) {
+    .wrapper{
+        max-width: 500px;
+    }
+    
+    .wrapper h2{
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .wrapper h2 {
+        margin-bottom: 40px;
+    }
+}

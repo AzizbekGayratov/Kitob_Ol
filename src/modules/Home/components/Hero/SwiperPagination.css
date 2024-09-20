@@ -1,0 +1,23 @@
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: white;
+    opacity: 0.2;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.swiper-pagination {
+    padding-bottom: 25px;
+}
+
+@media screen and (max-width: 500px) {
+    .swiper-pagination {
+        padding-bottom: 0;
+    }
+
+}
+
+.swiper-pagination-bullet-active {
+    background-color: white;
+    opacity: 1;
+}
