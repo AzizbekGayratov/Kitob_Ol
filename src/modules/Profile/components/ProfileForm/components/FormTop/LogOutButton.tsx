@@ -1,11 +1,14 @@
 import { LogOutBtn } from "assets/images/svg";
-import LogOut from "./LogOut";
+import Storage from "../../../../../../Services/Storage/Storage";
+import { useNavigate } from "react-router-dom";
 
 export default function LogOutButton() {
+  const navigate = useNavigate();
   return (
     <button
       onClick={() => {
-        LogOut();
+        Storage.clear();
+        navigate("/authorization/phone");
       }}
       className="hidden sm:flex items-center gap-4 py-3 px-6 rounded text-textColor text-[16px] leading-[19px] bg-[rgba(44,48,51,0.1)]"
     >

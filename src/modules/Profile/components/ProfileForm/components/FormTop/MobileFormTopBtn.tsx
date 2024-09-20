@@ -1,11 +1,14 @@
 import { LogOutBtn } from "assets/images/svg";
-import LogOut from "./LogOut";
+import Storage from "../../../../../../Services/Storage/Storage";
+import { useNavigate } from "react-router-dom";
 
 export default function MobileFormTopBtn() {
+  const navigate = useNavigate();
   return (
     <button
       onClick={() => {
-        LogOut();
+        Storage.clear();
+        navigate("/authorization/phone");
       }}
       className="sm:hidden p-2 rounded-full bg-[rgba(44,48,51,0.1)]"
     >
