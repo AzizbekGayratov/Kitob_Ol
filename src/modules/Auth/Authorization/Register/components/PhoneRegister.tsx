@@ -26,6 +26,7 @@ export default function PhoneRegister() {
         if (response.ok) {
           setPhone("+998");
           window.sessionStorage.setItem("phone", phone);
+          alert(response.statusText);
           navigate("/register/phone/otp");
         }
 

@@ -3,7 +3,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { activeNavBtn3, activeNavBtn4 } from "assets/images/svg/HeaderNavLink";
+import {
+  activeNavBtn3,
+  activeNavBtn4,
+} from "../../../../assets/images/svg/HeaderNavLink";
 import { useState } from "react";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";

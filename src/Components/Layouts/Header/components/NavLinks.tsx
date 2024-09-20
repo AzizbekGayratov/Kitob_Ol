@@ -7,7 +7,7 @@ import {
   NavLinkIcon4,
   activeNavBtn3,
   activeNavBtn4,
-} from "assets/images/svg/HeaderNavLink";
+} from "../../../../assets/images/svg/HeaderNavLink";
 import { NavLink, useLocation } from "react-router-dom";
 
 interface Props {

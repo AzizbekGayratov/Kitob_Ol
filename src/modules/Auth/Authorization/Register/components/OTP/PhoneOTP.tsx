@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import OTP from "./OTP";
-import { Storage } from "Services";
+import { Storage } from "../../../../../../Services";
 
 export default function PhoneOTP() {
   const [otp, setOtp] = React.useState("");

@@ -1,7 +1,7 @@
 import { CommentProps } from "./CommentsRoute";
 import { FaUserAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { ReplySvg, QuoteSvg } from "assets/images/svg";
+import { ReplySvg, QuoteSvg } from "../../../assets/images/svg";
 
 export type Profile = {
   name: string;

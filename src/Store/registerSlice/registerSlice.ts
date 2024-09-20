@@ -1,4 +1,4 @@
-import { Storage } from "Services";
+import { Storage } from "../../Services";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { initialState, registerType } from "./initialState";
