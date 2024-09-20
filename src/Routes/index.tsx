@@ -7,19 +7,19 @@ import {
   Profile,
   // Register,
   Authorization,
-} from "modules";
-import { Books, Vacancies } from "modules/Home/components";
+} from "../modules";
+import { Books, Vacancies } from "../modules/Home/components";
 import { createBrowserRouter } from "react-router-dom";
-import MainProductViewWithContent from "modules/ProductView/MainProductViewContent";
-import CommentsRoute from "modules/ProductView/CommentsRoute/CommentsRoute";
-import { PhoneLogin, EmailLogin } from "modules/Auth/Authorization/components";
-import RegisterAuth from "modules/Auth/Authorization/Register/RegisterAuth";
+import MainProductViewWithContent from "../modules/ProductView/MainProductViewContent";
+import CommentsRoute from "../modules/ProductView/CommentsRoute/CommentsRoute";
+import { PhoneLogin, EmailLogin } from "../modules/Auth/Authorization/components";
+import RegisterAuth from "../modules/Auth/Authorization/Register/RegisterAuth";
 import {
   EmailRegister,
   PhoneRegister,
-} from "modules/Auth/Authorization/Register/components";
-import PhoneOTP from "modules/Auth/Authorization/Register/components/OTP/PhoneOTP";
-import EmailOTP from "modules/Auth/Authorization/Register/components/OTP/EmailOTP";
+} from "../modules/Auth/Authorization/Register/components";
+import PhoneOTP from "../modules/Auth/Authorization/Register/components/OTP/PhoneOTP";
+import EmailOTP from "../modules/Auth/Authorization/Register/components/OTP/EmailOTP";
 
 const routes = createBrowserRouter([
   {

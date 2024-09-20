@@ -1,7 +1,7 @@
 import App from "./App.tsx";
-import "assets/css/index.css";
+import "./assets/css/index.css";
 import { Provider } from "react-redux";
-import { store } from "Store/index.ts";
+import { store } from "./Store/index.ts";
 import { createTheme } from "@mui/material";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

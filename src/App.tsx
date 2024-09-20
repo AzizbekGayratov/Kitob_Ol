@@ -1,6 +1,6 @@
-import Routes from "Routes";
+import Routes from "./Routes/index";
 import { Suspense } from "react";
-import { Loader } from "Components";
+import { Loader } from "./Components/index.ts";
 import { RouterProvider } from "react-router-dom";
 
 const App = () => {

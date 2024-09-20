@@ -29,7 +29,6 @@ export default function PhoneRegister() {
           navigate("/register/phone/otp");
         }
 
-        setPhone("+998");
       } catch (error) {
         console.error(error);
       }
