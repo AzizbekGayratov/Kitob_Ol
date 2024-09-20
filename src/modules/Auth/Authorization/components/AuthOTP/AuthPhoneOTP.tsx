@@ -1,22 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import OTP from "./OTP";
-import { Storage } from "../../../../../../Services";
+import AuthOTP from "./AuthOTP";
+import { Storage } from "../../../../../Services";
 
-export default function PhoneOTP() {
+export default function AuthPhoneOTP() {
   const [otp, setOtp] = React.useState("");
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
     e.preventDefault();
-    const phoneNumber = window.sessionStorage.getItem("phone");
+    const phone = window.sessionStorage.getItem("phone");
 
     const fetchData = async () => {
-      console.log({ otp, phoneNumber });
+      console.log({ otp, phone });
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/phone/register`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/phone/login`,
           {
             method: "POST",
             headers: {
@@ -24,7 +24,7 @@ export default function PhoneOTP() {
             },
             body: JSON.stringify({
               confirmation_code: otp,
-              phone: phoneNumber,
+              phone: phone,
             }),
           }
         );
@@ -57,7 +57,7 @@ export default function PhoneOTP() {
         <p className="text-base leading-[19px] font-light text-primary opacity-70 sm:mb-[30px] mb-[40px]">
           Siz kiritgan telefon raqamiga kod yuborildi. Iltimos kodni kiriting!
         </p>
-        <OTP otp={otp} setOtp={setOtp} />
+        <AuthOTP otp={otp} setOtp={setOtp} />
       </div>
       <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
         <button

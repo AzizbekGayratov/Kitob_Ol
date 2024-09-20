@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EmailRegister() {
   const [email, setEmail] = React.useState("");
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
@@ -26,6 +27,8 @@ export default function EmailRegister() {
           setEmail("");
           window.sessionStorage.setItem("email", email);
           navigate("/register/email/otp");
+        } else if (response.status === 400) {
+          setError("Bu email allaqachon ro'yxatdan o'tgan");
         }
       } catch (error) {
         console.error(error);
@@ -52,9 +55,15 @@ export default function EmailRegister() {
           placeholder="Someone007@gmail.com"
           required
         />
-        <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
-          Kirish uchun iltimos email manzilingizni kiriting!
-        </p>
+        {error ? (
+          <p className="text-red-500 text-base leading-[19px] font-light mt-4 ">
+            {error}
+          </p>
+        ) : (
+          <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
+            Kirish uchun iltimos email manzilingizni kiriting!
+          </p>
+        )}
       </div>
       <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
         <button className="bg-primary text-white py-[18px] text-base leading-[19px]">

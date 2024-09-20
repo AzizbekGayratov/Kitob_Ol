@@ -1,10 +1,45 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EmailLogin() {
   const [email, setEmail] = React.useState("");
+  const navigate = useNavigate();
+
+  const submitData = (e: any) => {
+    e.preventDefault();
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/login/email`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+            }),
+          }
+        );
+        if (response.ok) {
+          setEmail("");
+          window.sessionStorage.setItem("email", email);
+          navigate("/authorization/email/otp");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form
+      onSubmit={(e) => {
+        submitData(e);
+      }}
+    >
       <div className="sm:p-10 sm:pb-[100px] p-4">
         <p className="text-base leading-[19px] font-light text-primary opacity-70 mb-[10px] sm:px-5">
           Email manzilingizni kiriting*

@@ -1,11 +1,11 @@
 import { LogOutBtn } from "assets/images/svg";
+import LogOut from "./LogOut";
 
 export default function MobileFormTopBtn() {
   return (
     <button
       onClick={() => {
-        // bu yerda log out funksiya yozish kerak
-        alert("Log out");
+        LogOut();
       }}
       className="sm:hidden p-2 rounded-full bg-[rgba(44,48,51,0.1)]"
     >

@@ -1,7 +1,17 @@
 import { Divider } from "@mui/material";
-import { NavLink, Outlet } from "react-router-dom";
+import { Storage } from "../../../Services";
+import { useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 export default function Authorization() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Storage.get("token")) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className="h-screen flex sm:items-center justify-center">
       <div className="w-full bg-white rounded max-w-[600px]">
