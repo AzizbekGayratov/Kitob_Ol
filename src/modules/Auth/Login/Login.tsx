@@ -6,12 +6,12 @@ export default function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitAuthData = () => {
-    try {
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const submitAuthData = () => {
+  //   try {
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <div className="h-screen flex sm:items-center justify-center">
