@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import imagePicker  from "../../../../../../../assets/images/svg/imagePicker.svg";
+import imagePicker from "../../../../../../../assets/images/svg/imagePicker.svg";
 
 export type Profile = {
   name: string;
@@ -10,7 +10,6 @@ export type Profile = {
   gender: "Erkak" | "Ayol";
   avatar: string;
 };
-
 
 export default function ImagePicker() {
   const { avatar } = useSelector(

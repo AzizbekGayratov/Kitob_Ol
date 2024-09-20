@@ -8,7 +8,7 @@ import VacancyIcon from "./VacancyIcon.svg";
 import ActiveBooksIcon from "./ActiveBookIcon.svg";
 import ActiveVacancyIcon from "./ActiveVacancyIcon.svg";
 import LogOutBtn from "./LogOutBtn.svg";
-import imagePicker from "./ImagePicker.svg";
+// import imagePicker from "./ImagePicker.svg";
 import ReplySvg from "./reply.svg";
 import QuoteSvg from "./Quote.svg";
 export {
@@ -22,7 +22,7 @@ export {
   ActiveBooksIcon,
   ActiveVacancyIcon,
   LogOutBtn,
-  imagePicker,
+  // imagePicker,
   ReplySvg,
   QuoteSvg,
 };
