@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function PhoneLogin() {
   const [phone, setPhone] = React.useState("+998");
   const [error, setError] = React.useState("");
-  const [isRegistered, setIsRegistered] = React.useState(false);
+  const [isRegistered, setIsRegistered] = React.useState(true);
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
