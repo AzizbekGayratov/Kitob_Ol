@@ -25,19 +25,19 @@ export default function OTP({
         <InputOTPGroup className="flex space-x-4">
           <InputOTPSlot
             index={0}
-            className="bg-[#EAEAEB] rounded border-none"
+            className="bg-[#EAEAEB] rounded border-none "
           />
           <InputOTPSlot
             index={1}
-            className="bg-[#EAEAEB] rounded border-none"
+            className="bg-[#EAEAEB] rounded border-none "
           />
           <InputOTPSlot
             index={2}
-            className="bg-[#EAEAEB] rounded border-none"
+            className="bg-[#EAEAEB] rounded border-none "
           />
           <InputOTPSlot
             index={3}
-            className="bg-[#EAEAEB] rounded border-none"
+            className="bg-[#EAEAEB] rounded border-none "
           />
           <InputOTPSlot
             index={4}

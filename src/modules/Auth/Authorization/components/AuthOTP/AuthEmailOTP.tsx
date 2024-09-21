@@ -12,11 +12,11 @@ export default function AuthEmailOTP() {
     const email = window.sessionStorage.getItem("email");
 
     const fetchData = async () => {
-      console.log({ otp, email });
-
+      const requestType = window.sessionStorage.getItem("auth_response_type");
+      
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/email/login`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/email/${requestType}`,
           {
             method: "POST",
             headers: {
@@ -36,7 +36,6 @@ export default function AuthEmailOTP() {
         }
 
         const data = await response.json();
-        console.log(data);
         Storage.set("token", data);
         navigate("/");
       } catch (error) {

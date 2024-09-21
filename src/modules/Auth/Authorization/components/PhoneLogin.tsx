@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function PhoneLogin() {
   const [phone, setPhone] = React.useState("+998");
-  const [error, setError] = React.useState("");
-  const [isRegistered, setIsRegistered] = React.useState(true);
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
@@ -13,9 +11,7 @@ export default function PhoneLogin() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/${
-            isRegistered ? "login" : "register"
-          }/phone`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/login/phone`,
           {
             method: "POST",
             headers: {
@@ -28,15 +24,31 @@ export default function PhoneLogin() {
         );
         if (response.ok) {
           setPhone("+998");
+          window.sessionStorage.setItem("auth_response_type", "login");
           window.sessionStorage.setItem("phone", phone);
           navigate("/authorization/phone/otp");
         } else if (response.status === 400) {
-          setIsRegistered(!isRegistered);
-          setError(
-            isRegistered
-              ? "Bu raqam ro'yxatdan o'tmagan"
-              : "Bu raqam allaqachon ro'yxatdan o'tgan"
+          const responseRegister = await fetch(
+            `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/register/phone`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                phone: phone,
+              }),
+            }
           );
+
+          if (responseRegister.ok) {
+            setPhone("+998");
+            window.sessionStorage.setItem("auth_response_type", "register");
+            window.sessionStorage.setItem("phone", phone);
+            navigate("/authorization/phone/otp");
+          } else {
+            throw new Error("Request failed");
+          }
         }
       } catch (error) {
         console.error(error);
@@ -61,26 +73,16 @@ export default function PhoneLogin() {
           className="form_input"
           required
         />
-        {error ? (
-          <p className="text-red-500 text-base leading-[19px] font-light mt-4 ">
-            {error}
-          </p>
-        ) : (
-          <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
-            Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
-          </p>
-        )}
+        <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
+          Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
+        </p>
       </div>
       <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
         <button
           type="submit"
           className="bg-primary text-white py-[18px] text-base leading-[19px]"
         >
-          {error
-            ? isRegistered
-              ? "Login qilish"
-              : "Registratsiya qilish"
-            : "Keyingisi"}
+          Keyingisi
         </button>
       </div>
     </form>

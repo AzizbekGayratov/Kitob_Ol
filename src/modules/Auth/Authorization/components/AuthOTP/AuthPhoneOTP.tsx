@@ -11,12 +11,13 @@ export default function AuthPhoneOTP() {
     e.preventDefault();
     const phone = window.sessionStorage.getItem("phone");
 
-    const fetchData = async () => {
-      console.log({ otp, phone });
+    const fetchData = async () => {      
+      const requestType= window.sessionStorage.getItem("auth_response_type");
+      
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/phone/login`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/phone/${requestType}`,
           {
             method: "POST",
             headers: {
@@ -36,7 +37,6 @@ export default function AuthPhoneOTP() {
         }
 
         const data = await response.json();
-        console.log(data);
         Storage.set("token", data);
         navigate("/");
       } catch (error) {
