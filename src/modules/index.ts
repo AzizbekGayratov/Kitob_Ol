@@ -5,5 +5,15 @@ import Profile from "./Profile/Profile";
 import Register from "./Auth/Register/Register";
 import ProductView from "./ProductView/ProductView";
 import Authorization from "./Auth/Authorization/Authorization";
+import Index from "./Announcement";
 
-export { Error, Home, Login, Profile, Register, ProductView, Authorization };
+export {
+  Error,
+  Home,
+  Login,
+  Profile,
+  Register,
+  ProductView,
+  Authorization,
+  Index,
+};

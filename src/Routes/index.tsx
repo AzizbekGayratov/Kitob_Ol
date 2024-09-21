@@ -5,6 +5,7 @@ import {
   Login,
   ProductView,
   Profile,
+  Index,
   // Register,
   Authorization,
 } from "../modules";
@@ -12,7 +13,10 @@ import { Books, Vacancies } from "../modules/Home/components";
 import { createBrowserRouter } from "react-router-dom";
 import MainProductViewWithContent from "../modules/ProductView/MainProductViewContent";
 import CommentsRoute from "../modules/ProductView/CommentsRoute/CommentsRoute";
-import { PhoneLogin, EmailLogin } from "../modules/Auth/Authorization/components";
+import {
+  PhoneLogin,
+  EmailLogin,
+} from "../modules/Auth/Authorization/components";
 import RegisterAuth from "../modules/Auth/Authorization/Register/RegisterAuth";
 import {
   EmailRegister,
@@ -43,6 +47,10 @@ const routes = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/elon",
+        element: <Index />,
       },
       {
         path: "/product/:name",
