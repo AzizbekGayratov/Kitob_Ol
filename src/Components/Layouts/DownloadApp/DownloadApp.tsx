@@ -1,4 +1,4 @@
-import { AppStore, PlayMarket } from "assets/images/svg";
+import { AppStore, PlayMarket } from "../../../assets/images/svg";
 import ButtonComponent from "./components/ButtonComponent";
 import ImageContainer from "./components/ImageContainer";
 import "./style.css";

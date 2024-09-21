@@ -1,4 +1,4 @@
-import { FooterLogo } from "assets/images/svg";
+import { FooterLogo } from "../../../../assets/images/svg";
 
 export default function MainContent() {
   return (

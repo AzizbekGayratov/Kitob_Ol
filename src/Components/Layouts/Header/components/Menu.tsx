@@ -3,7 +3,7 @@ import {
   activeNavBtn2,
   menuCloseBtn,
   menuLogo,
-} from "assets/images/svg/HeaderNavLink";
+} from "../../../../assets/images/svg/HeaderNavLink";
 import { Link } from "react-router-dom";
 import Accordation from "./Accordation";
 

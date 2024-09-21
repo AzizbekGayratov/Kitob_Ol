@@ -1,4 +1,4 @@
-import { TitleBar } from "Components/Common";
+import { TitleBar } from "../../../../../Components/Common";
 import MainContent from "../MainContent";
 
 export default function Connect() {

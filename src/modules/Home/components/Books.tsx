@@ -1,4 +1,4 @@
-import { evenlyCard, perCard } from "assets/images/jpg";
+import { evenlyCard, perCard } from "../../../assets/images/jpg";
 import LikeBtn from "./LikeBtn";
 import { Link } from "react-router-dom";
 

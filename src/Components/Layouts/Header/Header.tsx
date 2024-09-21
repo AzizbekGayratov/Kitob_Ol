@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HeaderNav } from "./components";
-import { LogoSvg, MenuGamburger } from "assets/images/svg";
+import { LogoSvg, MenuGamburger } from "../../../assets/images/svg";
 import { Box, Drawer } from "@mui/material";
 import { useState } from "react";
 import Menu from "./components/Menu";

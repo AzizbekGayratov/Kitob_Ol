@@ -3,7 +3,7 @@ import "swiper/css/pagination";
 import "./SwiperPagination.css";
 import "swiper/css";
 import { Pagination, Autoplay } from "swiper/modules";
-import { heroPng } from "assets/images/png";
+import { heroPng } from "../../../../assets/images/png";
 
 export default function Hero() {
   const swiperData = [null, null, null, null];

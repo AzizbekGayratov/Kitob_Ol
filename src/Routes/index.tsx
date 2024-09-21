@@ -24,6 +24,9 @@ import {
 } from "../modules/Auth/Authorization/Register/components";
 import PhoneOTP from "../modules/Auth/Authorization/Register/components/OTP/PhoneOTP";
 import EmailOTP from "../modules/Auth/Authorization/Register/components/OTP/EmailOTP";
+import AuthEmailOTP from "modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP";
+import AuthPhoneOTP from "modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
+
 
 const routes = createBrowserRouter([
   {
@@ -88,6 +91,28 @@ const routes = createBrowserRouter([
     ],
   },
   {
+    path: "/authorization/email/otp",
+    element: <Authorization />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: <AuthEmailOTP />,
+      },
+    ],
+  },
+  {
+    path: "/authorization/phone/otp",
+    element: <Authorization />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: <AuthPhoneOTP />,
+      },
+    ],
+  },
+  {
     path: "/register",
     element: <RegisterAuth />,
     errorElement: <Error />,
@@ -121,20 +146,6 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: <PhoneOTP />,
-      },
-    ],
-  },
-  {
-    path: "/authorization/register",
-    element: <div></div>,
-    children: [
-      {
-        path: "phone",
-        element: <PhoneLogin />,
-      },
-      {
-        path: "email",
-        element: <EmailLogin />,
       },
     ],
   },
