@@ -1,10 +1,11 @@
 import Input from "react-phone-number-input/input";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PhoneLogin() {
   const [phone, setPhone] = React.useState("+998");
   const [error, setError] = React.useState("");
+  const [isRegistered, setIsRegistered] = React.useState(false);
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
@@ -12,7 +13,9 @@ export default function PhoneLogin() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/login/phone`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/${
+            isRegistered ? "login" : "register"
+          }/phone`,
           {
             method: "POST",
             headers: {
@@ -28,7 +31,12 @@ export default function PhoneLogin() {
           window.sessionStorage.setItem("phone", phone);
           navigate("/authorization/phone/otp");
         } else if (response.status === 400) {
-          setError("Bu raqam ro'yxatdan o'tmagan");
+          setIsRegistered(!isRegistered);
+          setError(
+            isRegistered
+              ? "Bu raqam ro'yxatdan o'tmagan"
+              : "Bu raqam allaqachon ro'yxatdan o'tgan"
+          );
         }
       } catch (error) {
         console.error(error);
@@ -54,29 +62,25 @@ export default function PhoneLogin() {
           required
         />
         {error ? (
-          <>
-            <p className="text-red-500 text-base leading-[19px] font-light mt-4 ">
-              {error}
-            </p>
-            <Link
-              to="/register/phone"
-              className="text-base leading-[19px] block font-light text-error underline text-blue-500 mt-4"
-            >
-              Registratsiyadan o'tish
-            </Link>
-          </>
+          <p className="text-red-500 text-base leading-[19px] font-light mt-4 ">
+            {error}
+          </p>
         ) : (
           <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
-            Avtorizatsiya qilish uchun iltimos telefon raqamingini kiriting!
+            Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
           </p>
         )}
       </div>
-      <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
-        <button className="bg-primary bg-opacity-20 py-[18px] text-base leading-[19px]">
-          Bekor qilish
-        </button>
-        <button className="bg-primary text-white py-[18px] text-base leading-[19px]">
-          Keyingisi
+      <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
+        <button
+          type="submit"
+          className="bg-primary text-white py-[18px] text-base leading-[19px]"
+        >
+          {error
+            ? isRegistered
+              ? "Login qilish"
+              : "Registratsiya qilish"
+            : "Keyingisi"}
         </button>
       </div>
     </form>

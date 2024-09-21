@@ -5,6 +5,7 @@ import Description from "./components/description/Description";
 import Images from "./components/images/Images";
 import Location from "./components/location/Location";
 import SubmitForm from "./components/submitForm/SubmitForm";
+import { BreadCrumbComponent, MobileBreadCrumb } from "./components/BreadCrumb";
 
 function Index() {
   const initialForm = {
@@ -51,6 +52,10 @@ function Index() {
 
   return (
     <section className="p-2 flex flex-col gap-10">
+      <>
+        <BreadCrumbComponent name="e'lon berish" />
+        <MobileBreadCrumb name="e'lon berish" />
+      </>
       <form
         className="p-2 flex flex-col gap-10"
         onSubmit={handleSubmit}

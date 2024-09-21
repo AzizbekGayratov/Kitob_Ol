@@ -8,7 +8,7 @@ const ProductView = lazy(() => import("modules/ProductView/ProductView"));
 const Authorization = lazy(
   () => import("modules/Auth/Authorization/Authorization")
 );
-const Announcement = lazy(() => import("../modules/Announcement/index"));
+const Announcement = lazy(() => import("modules/Announcement/Announcement"));
 
 export {
   Error,

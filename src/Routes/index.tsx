@@ -5,8 +5,7 @@ import {
   Login,
   ProductView,
   Profile,
-  Index,
-  // Register,
+  Announcement,
   Authorization,
 } from "../modules";
 import { Books, Vacancies } from "../modules/Home/components";
@@ -17,16 +16,8 @@ import {
   PhoneLogin,
   EmailLogin,
 } from "../modules/Auth/Authorization/components";
-import RegisterAuth from "../modules/Auth/Authorization/Register/RegisterAuth";
-import {
-  EmailRegister,
-  PhoneRegister,
-} from "../modules/Auth/Authorization/Register/components";
-import PhoneOTP from "../modules/Auth/Authorization/Register/components/OTP/PhoneOTP";
-import EmailOTP from "../modules/Auth/Authorization/Register/components/OTP/EmailOTP";
 import AuthEmailOTP from "modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP";
 import AuthPhoneOTP from "modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
-
 
 const routes = createBrowserRouter([
   {
@@ -52,8 +43,8 @@ const routes = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/elon",
-        element: <Index />,
+        path: "/announcements",
+        element: <Announcement />,
       },
       {
         path: "/product/:name",
@@ -109,43 +100,6 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: <AuthPhoneOTP />,
-      },
-    ],
-  },
-  {
-    path: "/register",
-    element: <RegisterAuth />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "phone",
-        element: <PhoneRegister />,
-      },
-      {
-        path: "email",
-        element: <EmailRegister />,
-      },
-    ],
-  },
-  {
-    path: "/register/email/otp",
-    element: <RegisterAuth />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "",
-        element: <EmailOTP />,
-      },
-    ],
-  },
-  {
-    path: "/register/phone/otp",
-    element: <RegisterAuth />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "",
-        element: <PhoneOTP />,
       },
     ],
   },

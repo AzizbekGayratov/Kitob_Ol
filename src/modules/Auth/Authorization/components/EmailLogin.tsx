@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function EmailLogin() {
   const [email, setEmail] = React.useState("");
+  const [isRegistered, setIsRegistered] = React.useState(true);
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
@@ -10,7 +12,9 @@ export default function EmailLogin() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/login/email`,
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/${
+            isRegistered ? "login" : "register"
+          }/email`,
           {
             method: "POST",
             headers: {
@@ -25,6 +29,13 @@ export default function EmailLogin() {
           setEmail("");
           window.sessionStorage.setItem("email", email);
           navigate("/authorization/email/otp");
+        } else if (response.status === 400) {
+          setIsRegistered(!isRegistered);
+          setError(
+            isRegistered
+              ? "Bu email ro'yxatdan o'tmagan"
+              : "Bu email allaqachon ro'yxatdan o'tgan"
+          );
         }
       } catch (error) {
         console.error(error);
@@ -52,16 +63,26 @@ export default function EmailLogin() {
           placeholder="Someone007@gmail.com"
           required
         />
-        <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
-          Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
-        </p>
+        {error ? (
+          <p className="text-red-500 text-base leading-[19px] font-light mt-4 ">
+            {error}
+          </p>
+        ) : (
+          <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
+            Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
+          </p>
+        )}
       </div>
-      <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
-        <button className="bg-primary bg-opacity-20 py-[18px] text-base leading-[19px]">
-          Bekor qilish
-        </button>
-        <button className="bg-primary text-white py-[18px] text-base leading-[19px]">
-          Keyingisi
+      <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
+        <button
+          type="submit"
+          className="bg-primary text-white py-[18px] text-base leading-[19px]"
+        >
+          {error
+            ? isRegistered
+              ? "Login qilish"
+              : "Registratsiya qilish"
+            : "Keyingisi"}
         </button>
       </div>
     </form>
