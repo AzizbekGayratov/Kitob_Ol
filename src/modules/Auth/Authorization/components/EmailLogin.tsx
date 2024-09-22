@@ -23,8 +23,31 @@ export default function EmailLogin() {
         );
         if (response.ok) {
           setEmail("");
+          window.sessionStorage.setItem("auth_response_type", "login");
           window.sessionStorage.setItem("email", email);
           navigate("/authorization/email/otp");
+        } else if (response.status === 400) {
+          const responseRegister = await fetch(
+            `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/register/email`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+              }),
+            }
+          );
+
+          if (responseRegister.ok) {
+            setEmail("");
+            window.sessionStorage.setItem("auth_response_type", "register");
+            window.sessionStorage.setItem("email", email);
+            navigate("/authorization/email/otp");
+          } else {
+            throw new Error("Request failed");
+          }
         }
       } catch (error) {
         console.error(error);
@@ -56,11 +79,11 @@ export default function EmailLogin() {
           Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
-        <button className="bg-primary bg-opacity-20 py-[18px] text-base leading-[19px]">
-          Bekor qilish
-        </button>
-        <button className="bg-primary text-white py-[18px] text-base leading-[19px]">
+      <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
+        <button
+          type="submit"
+          className="bg-primary text-white py-[18px] text-base leading-[19px]"
+        >
           Keyingisi
         </button>
       </div>

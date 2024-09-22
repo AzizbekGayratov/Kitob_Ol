@@ -5,6 +5,7 @@ import { Storage } from "../../../../../Services";
 
 export default function AuthPhoneOTP() {
   const [otp, setOtp] = React.useState("");
+  const [error, setError] = React.useState("");
   const navigate = useNavigate();
 
   const submitData = (e: any) => {
@@ -12,11 +13,13 @@ export default function AuthPhoneOTP() {
     const phone = window.sessionStorage.getItem("phone");
 
     const fetchData = async () => {
-      console.log({ otp, phone });
+      const requestType = window.sessionStorage.getItem("auth_response_type");
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/phone/login`,
+          `${
+            import.meta.env.VITE_REACT_AUTH_URL
+          }/auth/user/phone/${requestType}`,
           {
             method: "POST",
             headers: {
@@ -31,14 +34,17 @@ export default function AuthPhoneOTP() {
 
         if (response.ok) {
           window.sessionStorage.clear();
+        } else if (response.status === 500) {
+          setError("Siz kiritgan kod noto'g'ri");
         } else {
           throw new Error("Request failed");
         }
 
-        const data = await response.json();
-        console.log(data);
-        Storage.set("token", data);
-        navigate("/");
+        if (response.ok) {
+          const data = await response.json();
+          Storage.set("token", data);
+          navigate("/");
+        }
       } catch (error) {
         console.error(error);
       }
@@ -58,6 +64,7 @@ export default function AuthPhoneOTP() {
           Siz kiritgan telefon raqamiga kod yuborildi. Iltimos kodni kiriting!
         </p>
         <AuthOTP otp={otp} setOtp={setOtp} />
+        {error && <p className="text-red-500 mt-6">{error}</p>}
       </div>
       <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
         <button
