@@ -5,7 +5,7 @@ import {
   Login,
   ProductView,
   Profile,
-  Index,
+  AnnouncementBook,
   // Register,
   Authorization,
 } from "../modules";
@@ -26,7 +26,7 @@ import PhoneOTP from "../modules/Auth/Authorization/Register/components/OTP/Phon
 import EmailOTP from "../modules/Auth/Authorization/Register/components/OTP/EmailOTP";
 import AuthEmailOTP from "modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP";
 import AuthPhoneOTP from "modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
-
+import AnnouncementVacancy from "modules/Announcements/AnnouncementVacancies/AnnouncementVacancy";
 
 const routes = createBrowserRouter([
   {
@@ -52,8 +52,12 @@ const routes = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/elon",
-        element: <Index />,
+        path: "/announcements/book",
+        element: <AnnouncementBook />,
+      },
+      {
+        path: "/announcements/vacancy",
+        element: <AnnouncementVacancy />,
       },
       {
         path: "/product/:name",

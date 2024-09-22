@@ -5,7 +5,8 @@ import Profile from "./Profile/Profile";
 import Register from "./Auth/Register/Register";
 import ProductView from "./ProductView/ProductView";
 import Authorization from "./Auth/Authorization/Authorization";
-import Index from "./Announcement";
+import AnnouncementBook from "./Announcements/AnnouncementBooks/AnnouncementBook";
+import AnnouncementVacancy from "./Announcements/AnnouncementVacancies/AnnouncementVacancy";
 
 export {
   Error,
@@ -15,5 +16,6 @@ export {
   Register,
   ProductView,
   Authorization,
-  Index,
+  AnnouncementBook,
+  AnnouncementVacancy,
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import TextArea from "./components/TextArea";
-import { ComponentPropsType } from "modules/Announcement/types/Types";
+import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
 
 export default function Description({
   formData,

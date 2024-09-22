@@ -2,7 +2,7 @@ import React from "react";
 import Label from "./components/label/Label";
 import TextInput from "./components/textInput/TextInput";
 import FormContainer from "./components/formContainer/FormContainer";
-import { ComponentPropsType } from "modules/Announcement/types/Types";
+import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
 
 export default function AboutAnnouncement({
   formData,

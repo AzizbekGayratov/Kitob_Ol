@@ -6,7 +6,7 @@ import Images from "./components/images/Images";
 import Location from "./components/location/Location";
 import SubmitForm from "./components/submitForm/SubmitForm";
 
-function Index() {
+function AnnouncementBook() {
   const initialForm = {
     bookName: "",
     bookCategory: "",
@@ -67,4 +67,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default AnnouncementBook;
