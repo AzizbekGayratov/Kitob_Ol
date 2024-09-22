@@ -79,7 +79,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed w-full z-40 py-4 bg-rootBg desktop:bg-white lg:py-1">
+      <header className="fixed w-full z-40 py-4 desktop:bg-rootBg bg-white lg:py-1">
         <div className="container flex items-center justify-between">
           <Link
             to="/"

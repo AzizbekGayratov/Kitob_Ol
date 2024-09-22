@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import PhoneInput from "react-phone-number-input/input";
 import {
   Select,
@@ -12,6 +11,7 @@ import {
   setIsProfileUpdating,
   updateProfileData,
 } from "Store/profileSlice/profileSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export type Profile = {
   name: string;
