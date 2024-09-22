@@ -97,6 +97,7 @@ export default function UpdateForm() {
             Tug'ilgan sanasi
           </label>
           <input
+            type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
             id="user_birthDate"
