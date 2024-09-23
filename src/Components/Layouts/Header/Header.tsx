@@ -67,19 +67,25 @@
 // Changed the code to imporve responsive desing to mobile and desktop
 // After  👇
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HeaderNav } from "./components";
 import { LogoSvg, MenuGamburger } from "../../../assets/images/svg";
 import { Box, Drawer } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menu from "./components/Menu";
 
 const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsDrawerOpen(false);
+  }, [location]);
+
   return (
     <>
-      <header className="fixed w-full z-40 py-4 desktop:bg-rootBg bg-white lg:py-1">
+      <header className="fixed w-full z-40 py-3 desktop:bg-rootBg bg-white lg:py-1">
         <div className="container flex items-center justify-between">
           <Link
             to="/"

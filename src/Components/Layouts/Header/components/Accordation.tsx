@@ -10,49 +10,67 @@ import {
 import { useState } from "react";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Storage } from "../../../../Services";
 
 export default function Accordation() {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
+  const isAuthorized = Storage.get("token");
+
   return (
     <>
-      <ul className="py-1">
-        <Accordion
-          expanded={isOpen1}
-          onChange={() => setIsOpen1(!isOpen1)}
-          sx={{
-            backgroundColor: isOpen1 ? "#ABBCC81A" : "#2C3033",
-            boxShadow: "none",
-            border: "none",
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-            aria-controls="panel1-content"
-            id="panel1-header"
+      <li className="py-1">
+        {!isAuthorized ? (
+          <Accordion
+            expanded={isOpen1}
+            onChange={() => setIsOpen1(!isOpen1)}
+            sx={{
+              backgroundColor: isOpen1 ? "#ABBCC81A" : "#2C3033",
+              boxShadow: "none",
+              border: "none",
+            }}
           >
-            <Typography className="text-white flex items-center gap-3">
-              <img src={activeNavBtn3} alt="icon" /> Mening profilim
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <p>
-              <Link
-                to="/register/phone"
-                className="text-white block pb-[18px] px-6"
-              >
-                Avtorizatsiya
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              <Typography className="text-white flex items-center gap-3">
+                <img src={activeNavBtn3} alt="icon" /> Mening profilim
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <p>
+                <Link
+                  to="/authorization/phone"
+                  className="text-white block pb-[18px] px-6"
+                >
+                  Avtorizatsiya
+                </Link>
+              </p>
+              <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
+              <Link to="/login">
+                <p className="text-white block pt-[18px] px-6">
+                  Do’kon yoki nashriyot
+                </p>
               </Link>
-            </p>
-            <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
-            <p className="text-white block pt-[18px] px-6">
-              Do’kon yoki nashriyot
-            </p>
-          </AccordionDetails>
-        </Accordion>
-      </ul>
-      <ul className="py-1">
+            </AccordionDetails>
+          </Accordion>
+        ) : (
+          <div className="p-4">
+            <button>
+              <Link
+                to="/profile"
+                className="flex items-center gap-3 text-white text-sm"
+              >
+                <img src={activeNavBtn3} alt="icon" /> Mening profilim
+              </Link>
+            </button>
+          </div>
+        )}
+      </li>
+      <li className="py-1">
         <Accordion
           expanded={isOpen2}
           onChange={() => setIsOpen2(!isOpen2)}
@@ -79,7 +97,7 @@ export default function Accordation() {
             </Typography>
           </AccordionDetails>
         </Accordion>
-      </ul>
+      </li>
     </>
   );
 }

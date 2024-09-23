@@ -50,7 +50,7 @@ function AnnouncementBook() {
   };
 
   return (
-    <section className="p-2 flex flex-col gap-10">
+    <section className="sm:p-2 flex flex-col gap-10">
       <form
         className="p-2 flex flex-col gap-10"
         onSubmit={handleSubmit}

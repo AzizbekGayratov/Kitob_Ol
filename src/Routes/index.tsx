@@ -6,7 +6,7 @@ import {
   ProductView,
   Profile,
   AnnouncementBook,
-  // Register,
+  Register,
   Authorization,
 } from "../modules";
 import { Books, Vacancies } from "../modules/Home/components";
@@ -17,9 +17,10 @@ import {
   PhoneLogin,
   EmailLogin,
 } from "../modules/Auth/Authorization/components";
-import AuthEmailOTP from "modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP";
-import AuthPhoneOTP from "modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
-import AnnouncementVacancy from "modules/Announcements/AnnouncementVacancies/AnnouncementVacancy";
+import AuthEmailOTP from "../modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP";
+import AuthPhoneOTP from "../modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
+import AnnouncementVacancy from "../modules/Announcements/AnnouncementVacancies/AnnouncementVacancy";
+import ProtectedRoute from "../Components/Layouts/ProtectedRoute/ProtectedRoute";
 
 const routes = createBrowserRouter([
   {
@@ -41,16 +42,26 @@ const routes = createBrowserRouter([
         ],
       },
       {
-        path: "/profile",
-        element: <Profile />,
+        path: "/",
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/profile",
+            element: <Profile />,
+          },
+          {
+            path: "/announcements/book",
+            element: <AnnouncementBook />,
+          },
+          {
+            path: "/announcements/vacancy",
+            element: <AnnouncementVacancy />,
+          },
+        ],
       },
       {
-        path: "/announcements/book",
-        element: <AnnouncementBook />,
-      },
-      {
-        path: "/announcements/vacancy",
-        element: <AnnouncementVacancy />,
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/product/:name",
@@ -113,6 +124,10 @@ const routes = createBrowserRouter([
     path: "/login",
     element: <Login />,
     errorElement: <Error />,
+  },
+  {
+    path: "*",
+    element: <Error />,
   },
 ]);
 

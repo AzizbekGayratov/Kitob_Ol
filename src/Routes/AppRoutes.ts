@@ -3,6 +3,7 @@ import { lazy } from "react";
 const Home = lazy(() => import("modules/Home"));
 const Profile = lazy(() => import("modules/Profile/Profile"));
 const Login = lazy(() => import("modules/Auth/Login/Login"));
+const Register = lazy(() => import("modules/Auth/Register/Register"));
 const Error = lazy(() => import("modules/Error"));
 const ProductView = lazy(() => import("modules/ProductView/ProductView"));
 const Authorization = lazy(
@@ -20,6 +21,7 @@ export {
   Home,
   Login,
   Profile,
+  Register,
   ProductView,
   Authorization,
   AnnouncementBook,
