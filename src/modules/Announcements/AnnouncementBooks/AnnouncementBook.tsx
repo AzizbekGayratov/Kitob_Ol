@@ -7,31 +7,92 @@ import Location from "./components/location/Location";
 import SubmitForm from "./components/submitForm/SubmitForm";
 
 function AnnouncementBook() {
+  // const initialForm = {
+  //   bookName: "",
+  //   bookCategory: "",
+  //   bookAuthor: "",
+  //   bookID: "",
+  //   selectedBookLanguage: "",
+  //   isInternationalBook: false,
+  //   selectedTextType: "",
+  //   bookTranslator: "",
+  //   bookPages: "",
+  //   bookPublisher: "",
+  //   bookYear: "",
+  //   bookPrice: "",
+  //   bookCurrency: "",
+  //   paperFormat: "",
+  //   bookCover: "",
+  //   bookCondition: "",
+  //   applicant: "",
+  //   email: "",
+  //   phoneNumber: "",
+  //   description: "",
+  //   usefulInformations: "",
+  //   location: "",
+  //   images: [],
+  // };
+
   const initialForm = {
-    bookName: "",
-    bookCategory: "",
-    bookAuthor: "",
-    bookID: "",
-    selectedBookLanguage: "",
-    isInternationalBook: false,
-    selectedTextType: "",
-    bookTranslator: "",
-    bookPages: "",
-    bookPublisher: "",
-    bookYear: "",
-    bookPrice: "",
-    bookCurrency: "",
-    paperFormat: "",
-    bookCover: "",
-    bookCondition: "",
-    applicant: "",
-    email: "",
-    phoneNumber: "",
-    description: "",
-    usefulInformations: "",
-    location: "",
-    images: [],
+    title: "", // was bookName
+    category_id: "", // was bookCategory
+    author_id: "", // was bookAuthor
+    shitrix_code: "", // was bookID
+    language_id: "", // was selectedBookLanguage
+    is_new: false, // was isInternationalBook
+    writing_type: "", // was selectedTextType
+    translator_id: "", // was bookTranslator
+    total_pages: "", // was bookPages
+    publisher_id: "", // was bookPublisher
+    published_year: "", // was bookYear
+    price: "", // was bookPrice
+    cover_format: "", // was paperFormat
+    cover_type: "", // was bookCover
+    description: "", // was description
+    location: {
+      // was location
+      city_id: "",
+      district_id: "",
+    },
+    image_url: "", // new field
+    img_url: "", // new field
+    stock: 0, // new field
+
+    // Optional fields (unused but retained)
+    bookCurrency: "", // optional
+    bookCondition: "", // optional
+    applicant: "", // optional
+    email: "", // optional
+    phoneNumber: "", // optional
+    usefulInformations: "", // optional
+    images: [], // optional
   };
+
+  // const initialForm = {
+  //   title: "",
+  //   writing_type: "",
+  //   cover_type: "",
+  //   bookCategory: "",
+  //   bookAuthor: "",
+  //   paperFormat: "",
+  //   bookID: "",
+  //   selectedBookLanguage: "",
+  //   isInternationalBook: false,
+  //   bookTranslator: "",
+  //   bookPages: "",
+  //   bookPublisher: "",
+  //   bookYear: "",
+  //   bookPrice: "",
+  //   bookCurrency: "",
+  //   bookCondition: "",
+  //   applicant: "",
+  //   email: "",
+  //   phoneNumber: "",
+  //   description: "",
+  //   usefulInformations: "",
+  //   location: "",
+  //   images: [],
+  // };
 
   const [formData, setFormData] = useState(initialForm);
 

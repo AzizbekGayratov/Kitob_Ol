@@ -1,7 +1,7 @@
 import React from "react";
 import Label from "../aboutAnnouncement/components/label/Label";
 import FormContainer from "../aboutAnnouncement/components/formContainer/FormContainer";
-import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
+import { ComponentPropsType } from "modules/Announcements/types/Types";
 
 export default function Connect({ formData, setFormData }: ComponentPropsType) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

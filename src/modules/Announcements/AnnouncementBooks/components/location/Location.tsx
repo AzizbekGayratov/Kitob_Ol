@@ -1,4 +1,4 @@
-import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
+import { ComponentPropsType } from "modules/Announcements/types/Types";
 
 export default function Location({
   formData,

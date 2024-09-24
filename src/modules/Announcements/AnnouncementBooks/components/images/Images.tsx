@@ -1,4 +1,4 @@
-import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
+import { ComponentPropsType } from "modules/Announcements/types/Types";
 import ImageCard from "./components/imageContainer/ImageCard";
 
 export default function Images({ formData, setFormData }: ComponentPropsType) {

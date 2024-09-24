@@ -5,5 +5,5 @@ export default function FormContainer({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex flex-col gap-3">{children}</div>;
+  return <div className="flex flex-col gap-4">{children}</div>;
 }

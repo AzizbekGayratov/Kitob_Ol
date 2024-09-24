@@ -1,6 +1,6 @@
 import React from "react";
 import TextArea from "./components/TextArea";
-import { ComponentPropsType } from "modules/Announcements/AnnouncementBooks/types/Types";
+import { ComponentPropsType } from "modules/Announcements/types/Types";
 
 export default function Description({
   formData,
@@ -15,7 +15,7 @@ export default function Description({
     <div className="container bg-white p-7">
       <h2 className="font-semibold text-[32px] text-primary">Tavsif</h2>
 
-      <div className="fle flex-col gap-7 sm:gap-16 md:max-w-[82%] mt-7 space-y-10 ">
+      <div className="flex flex-col gap-7 sm:gap-16 md:max-w-[82%] mt-7 space-y-10 ">
         <div>
           <TextArea
             name="description"
