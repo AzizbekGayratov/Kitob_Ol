@@ -17,11 +17,11 @@ export default function Location({
 
       <input
         type="text"
-        name="location"
+        name="city_id"
         id="location"
         placeholder="Shahar yoki Pochta indeksi"
         className="form_input mt-5 md:max-w-[48%]"
-        value={formData.location}
+        value={formData.location.city_id}
         onChange={handleInputChange}
         required
       />
