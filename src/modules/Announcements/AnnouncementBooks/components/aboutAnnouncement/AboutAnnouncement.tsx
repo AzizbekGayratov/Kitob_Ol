@@ -298,7 +298,7 @@ export default function AboutAnnouncement({
   };
 
   return (
-    <div className="container bg-white p-7">
+    <div className="container bg-white p-4">
       <h2 className="font-semibold text-[32px] text-primary">
         Bizga e'loningiz haqida gapirib bering
       </h2>
@@ -386,9 +386,8 @@ export default function AboutAnnouncement({
               Til
             </option>
 
-            <option value="uzbek">Uzbek</option>
-            <option value="english">English</option>
-            <option value="russian">Russian</option>
+            <option value="uzbek">O’zbek</option>
+            <option value="russian">Rus tili</option>
           </select>
         </FormContainer>
 
@@ -463,7 +462,8 @@ export default function AboutAnnouncement({
           <Label htmlFor="bookYear">Kitob yili*</Label>
 
           <TextInput
-            type="date"
+            type="number"
+            placeholder="Yili"
             name="bookYear"
             value={formData.bookYear}
             onChange={handleInputChange}
@@ -554,8 +554,8 @@ export default function AboutAnnouncement({
               Holati
             </option>
 
-            <option value="yangi">Yangi</option>
-            <option value="eski">Eski</option>
+            <option value="true">Yangi</option>
+            <option value="false">Eski</option>
           </select>
         </FormContainer>
       </div>

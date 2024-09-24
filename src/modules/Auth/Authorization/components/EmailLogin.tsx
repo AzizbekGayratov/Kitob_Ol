@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function EmailLogin() {
   const [email, setEmail] = React.useState("");
@@ -78,6 +78,12 @@ export default function EmailLogin() {
         <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
           Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
         </p>
+        <Link
+          to="/"
+          className="text-blue-400 text-xs inline-block mt-3 sm:px-2"
+        >
+          Visit homepage
+        </Link>
       </div>
       <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
         <button

@@ -24,7 +24,7 @@ export default function HeaderNav() {
       </button>
 
       {dropDownOpen && (
-        <div className="absolute top-[100px] right-[8px] shadow-lg border rounded">
+        <div className="absolute top-[82px] right-[0px] shadow-lg border rounded">
           <div className="absolute rounded block bg-white size-24 rotate-45 left-20 z-0" />
 
           <div

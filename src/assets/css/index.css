@@ -12,7 +12,7 @@
   }
 
   main {
-    @apply flex-1 mt-[65px] sm:mt-[100px] md:mt-[140px];
+    @apply flex-1 mt-[85px] sm:mt-[100px] md:mt-[140px];
   }
 
   input {

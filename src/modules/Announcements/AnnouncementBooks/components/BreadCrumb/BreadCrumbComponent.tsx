@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "../../../../../Components/Ui/breadcrumb";
+} from "../../../../../Components/Ui/breadcrumb.tsx";
 import { LuHome } from "react-icons/lu";
 import { RxDividerVertical } from "react-icons/rx";
 
