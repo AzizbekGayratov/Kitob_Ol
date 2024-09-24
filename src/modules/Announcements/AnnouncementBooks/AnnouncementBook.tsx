@@ -65,6 +65,7 @@ function AnnouncementBook() {
     email: "", // optional
     phoneNumber: "", // optional
     usefulInformations: "", // optional
+    useSecondaryInformations: '', // optional
     images: [], // optional
   };
 

@@ -42,7 +42,7 @@ export default function Description({
             rows={15}
             maxLength={800}
             placeholder="Boshqa foydali malumotlar"
-            value={formData.usefulInformations}
+            value={formData.useSecondaryInformations}
             onChange={handleInputChange}
           />
 
@@ -52,7 +52,7 @@ export default function Description({
           >
             <p>Yana kamida 80 ta belgi yozing</p>
 
-            <p>{formData.usefulInformations.length}/800</p>
+            <p>{formData.useSecondaryInformations.length}/800</p>
           </label>
         </div>
       </div>

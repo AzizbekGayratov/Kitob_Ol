@@ -76,6 +76,7 @@ export interface FormDataType {
   email?: string; // optional
   phoneNumber?: string; // optional
   usefulInformations?: string; // optional
+  useSecondaryInformations: string; // optional
   images?: (string | ArrayBuffer | null)[]; // optional
 }
 
