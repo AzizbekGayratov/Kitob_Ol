@@ -5,6 +5,7 @@ import Description from "./components/description/Description";
 import Images from "./components/images/Images";
 import Location from "./components/location/Location";
 import SubmitForm from "./components/submitForm/SubmitForm";
+import { FormDataType } from "../types/Types";
 
 function AnnouncementBook() {
   // const initialForm = {
@@ -33,7 +34,7 @@ function AnnouncementBook() {
   //   images: [],
   // };
 
-  const initialForm = {
+  const initialForm: FormDataType = {
     title: "", // was bookName
     category_id: "", // was bookCategory
     author_id: "", // was bookAuthor
