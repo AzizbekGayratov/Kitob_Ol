@@ -6,7 +6,7 @@ const profileSlice = createSlice({
     profile: {
       name: "John",
       lastName: "Doe",
-      birthDate: "2009-02-01",
+      birthDate: "2011-03-05",
       phone: "+998901234567",
       email: "qHl6t@example.com",
       gender: "Erkak",
