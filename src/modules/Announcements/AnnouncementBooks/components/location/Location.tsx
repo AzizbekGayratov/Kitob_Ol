@@ -25,11 +25,9 @@ export default function Location({
 
   // selected
   const [location, setLocation] = useState("");
-  const [district, setDistrict] = useState("");
 
   // id
   const [city_id, setCity_id] = useState("");
-  const [district_id, setDistrict_id] = useState("");
 
   useEffect(() => {
     const fetchList = async () => {
