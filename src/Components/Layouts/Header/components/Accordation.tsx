@@ -18,21 +18,17 @@ export default function Accordation() {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
-  const isAuthorized = !!Storage.get("token");
+  const isAuthorized = Storage.get("token");
 
   const dispatch = useDispatch();
   const { language } = useSelector(
     (state: { language: { language: string } }) => state.language
   );
 
-  const handleLanguageSelect = (language: string) => {
-    localStorage.setItem("language", language);
-
-    dispatch(selectLanguage(language));
-    console.log(language);
+  const handleLanguageSelect = (e: string) => {
+    localStorage.setItem("language", e);
+    dispatch(selectLanguage(e));
   };
-
-  console.log(language);
 
   return (
     <>
@@ -85,6 +81,60 @@ export default function Accordation() {
             </button>
           </div>
         )}
+      </li>
+      <li className="py-1">
+        <Accordion
+          expanded={isOpen2}
+          onChange={() => setIsOpen2(!isOpen2)}
+          sx={{
+            backgroundColor: isOpen2 ? "#ABBCC81A" : "#2C3033",
+            boxShadow: "none",
+            border: "none",
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+            aria-controls="panel2-content"
+            id="panel2-header"
+          >
+            <Typography className="text-white flex items-center gap-3">
+              <img src={activeNavBtn4} alt="icon" /> Til
+            </Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <button
+              className="text-white block py-3 px-6 rounded-md"
+              onClick={() => {
+                handleLanguageSelect("en");
+              }}
+            >
+              English
+            </button>
+
+            <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
+
+            <button
+              className="text-white block py-3 px-6 rounded-md"
+              onClick={() => {
+                handleLanguageSelect("ru");
+              }}
+            >
+              Русский
+            </button>
+
+            <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
+
+            <button
+              className="text-white block py-3 px-6 rounded-md"
+              onClick={() => {
+                handleLanguageSelect("uz");
+              }}
+            >
+              Uzbek
+            </button>
+          </AccordionDetails>
+        </Accordion>
       </li>
     </>
   );
