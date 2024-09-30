@@ -11,12 +11,28 @@ import { useState } from "react";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Storage } from "../../../../Services";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLanguage } from "Store/languageSlice/languageSlice";
 
 export default function Accordation() {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
-  const isAuthorized = Storage.get("token");
+  const isAuthorized = !!Storage.get("token");
+
+  const dispatch = useDispatch();
+  const { language } = useSelector(
+    (state: { language: { language: string } }) => state.language
+  );
+
+  const handleLanguageSelect = (language: string) => {
+    localStorage.setItem("language", language);
+
+    dispatch(selectLanguage(language));
+    console.log(language);
+  };
+
+  console.log(language);
 
   return (
     <>
@@ -69,34 +85,6 @@ export default function Accordation() {
             </button>
           </div>
         )}
-      </li>
-      <li className="py-1">
-        <Accordion
-          expanded={isOpen2}
-          onChange={() => setIsOpen2(!isOpen2)}
-          sx={{
-            backgroundColor: isOpen2 ? "#ABBCC81A" : "#2C3033",
-            boxShadow: "none",
-            border: "none",
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-            aria-controls="panel2-content"
-            id="panel2-header"
-          >
-            <Typography className="text-white flex items-center gap-3">
-              <img src={activeNavBtn4} alt="icon" /> Til
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
       </li>
     </>
   );

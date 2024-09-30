@@ -6,6 +6,7 @@ import {
 } from "../../../../assets/images/svg/HeaderNavLink";
 import { Link } from "react-router-dom";
 import Accordation from "./Accordation";
+import AnnouncementButton from "./AnnouncementButton";
 
 export default function Menu({
   onCloseBtn,
@@ -28,11 +29,12 @@ export default function Menu({
       <nav>
         <ul>
           <li className="p-4">
-            <button className="text-white text-sm">
+            {/* <button className="text-white text-sm">
               <Link to="/elon" className="block py-[2px] px-2">
                 E'lon berish
               </Link>
-            </button>
+            </button> */}
+            <AnnouncementButton />
           </li>
           <li className="p-4">
             <button>
