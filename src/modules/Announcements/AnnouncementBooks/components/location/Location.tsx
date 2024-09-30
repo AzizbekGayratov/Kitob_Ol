@@ -41,10 +41,10 @@ export default function Location({
     };
     fetchList();
   }, []);
-
+  
   useEffect(() => {
     const fetchData = async () => {
-      const city_id = cities.map((c) => {
+      const city_id = await cities.filter((c) => {
         let id;
         if (location === c.name.en) {
           id = c.id;
@@ -52,8 +52,9 @@ export default function Location({
         }
         return id;
       });
+
       try {
-        const response = await api.get(`/districts/list?id=${city_id}`);
+        const response = await api.get(`/districts/list?id=${city_id[0]?.id}`);
         const data = response.data;
 
         setDistrictList(data.districts);
