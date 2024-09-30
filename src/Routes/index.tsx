@@ -21,6 +21,7 @@ import AuthEmailOTP from "../modules/Auth/Authorization/components/AuthOTP/AuthE
 import AuthPhoneOTP from "../modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP";
 import AnnouncementVacancy from "../modules/Announcements/AnnouncementVacancies/AnnouncementVacancy";
 import ProtectedRoute from "../Components/Layouts/ProtectedRoute/ProtectedRoute";
+import PublisherRoutes from "Components/Layouts/ProtectedRoute/PublisherRoutes";
 
 const routes = createBrowserRouter([
   {
@@ -53,6 +54,12 @@ const routes = createBrowserRouter([
             path: "/announcements/book",
             element: <AnnouncementBook />,
           },
+        ],
+      },
+      {
+        path: "/",
+        element: <PublisherRoutes />,
+        children: [
           {
             path: "/announcements/vacancy",
             element: <AnnouncementVacancy />,

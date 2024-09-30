@@ -1,5 +1,6 @@
 import LogOutButton from "./LogOutButton";
 import MobileFormTopBtn from "./MobileFormTopBtn";
+import ProfileDelete from "./profileDelete/ProfileDelete";
 
 export default function FormTop() {
   return (
@@ -7,8 +8,13 @@ export default function FormTop() {
       <h2 className="text-[28px] font-semibold leading-[34px]">
         Mening profilim
       </h2>
-      <LogOutButton />
-      <MobileFormTopBtn />
+      <div className="flex gap-2 items-center">
+        <>
+          <LogOutButton />
+          <MobileFormTopBtn />
+        </>
+        <ProfileDelete />
+      </div>
     </div>
   );
 }
