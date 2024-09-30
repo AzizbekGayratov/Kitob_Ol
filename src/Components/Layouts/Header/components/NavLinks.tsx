@@ -10,13 +10,16 @@ import {
   activeNavBtn3,
   activeNavBtn4,
 } from "../../../../assets/images/svg/HeaderNavLink";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLanguage } from "Store/languageSlice/languageSlice";
 
 interface Props {
   icon: JSX.Element;
   activeIcon: JSX.Element;
   href: string;
 }
+
 const navLinksData: Props[] = [
   {
     icon: (
@@ -76,12 +79,26 @@ export default function NavLinks() {
   const location = useLocation();
   const isAuthorized = Storage.get("token");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdownLanguage, setShowDropdownLanguage] = useState(false);
+  const dispatch = useDispatch();
+  const { language } = useSelector(
+    (state: { language: { language: string } }) => state.language
+  );
+
+  const handleLanguageSelect = (e: string) => {
+    localStorage.setItem("language", e);
+    setShowDropdownLanguage(!showDropdownLanguage);
+
+    dispatch(selectLanguage(e));
+  };
+
+  console.log(language);
 
   return (
     <ul className="flex items-center gap-5">
-      {navLinksData.map((item, _) => (
-        <li key={_}>
-          {item.href !== "/profile" ? (
+      {navLinksData.map((item, index) => (
+        <li key={index}>
+          {item.href !== "/profile" && item.href !== "/3" ? (
             <button className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
               <NavLink
                 to={item.href}
@@ -94,6 +111,51 @@ export default function NavLinks() {
                 {location.pathname === item.href ? item.activeIcon : item.icon}
               </NavLink>
             </button>
+          ) : item.href === "/3" ? (
+            <>
+              <button
+                className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
+                style={{ marginTop: "-6px" }}
+                onClick={() => setShowDropdownLanguage(!showDropdownLanguage)}
+              >
+                {item.icon}
+              </button>
+
+              {showDropdownLanguage && (
+                <div className="absolute top-[82px] right-36 shadow-lg border rounded">
+                  <div className="absolute rounded block bg-white size-24 rotate-45 left-20 z-0" />
+
+                  <div
+                    className={`z-50 flex flex-col gap-3 p-6 text-[#1C274C] font-Inter font-normal text-base rounded bg-white transition-opacity duration-500 ease-out ${
+                      showDropdownLanguage
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <button
+                      className="bg-rootBg rounded z-20 py-3 px-2 w-52"
+                      onClick={() => handleLanguageSelect("en")}
+                    >
+                      English
+                    </button>
+
+                    <button
+                      className="bg-rootBg rounded z-20 py-3 px-2 w-52"
+                      onClick={() => handleLanguageSelect("ru")}
+                    >
+                      Русский
+                    </button>
+
+                    <button
+                      className="bg-rootBg rounded z-10 py-3 px-2 w-52"
+                      onClick={() => handleLanguageSelect("uz")}
+                    >
+                      Uzbek
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <>
               {isAuthorized ? (
@@ -132,11 +194,18 @@ export default function NavLinks() {
                       >
                         <div className="flex items-center gap-4 z-40">
                           <div className="rounded-full overflow-hidden">
-                            <img src="https://picsum.photos/50" alt="user avatar" />
+                            <img
+                              src="https://picsum.photos/50"
+                              alt="user avatar"
+                            />
                           </div>
                           <div>
-                            <h3 className="text-primary font-Poppins font-medium">Anonym user</h3>
-                            <p className="text-[14px] font-medium leading-4 opacity-80">+998 xxx xx xx</p>
+                            <h3 className="text-primary font-Poppins font-medium">
+                              Anonym user
+                            </h3>
+                            <p className="text-[14px] font-medium leading-4 opacity-80">
+                              +998 xxx xx xx
+                            </p>
                           </div>
                         </div>
 
@@ -144,24 +213,21 @@ export default function NavLinks() {
                           className="bg-rootBg rounded z-10"
                           onClick={() => setShowDropdown(!showDropdown)}
                         >
-                          <Link
+                          <NavLink
                             to="/authorization/phone"
                             className="block py-3 px-2 w-52"
                           >
                             Avtorizatsiya
-                          </Link>
+                          </NavLink>
                         </button>
 
                         <button
                           className="bg-rootBg rounded z-10"
                           onClick={() => setShowDropdown(!showDropdown)}
                         >
-                          <Link
-                            to="/login"
-                            className="block py-3 px-2 w-52"
-                          >
-                            Do’kon yoki Nashriyot
-                          </Link>
+                          <NavLink to="/login" className="block py-3 px-2 w-52">
+                            Do'kon yoki Nashriyot
+                          </NavLink>
                         </button>
                       </div>
                     </div>

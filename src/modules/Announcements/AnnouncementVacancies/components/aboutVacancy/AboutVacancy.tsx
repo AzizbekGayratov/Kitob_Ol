@@ -23,7 +23,7 @@ export default function AboutVacancy({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-16 mt-7">
         <FormContainer>
-          <Label htmlFor="status">Kimsiz*</Label>
+          <h3 className="font-Inter font-normal text-2xl">Kimsiz*</h3>
 
           <div className="flex gap-7 flex-col lg:flex-row">
             <div className="flex gap-4 items-center">
