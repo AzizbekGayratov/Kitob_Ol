@@ -54,7 +54,7 @@ export default function Location({
       });
 
       try {
-        const response = await api.get(`/districts/list?id=${city_id[0]?.id}`);
+        const response = await api.get(`/districts/list?city_id=${city_id[0]?.id}`);
         const data = response.data;
 
         setDistrictList(data.districts);
