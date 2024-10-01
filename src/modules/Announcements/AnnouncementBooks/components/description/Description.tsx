@@ -6,6 +6,8 @@ export default function Description({
   formData,
   setFormData,
 }: ComponentPropsType) {
+  const { description = "", usefulInformations = "" } = formData;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -15,24 +17,26 @@ export default function Description({
     <div className="container bg-white p-7">
       <h2 className="font-semibold text-[32px] text-primary">Tavsif</h2>
 
-      <div className="flex flex-col gap-7 sm:gap-16 md:max-w-[82%] mt-7 space-y-10 ">
+      <div className="flex flex-col gap-7 sm:gap-16 md:max-w-[82%] mt-7">
         <div>
           <TextArea
             name="description"
             rows={15}
             maxLength={9000}
             placeholder="O'zingizni shu e'lonni ko'rayotgan odam sifatida tavsif yozing!"
-            value={formData.description}
+            value={description}
             onChange={handleInputChange}
           />
-
           <label
             htmlFor="description"
             className="flex justify-between font-Inter font-normal text-base mt-2"
           >
-            <p>Yana kamida 80 ta belgi yozing</p>
-
-            <p>{formData.description.length}/9000</p>
+            <p className={description.length < 25 ? "text-red-500" : ""}>
+              {description.length < 25
+                ? `Yana kamida ${25 - description.length} ta belgi yozing`
+                : "Tayyor"}
+            </p>
+            <p>{description.length}/9000</p>
           </label>
         </div>
 
@@ -40,19 +44,23 @@ export default function Description({
           <TextArea
             name="usefulInformations"
             rows={15}
-            maxLength={800}
+            maxLength={250}
             placeholder="Boshqa foydali malumotlar"
-            value={formData.useSecondaryInformations}
+            value={usefulInformations}
             onChange={handleInputChange}
           />
-
           <label
             htmlFor="usefulInformations"
             className="flex justify-between font-Inter font-normal text-base mt-2"
           >
-            <p>Yana kamida 80 ta belgi yozing</p>
-
-            <p>{formData.useSecondaryInformations.length}/800</p>
+            <p className={usefulInformations.length < 25 ? "text-red-500" : ""}>
+              {usefulInformations.length < 25
+                ? `Yana kamida ${
+                    25 - usefulInformations.length
+                  } ta belgi yozing`
+                : "Tayyor"}
+            </p>
+            <p>{usefulInformations.length}/250</p>
           </label>
         </div>
       </div>

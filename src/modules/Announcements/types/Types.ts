@@ -45,23 +45,22 @@
 // }
 
 export interface FormDataType {
-  title: string; // was bookName
-  category_id: string; // was bookCategory
-  author_id: string; // was bookAuthor
-  shitrix_code: string; // was bookID
-  language_id: string; // was selectedBookLanguage
-  is_new: boolean; // was isInternationalBook
-  writing_type: string; // was selectedTextType
-  translator_id: string; // was bookTranslator
-  total_pages: string; // was bookPages
-  publisher_id: string; // was bookPublisher
-  published_year: string; // was bookYear
-  price: string; // was bookPrice
-  cover_format: string; // was paperFormat
-  cover_type: string; // was bookCover
-  description: string; // was description
+  title: string;
+  category_id: string;
+  author_id: string;
+  shitrix_code: string;
+  language_id: string;
+  is_new: boolean | string;
+  writing_type: string;
+  translator_id: string;
+  total_pages: string;
+  publisher_id: string;
+  published_year: string;
+  price: string;
+  cover_format: string;
+  cover_type: string;
+  description: string;
   location: {
-    // was location
     city_id: string;
     district_id: string;
   };
@@ -71,41 +70,14 @@ export interface FormDataType {
 
   // Optional fields
   bookCurrency?: string; // optional
-  bookCondition?: string; // optional
+  bookCondition?: boolean; // optional
   applicant?: string; // optional
   email?: string; // optional
   phoneNumber?: string; // optional
-  usefulInformations?: string; // optional
+  usefulInformations: string; // optional
   useSecondaryInformations: string; // optional
   images?: (string | ArrayBuffer | null)[]; // optional
 }
-
-// export interface FormDataType {
-//   title: string;
-//   writing_type: string;
-//   cover_type: string;
-//   cover_format: string;
-//   category_id: string;
-//   author_id: string;
-//   bookID: string;
-//   isInternationalBook: boolean;
-//   selectedBookLanguage: string;
-//   bookTranslator: string;
-//   bookPages: string;
-//   bookPublisher: string;
-//   bookYear: string;
-//   bookPrice: string;
-//   bookCurrency: string;
-//   bookCondition: string;
-//   applicant: string;
-//   email: string;
-//   phoneNumber: string;
-//   description: string;
-//   usefulInformations: string;
-//   location: string;
-//   images: (string | ArrayBuffer | null)[];
-// }
-
 export interface initialJobForm {
   description: string;
   status: string;
@@ -132,4 +104,30 @@ export interface ComponentPropsType {
 export interface ComponentPropsTypeJob {
   jobFormData: initialJobForm;
   setJobFormData: React.Dispatch<React.SetStateAction<initialJobForm>> | any;
+}
+
+export interface PublishersType {
+  email: string;
+  id: string;
+  image_url: string;
+  location: {
+    city_id: string;
+    district_id: string;
+  };
+  locations: [
+    {
+      city_id: string;
+      district_id: string;
+      id: string;
+    }
+  ];
+  name: string;
+  phone_number: string;
+  phone_numbers: [
+    {
+      id: string;
+      phone_number: string;
+    }
+  ];
+  type: string;
 }

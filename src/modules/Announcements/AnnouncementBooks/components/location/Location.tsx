@@ -19,57 +19,50 @@ export default function Location({
   formData,
   setFormData,
 }: ComponentPropsType) {
-  // list
+  // City and district lists
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
 
-  // selected
+  // Selected city and location
   const [location, setLocation] = useState("");
-
-  // id
   const [city_id, setCity_id] = useState("");
 
+  // Fetch cities list on component mount
   useEffect(() => {
-    const fetchList = async () => {
+    const fetchCities = async () => {
       try {
         const response = await api.get("/cities/list");
-        const data = response.data;
-        setCities(data.cities);
+        setCities(response.data.cities);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching cities:", error);
       }
     };
-    fetchList();
+    fetchCities();
   }, []);
 
+  // Fetch district list when location (city) changes
   useEffect(() => {
-    const fetchData = async () => {
-      const city_id = cities.map((c) => {
-        let id;
-        if (location === c.name.en) {
-          id = c.id;
-          setCity_id(c.id);
-        }
-        return id;
-      });
-      try {
-        const response = await api.get(`/districts/list?id=${city_id}`);
-        const data = response.data;
-
-        setDistrictList(data.districts);
-      } catch (error) {
-        console.error(error);
+    if (location) {
+      const selectedCity = cities.find((c) => c.name.en === location);
+      if (selectedCity) {
+        setCity_id(selectedCity.id);
+        const fetchDistricts = async () => {
+          try {
+            const response = await api.get(
+              `/districts/list?id=${selectedCity.id}`
+            );
+            setDistrictList(response.data.districts);
+          } catch (error) {
+            console.error("Error fetching districts:", error);
+          }
+        };
+        fetchDistricts();
       }
-    };
-    fetchData();
-  }, [location]);
+    }
+  }, [location, cities]);
 
-  const handleInputChange = (id: string) => {
-    console.log({
-      city_id,
-      district_id: id,
-    });
-    setFormData({ ...formData, location: { city_id, district_id: id } });
+  const handleInputChange = (district_id: string) => {
+    setFormData({ ...formData, location: { city_id, district_id } });
   };
 
   return (
@@ -78,30 +71,46 @@ export default function Location({
         <label htmlFor="location">Manzilni kiriting*</label>
       </h2>
       <div className="grid grid-cols-2 gap-5 mt-4">
+        {/* City selection */}
         <select
-          onChange={(e) => {
-            // e.preventDefault();
-            setLocation(e.target.value);
-          }}
+          onChange={(e) => setLocation(e.target.value)}
           className="form_input"
+          defaultValue=""
         >
-          {cities.map((i, _) => (
-            <option key={_}>{i.name.en}</option>
+          <option value="" disabled hidden>
+            Shaharni tanlang
+          </option>
+          {cities.map((city) => (
+            <option key={city.id} value={city.name.en}>
+              {city.name.en}
+            </option>
           ))}
         </select>
-        {location.length !== 0 && (
+
+        {/* District selection (visible when city is selected) */}
+        {location && (
           <select
             onChange={(e) => {
-              districtList.map((i, _) => {
-                if (JSON.parse(i.name_json).en === e.target.value) {
-                  handleInputChange(i.id);
-                }
-              });
+              const selectedDistrict = districtList.find(
+                (d) => JSON.parse(d.name_json).en === e.target.value
+              );
+              if (selectedDistrict) {
+                handleInputChange(selectedDistrict.id);
+              }
             }}
             className="form_input"
+            defaultValue=""
           >
-            {districtList.map((i, _) => (
-              <option key={_}>{JSON.parse(i.name_json).en}</option>
+            <option value="" disabled hidden>
+              Tumanni tanlang
+            </option>
+            {districtList.map((district) => (
+              <option
+                key={district.id}
+                value={JSON.parse(district.name_json).en}
+              >
+                {JSON.parse(district.name_json).en}
+              </option>
             ))}
           </select>
         )}

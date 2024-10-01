@@ -15,8 +15,8 @@ export default function Images({ formData, setFormData }: ComponentPropsType) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-16 mt-7 md:max-w-[82%]">
-        {Array(6)
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-16 mt-7 md:max-w-[82%]">
+        {Array(2)
           .fill(null)
           .map((_, index) => (
             <ImageCard
