@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Storage } from "../../../../Services";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
 
 export default function Accordation() {
@@ -21,9 +21,9 @@ export default function Accordation() {
   const isAuthorized = Storage.get("token");
 
   const dispatch = useDispatch();
-  const { language } = useSelector(
-    (state: { language: { language: string } }) => state.language
-  );
+  // const { language } = useSelector(
+  //   (state: { language: { language: string } }) => state.language
+  // );
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);

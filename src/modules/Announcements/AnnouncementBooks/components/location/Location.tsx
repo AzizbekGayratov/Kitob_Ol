@@ -40,25 +40,28 @@ export default function Location({
     fetchCities();
   }, []);
 
-  // Fetch district list when location (city) changes
   useEffect(() => {
-    if (location) {
-      const selectedCity = cities.find((c) => c.name.en === location);
-      if (selectedCity) {
-        setCity_id(selectedCity.id);
-        const fetchDistricts = async () => {
-          try {
-            const response = await api.get(
-              `/districts/list?id=${selectedCity.id}`
-            );
-            setDistrictList(response.data.districts);
-          } catch (error) {
-            console.error("Error fetching districts:", error);
-          }
-        };
-        fetchDistricts();
+    const fetchData = async () => {
+      const city_id = await cities.filter((c) => {
+        let id;
+        if (location === c.name.en) {
+          id = c.id;
+          setCity_id(c.id);
+        }
+        return id;
+      });
+
+      try {
+        const response = await api.get(
+          `/districts/list?city_id=${city_id[0]?.id}`
+        );
+        const data = response.data;
+
+        setDistrictList(data.districts);
+      } catch (error) {
+        console.error(error);
       }
-    }
+    };
   }, [location, cities]);
 
   const handleInputChange = (district_id: string) => {
