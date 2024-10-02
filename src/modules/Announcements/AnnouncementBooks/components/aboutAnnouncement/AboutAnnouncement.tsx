@@ -3,16 +3,22 @@ import Label from "./components/label/Label";
 import TextInput from "./components/textInput/TextInput";
 import FormContainer from "./components/formContainer/FormContainer";
 import {
+  BookCategoriesType,
   ComponentPropsType,
   PublishersType,
 } from "modules/Announcements/types/Types";
 import api from "Services/Api";
+import { useSelector } from "react-redux";
 
 export default function AboutAnnouncement({
   formData,
   setFormData,
 }: ComponentPropsType) {
   const [publishers, setPublishers] = useState<any>();
+  const [categories, setCategories] = useState<any>();
+  const { language } = useSelector(
+    (state: { language: { language: string } }) => state.language
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | any>
@@ -28,9 +34,21 @@ export default function AboutAnnouncement({
     const getPublishers = async () => {
       const response = await api.get("/publishers/list");
       setPublishers(response.data.publishers || []); // Handle potential undefined data
+
+      console.log(publishers);
+    };
+
+    const getCategories = async () => {
+      try {
+        const response = await api.get("/categories/list");
+        setCategories(response.data.categories || []); // Set categories from API response
+      } catch (error) {
+        console.error("Error fetching categories", error);
+      }
     };
 
     getPublishers();
+    getCategories();
   }, []);
 
   return (
@@ -54,14 +72,25 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="category_id">Kategoriya</Label>
-
-          <TextInput
+          <select
             name="category_id"
+            id="category_id"
+            className="form_input"
             value={formData.category_id}
-            placeholder="Kategoriya"
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="" disabled>
+              Kategoriya
+            </option>
+
+            {categories?.map((category: BookCategoriesType) => (
+              <option key={category.id} value={category.id}>
+                {category.name?.language}
+                {/* Display category name in selected language */}
+              </option>
+            ))}
+          </select>
         </FormContainer>
 
         <FormContainer>
@@ -175,6 +204,7 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="publisher_id">Nashriyotni kiriting*</Label>
+
           <select
             name="publisher_id"
             id="publisher_id"
@@ -187,7 +217,7 @@ export default function AboutAnnouncement({
               Nashriyot
             </option>
 
-            {publishers.map((publisher: PublishersType) => (
+            {publishers?.map((publisher: PublishersType) => (
               <option key={publisher.id} value={publisher.id}>
                 {publisher.name}
               </option>

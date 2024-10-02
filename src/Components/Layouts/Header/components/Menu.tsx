@@ -29,11 +29,6 @@ export default function Menu({
       <nav>
         <ul>
           <li>
-            {/* <button className="text-white text-sm">
-              <Link to="/elon" className="block py-[2px] px-2">
-                E'lon berish
-              </Link>
-            </button> */}
             <AnnouncementButton />
           </li>
           <li className="p-4">

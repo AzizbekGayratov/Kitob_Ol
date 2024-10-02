@@ -62,6 +62,8 @@ export default function Location({
         console.error(error);
       }
     };
+
+    fetchData();
   }, [location, cities]);
 
   const handleInputChange = (district_id: string) => {

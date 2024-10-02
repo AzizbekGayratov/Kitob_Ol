@@ -7,27 +7,32 @@ import {
   activeNavBtn3,
   activeNavBtn4,
 } from "../../../../assets/images/svg/HeaderNavLink";
-import { useState } from "react";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Storage } from "../../../../Services";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
+import { DropDownType } from "modules/Announcements/types/Types";
+import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
 
 export default function Accordation() {
-  const [isOpen1, setIsOpen1] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
-
   const isAuthorized = Storage.get("token");
 
   const dispatch = useDispatch();
-  // const { language } = useSelector(
-  //   (state: { language: { language: string } }) => state.language
-  // );
+
+  const { selected } = useSelector(
+    (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
+  );
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
+
     dispatch(selectLanguage(e));
+    dispatch(toggleDropDown("language")); // Close the dropdown after selection
+  };
+
+  const handleDropdownClick = (dropdownName: DropDownType) => {
+    dispatch(toggleDropDown(dropdownName));
   };
 
   return (
@@ -35,10 +40,10 @@ export default function Accordation() {
       <li className="py-1">
         {!isAuthorized ? (
           <Accordion
-            expanded={isOpen1}
-            onChange={() => setIsOpen1(!isOpen1)}
+            expanded={selected === "profile"}
+            onChange={() => handleDropdownClick("profile")}
             sx={{
-              backgroundColor: isOpen1 ? "#ABBCC81A" : "#2C3033",
+              backgroundColor: selected === "profile" ? "#ABBCC81A" : "#2C3033",
               boxShadow: "none",
               border: "none",
             }}
@@ -84,10 +89,10 @@ export default function Accordation() {
       </li>
       <li className="py-1">
         <Accordion
-          expanded={isOpen2}
-          onChange={() => setIsOpen2(!isOpen2)}
+          expanded={selected === "language"}
+          onChange={() => handleDropdownClick("language")}
           sx={{
-            backgroundColor: isOpen2 ? "#ABBCC81A" : "#2C3033",
+            backgroundColor: selected === "language" ? "#ABBCC81A" : "#2C3033",
             boxShadow: "none",
             border: "none",
           }}

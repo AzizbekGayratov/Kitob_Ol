@@ -131,3 +131,17 @@ export interface PublishersType {
   ];
   type: string;
 }
+
+export interface BookCategoriesType {
+  description?: {
+    additionalProp1: "string";
+    additionalProp2?: "string";
+    additionalProp3?: "string";
+  };
+  id: "string";
+  name?: {
+    language: string;
+  };
+}
+
+export type DropDownType = "language" | "announcement" | "profile";

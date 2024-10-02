@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Storage } from "../../../../Services";
 import {
   NavLinkIcon1,
@@ -13,6 +12,8 @@ import {
 import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
+import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
+import { DropDownType } from "modules/Announcements/types/Types";
 
 interface Props {
   icon: JSX.Element;
@@ -78,18 +79,26 @@ const navLinksData: Props[] = [
 export default function NavLinks() {
   const location = useLocation();
   const isAuthorized = Storage.get("token");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [showDropdownLanguage, setShowDropdownLanguage] = useState(false);
+
   const dispatch = useDispatch();
   const { language } = useSelector(
     (state: { language: { language: string } }) => state.language
   );
+  const { selected } = useSelector(
+    (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
+  );
+
+  console.log(selected);
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
-    setShowDropdownLanguage(!showDropdownLanguage);
 
     dispatch(selectLanguage(e));
+    dispatch(toggleDropDown("language")); // Close the dropdown after selection
+  };
+
+  const handleDropdownClick = (dropdownName: DropDownType) => {
+    dispatch(toggleDropDown(dropdownName));
   };
 
   console.log(language);
@@ -116,18 +125,18 @@ export default function NavLinks() {
               <button
                 className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
                 style={{ marginTop: "-6px" }}
-                onClick={() => setShowDropdownLanguage(!showDropdownLanguage)}
+                onClick={() => handleDropdownClick("language")}
               >
                 {item.icon}
               </button>
 
-              {showDropdownLanguage && (
+              {selected === "language" && (
                 <div className="absolute top-[82px] right-36 shadow-lg border rounded">
                   <div className="absolute rounded block bg-white size-24 rotate-45 left-20 z-0" />
 
                   <div
                     className={`z-50 flex flex-col gap-3 p-6 text-[#1C274C] font-Inter font-normal text-base rounded bg-white transition-opacity duration-500 ease-out ${
-                      showDropdownLanguage
+                      selected === "language"
                         ? "opacity-100"
                         : "opacity-0 pointer-events-none"
                     }`}
@@ -178,16 +187,16 @@ export default function NavLinks() {
                   <button
                     className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
                     style={{ marginTop: "-6px" }}
-                    onClick={() => setShowDropdown(!showDropdown)}
+                    onClick={() => handleDropdownClick("profile")}
                   >
                     {item.icon}
                   </button>
-                  {showDropdown && (
+                  {selected === "profile" && (
                     <div className="absolute top-[82px] right-[242px] shadow-lg border rounded">
                       <div className="absolute rounded block bg-white size-24 rotate-45 left-20 z-0" />
                       <div
                         className={`z-20 flex flex-col gap-3 p-6 text-[#1C274C] font-Inter font-normal text-base rounded bg-white transition-opacity duration-500 ease-out ${
-                          showDropdown
+                          selected === "profile"
                             ? "opacity-100"
                             : "opacity-0 pointer-events-none"
                         }`}
@@ -211,7 +220,7 @@ export default function NavLinks() {
 
                         <button
                           className="bg-rootBg rounded z-10"
-                          onClick={() => setShowDropdown(!showDropdown)}
+                          // onClick={() => setShowDropdown(!showDropdown)}
                         >
                           <NavLink
                             to="/authorization/phone"
@@ -223,7 +232,7 @@ export default function NavLinks() {
 
                         <button
                           className="bg-rootBg rounded z-10"
-                          onClick={() => setShowDropdown(!showDropdown)}
+                          // onClick={() => setShowDropdown(!showDropdown)}
                         >
                           <NavLink to="/login" className="block py-3 px-2 w-52">
                             Do'kon yoki Nashriyot

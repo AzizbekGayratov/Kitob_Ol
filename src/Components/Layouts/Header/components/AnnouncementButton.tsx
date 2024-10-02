@@ -1,25 +1,31 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Accordion from "@mui/material/Accordion";
 import { Divider, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import { useDispatch, useSelector } from "react-redux";
+import { DropDownType } from "modules/Announcements/types/Types";
+import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
 
 export default function AnnouncementButton() {
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { selected } = useSelector(
+    (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
+  );
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
+  const handleDropdownClick = () => {
+    dispatch(toggleDropDown("announcement"));
   };
 
   return (
     <>
       <Accordion
-        expanded={isOpen}
-        onChange={handleToggle}
+        expanded={selected === "announcement"}
+        onChange={handleDropdownClick}
         sx={{
-          backgroundColor: isOpen ? "#ABBCC81A" : "#2C3033",
+          backgroundColor:
+            selected === "announcement" ? "#ABBCC81A" : "#2C3033",
           boxShadow: "none",
           border: "none",
         }}
