@@ -1,10 +1,12 @@
+import { FormDataType } from "modules/Announcements/types/Types";
 import React, { useState } from "react";
 import { TbTrash } from "react-icons/tb";
+import api from "Services/Api";
 
-interface ImageCardProps {
-  imageIndex: number;
-  formData: any;
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
+export interface ImageCardProps {
+  imageIndex: number; // 0 for image_url, 1 for img_url
+  formData: FormDataType;
+  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
 }
 
 export default function ImageCard({
@@ -13,26 +15,57 @@ export default function ImageCard({
   setFormData,
 }: ImageCardProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [file, setFile] = useState<File | null>(null); // Track the actual file
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result);
-        const updatedImages = [...formData.images];
-        updatedImages[imageIndex] = reader.result;
-        setFormData({ ...formData, images: updatedImages });
+        setImage(reader.result); // Display image preview
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
+
+      // Upload the image to the API
+      setFile(selectedFile);
+      await uploadImage(selectedFile); // Immediately trigger image upload
+    }
+  };
+
+  const uploadImage = async (selectedFile: File) => {
+    try {
+      const formDataToUpload = new FormData();
+      formDataToUpload.append("file", selectedFile); // Ensure the key matches what the API expects
+
+      const response = await api.post("/img-upload", formDataToUpload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { Message, Url } = response.data;
+      console.log("Response:", Message, Url);
+
+      // Update form data with the URL returned by the server
+      if (imageIndex === 0) {
+        setFormData({ ...formData, image_url: Url }); // Update image_url
+      } else if (imageIndex === 1) {
+        setFormData({ ...formData, img_url: Url }); // Update img_url
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
 
   const removeImage = () => {
     setImage(null);
-    const updatedImages = [...formData.images];
-    updatedImages[imageIndex] = null;
-    setFormData({ ...formData, images: updatedImages });
+    setFile(null); // Reset file when removing the image
+
+    if (imageIndex === 0) {
+      setFormData({ ...formData, image_url: "" }); // Clear image_url
+    } else if (imageIndex === 1) {
+      setFormData({ ...formData, img_url: "" }); // Clear img_url
+    }
   };
 
   return (

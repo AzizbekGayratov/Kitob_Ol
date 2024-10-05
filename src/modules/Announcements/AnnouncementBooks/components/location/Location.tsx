@@ -42,7 +42,7 @@ export default function Location({
 
   useEffect(() => {
     const fetchData = async () => {
-      const city_id = await cities.filter((c) => {
+      const city_id = cities.filter((c) => {
         let id;
         if (location === c.name.en) {
           id = c.id;
@@ -52,6 +52,8 @@ export default function Location({
       });
 
       try {
+        if (!city_id[0]) return;
+
         const response = await api.get(
           `/districts/list?city_id=${city_id[0]?.id}`
         );
@@ -75,16 +77,19 @@ export default function Location({
       <h2 className="font-semibold text-[32px] text-primary">
         <label htmlFor="location">Manzilni kiriting*</label>
       </h2>
+
       <div className="grid grid-cols-2 gap-5 mt-4">
         {/* City selection */}
         <select
           onChange={(e) => setLocation(e.target.value)}
           className="form_input"
+          id="location"
           defaultValue=""
         >
           <option value="" disabled hidden>
             Shaharni tanlang
           </option>
+
           {cities.map((city) => (
             <option key={city.id} value={city.name.en}>
               {city.name.en}

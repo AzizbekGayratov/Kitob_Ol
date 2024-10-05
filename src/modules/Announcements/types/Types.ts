@@ -64,8 +64,8 @@ export interface FormDataType {
     city_id: string;
     district_id: string;
   };
-  image_url: string; // new field
-  img_url: string; // new field
+  image_url: string;
+  img_url: string;
   stock: number; // new field
 
   // Optional fields
@@ -74,9 +74,8 @@ export interface FormDataType {
   applicant?: string; // optional
   email?: string; // optional
   phoneNumber?: string; // optional
-  usefulInformations: string; // optional
-  useSecondaryInformations: string; // optional
-  images?: (string | ArrayBuffer | null)[]; // optional
+  usefulInformations?: string; // optional
+  useSecondaryInformations?: string; // optional
 }
 export interface initialJobForm {
   description: string;
@@ -133,15 +132,9 @@ export interface PublishersType {
 }
 
 export interface BookCategoriesType {
-  description?: {
-    additionalProp1: "string";
-    additionalProp2?: "string";
-    additionalProp3?: "string";
-  };
-  id: "string";
-  name?: {
-    language: string;
-  };
+  id: string;
+  description?: string;
+  name: string;
 }
 
 export type DropDownType = "language" | "announcement" | "profile";

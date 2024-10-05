@@ -42,6 +42,7 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             placeholder="Nasibjon70@gmail.com"
             value={formData.email}
             onChange={handleInputChange}
+            autoComplete="email"
           />
         </FormContainer>
 
