@@ -13,7 +13,8 @@ const AnnouncementBook = lazy(
   () => import("modules/Announcements/AnnouncementBooks/AnnouncementBook")
 );
 const AnnouncementVacancy = lazy(
-  () => import("modules/Announcements/AnnouncementVacancies/AnnouncementVacancy")
+  () =>
+    import("modules/Announcements/AnnouncementVacancies/AnnouncementVacancy")
 );
 
 export {
