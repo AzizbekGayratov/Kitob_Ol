@@ -13,7 +13,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
 import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
-import { DropDownType } from "modules/Announcements/types/Types";
+import { DropDownType, languagesType } from "modules/Announcements/types/Types";
 
 interface Props {
   icon: JSX.Element;
@@ -82,7 +82,7 @@ export default function NavLinks() {
 
   const dispatch = useDispatch();
   const { language } = useSelector(
-    (state: { language: { language: string } }) => state.language
+    (state: { language: { language: languagesType } }) => state.language
   );
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown

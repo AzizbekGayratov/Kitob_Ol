@@ -138,3 +138,23 @@ export interface BookCategoriesType {
 }
 
 export type DropDownType = "language" | "announcement" | "profile";
+
+export interface CityProps {
+  id: string;
+  name: {
+    en: string;
+    ru: string;
+    uz: string;
+  };
+}
+export interface DistrictProps {
+  id: string;
+  name: {
+    en: string;
+    ru: string;
+    uz: string;
+  };
+  name_json: string;
+}
+
+export type languagesType = "uz" | "ru" | "en";

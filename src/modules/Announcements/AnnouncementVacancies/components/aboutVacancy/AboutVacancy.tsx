@@ -1,11 +1,15 @@
 import FormContainer from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/formContainer/FormContainer";
 import Label from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/label/Label";
 import { ComponentPropsTypeJob } from "modules/Announcements/types/Types";
+import { useState } from "react";
 
 export default function AboutVacancy({
   jobFormData,
   setJobFormData,
 }: ComponentPropsTypeJob) {
+  const [fromJobCurrency, setFromJobCurrency] = useState("UZS");
+  const [toJobCurrency, setToJobCurrency] = useState("UZS");
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -72,7 +76,6 @@ export default function AboutVacancy({
 
         <FormContainer>
           <Label htmlFor="salary_from">Maosh*</Label>
-
           <div className="grid grid-cols-6 gap-2">
             <input
               type="number"
@@ -87,10 +90,8 @@ export default function AboutVacancy({
 
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              value={jobFormData.fromJobCurrency || "UZS"}
-              name="fromJobCurrency"
-              id="fromJobCurrency"
-              onChange={handleInputChange}
+              value={fromJobCurrency}
+              onChange={(e) => setFromJobCurrency(e.target.value)}
               required
             >
               <option value="UZS">UZS</option>
@@ -101,7 +102,6 @@ export default function AboutVacancy({
 
         <FormContainer>
           <div className="size-8"></div>
-
           <div className="grid grid-cols-6 gap-2">
             <input
               type="number"
@@ -116,10 +116,8 @@ export default function AboutVacancy({
 
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              value={jobFormData.toJobCurrency || "UZS"}
-              name="toJobCurrency"
-              id="toJobCurrency"
-              onChange={handleInputChange}
+              value={toJobCurrency}
+              onChange={(e) => setToJobCurrency(e.target.value)}
               required
             >
               <option value="UZS">UZS</option>
