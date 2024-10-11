@@ -15,9 +15,6 @@ export default function ImageCard({
   setFormData,
 }: ImageCardProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
-  const [file, setFile] = useState<File | null>(null); // Track the actual file
-  console.log(file, image);
-  
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -29,7 +26,6 @@ export default function ImageCard({
       reader.readAsDataURL(selectedFile);
 
       // Upload the image to the API
-      setFile(selectedFile);
       await uploadImage(selectedFile); // Immediately trigger image upload
     }
   };
@@ -61,7 +57,6 @@ export default function ImageCard({
 
   const removeImage = () => {
     setImage(null);
-    setFile(null); // Reset file when removing the image
 
     if (imageIndex === 0) {
       setFormData({ ...formData, image_url: "" }); // Clear image_url
