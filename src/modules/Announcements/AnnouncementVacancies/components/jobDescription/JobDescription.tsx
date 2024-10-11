@@ -13,6 +13,8 @@ export default function JobDescription({
   };
   console.log(jobFormData);
 
+  const { description } = jobFormData;
+
   return (
     <div className="container bg-white p-7">
       <h2 className="font-semibold text-[32px] text-primary">Tavsif</h2>
@@ -23,17 +25,19 @@ export default function JobDescription({
           rows={15}
           maxLength={9000}
           placeholder="O'zingizni shu e'lonni ko'rayotgan odam sifatida tavsif yozing!"
-          value={jobFormData.description}
+          value={description}
           onChange={handleInputChange}
         />
-
         <label
           htmlFor="description"
           className="flex justify-between font-Inter font-normal text-base mt-2"
         >
-          <p>Yana kamida 80 ta belgi yozing</p>
-
-          <p>{jobFormData.description.length}/9000</p>
+          <p className={description.length < 25 ? "text-red-500" : ""}>
+            {description.length < 25
+              ? `Yana kamida ${25 - description.length} ta belgi yozing`
+              : "Tayyor"}
+          </p>
+          <p>{description.length}/9000</p>
         </label>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AboutAnnouncement from "./components/aboutAnnouncement/AboutAnnouncement";
 import Connect from "./components/connect/Connect";
 import Description from "./components/description/Description";
@@ -35,37 +35,36 @@ function AnnouncementBook() {
   };
 
   const [formData, setFormData] = useState(initialForm);
-  const [errorMessage, setErrorMessage] = useState("");
+
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    const getAuthorId = async () => {
+      try {
+        const response = await api.get("/authors/list");
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          author_id: response.data.id,
+        }));
+        console.log(response.data);
+      } catch (error) {
+        console.error("Failed to fetch author ID:", error);
+      }
+    };
+
+    getAuthorId();
+  }, []); // Empty dependency array ensures it only runs once
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(""); // Clear previous messages
-    setSuccessMessage("");
 
     try {
-      // const response = await api.post("/books/create", formData);
-      // console.log(api.head);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_API_URL}/books/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4YWRqb25vdnNhcmRvcmJla2tAZ21haWwuY29tIiwiZXhwIjoxNzI4MjUwNTk2LCJpYXQiOjE3MjgyMzk3OTYsImlkIjoiNDY5ZDAwODMtZTJjMC00OWI0LWEyYTUtNDY0ZWFjYTdkOWMxIiwibG9naW4iOiJzYXJkb3JiZWsiLCJ0eXBlIjoicHVibGlzaGVyIn0.uwDcdwjK0_6O7D6ZRCuNRVbWg6Lug03eWseHWsg5siw`}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      // console.log("Submission successful:", response.data);
-      if (response.ok) {
-        setSuccessMessage("Announcement submitted successfully!");
-        resetForm(); // Reset the form after successful submission
-      }
+      const response = await api.post("/books/create", formData);
+      console.log("Submission successful:", response.data);
+      setSuccessMessage("Announcement submitted successfully!");
+      resetForm(); // Reset the form after successful submission
     } catch (error) {
       console.error("Submission failed:", error);
-      setErrorMessage("Submission failed. Please try again.");
     }
   };
 
@@ -76,8 +75,6 @@ function AnnouncementBook() {
 
   return (
     <section className="sm:p-2 flex flex-col gap-10">
-      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-      {successMessage && <div className="text-green-500">{successMessage}</div>}
       <form className="p-2 flex flex-col gap-10" onSubmit={handleSubmit}>
         <AboutAnnouncement formData={formData} setFormData={setFormData} />
         <Images formData={formData} setFormData={setFormData} />

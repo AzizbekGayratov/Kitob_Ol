@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { languagesType } from "modules/Announcements/types/Types";
 
-const defaultLanguage = "uz";
-const storedLanguage = localStorage.getItem("language");
+const defaultLanguage = "uz" as languagesType;
+const storedLanguage = localStorage.getItem("language") as languagesType;
 
 if (!storedLanguage) {
   localStorage.setItem("language", defaultLanguage);

@@ -1,19 +1,10 @@
 import api from "Services/Api";
-import { ComponentPropsType } from "modules/Announcements/types/Types";
+import {
+  ComponentPropsType,
+  CityProps,
+  DistrictProps,
+} from "modules/Announcements/types/Types";
 import { useEffect, useState } from "react";
-
-interface CityProps {
-  id: string;
-  name: {
-    en: string;
-    ru: string;
-    uz: string;
-  };
-}
-interface DistrictProps {
-  id: string;
-  name_json: string;
-}
 
 export default function Location({
   formData,

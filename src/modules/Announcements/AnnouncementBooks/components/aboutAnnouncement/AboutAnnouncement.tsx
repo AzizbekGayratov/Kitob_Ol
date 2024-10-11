@@ -5,6 +5,7 @@ import FormContainer from "./components/formContainer/FormContainer";
 import {
   BookCategoriesType,
   ComponentPropsType,
+  languagesType,
   PublishersType,
 } from "modules/Announcements/types/Types";
 import api from "Services/Api";
@@ -17,7 +18,7 @@ export default function AboutAnnouncement({
   const [publishers, setPublishers] = useState<PublishersType[]>([]);
   const [categories, setCategories] = useState<BookCategoriesType[]>([]);
   const { language } = useSelector(
-    (state: { language: { language: string } }) => state.language
+    (state: { language: { language: languagesType } }) => state.language
   );
 
   const handleInputChange = (
