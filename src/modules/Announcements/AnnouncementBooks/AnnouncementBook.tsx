@@ -62,6 +62,8 @@ function AnnouncementBook() {
       const response = await api.post("/books/create", formData);
       console.log("Submission successful:", response.data);
       setSuccessMessage("Announcement submitted successfully!");
+      console.log(successMessage);
+      
       resetForm(); // Reset the form after successful submission
     } catch (error) {
       console.error("Submission failed:", error);

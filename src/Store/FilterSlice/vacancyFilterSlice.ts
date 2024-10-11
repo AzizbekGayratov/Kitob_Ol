@@ -19,5 +19,5 @@ const vacancyFilterSlice = createSlice({
   },
 });
 
-export default vacancyFilterSlice;
+export default vacancyFilterSlice.reducer;
 export const { setSearch } = vacancyFilterSlice.actions;

@@ -26,5 +26,5 @@ const bookFilterSlice = createSlice({
   },
 });
 
-export default bookFilterSlice;
+export default bookFilterSlice.reducer;
 export const { setState } = bookFilterSlice.actions;
