@@ -1,6 +1,7 @@
 import Input from "react-phone-number-input/input";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import PhoneNumberInput from "Components/Common/Input/PhoneNumberInput";
 
 export default function PhoneLogin() {
   const [phone, setPhone] = React.useState("+998");
@@ -67,16 +68,22 @@ export default function PhoneLogin() {
         <p className="text-base leading-[19px] font-light text-primary opacity-70 mb-[10px] sm:px-5">
           Telefon raqamingizni kiriting*
         </p>
-        <Input
+        {/* <Input
           value={phone}
           onChange={(value) => setPhone(value as string)}
           className="form_input"
           required
-        />
+        /> */}
+        <PhoneNumberInput phone={phone} setPhone={setPhone} />
         <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
           Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
         </p>
-        <Link to="/" className="text-blue-400 text-xs inline-block mt-3 sm:px-2">Visit homepage</Link>
+        <Link
+          to="/"
+          className="text-blue-400 text-xs inline-block mt-3 sm:px-2"
+        >
+          Visit homepage
+        </Link>
       </div>
       <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
         <button

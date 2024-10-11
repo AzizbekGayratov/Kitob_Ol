@@ -44,10 +44,25 @@ function AnnouncementBook() {
     setSuccessMessage("");
 
     try {
-      const response = await api.post("/books/create", formData);
-      console.log("Submission successful:", response.data);
-      setSuccessMessage("Announcement submitted successfully!");
-      resetForm(); // Reset the form after successful submission
+      // const response = await api.post("/books/create", formData);
+      // console.log(api.head);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_API_URL}/books/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4YWRqb25vdnNhcmRvcmJla2tAZ21haWwuY29tIiwiZXhwIjoxNzI4MjUwNTk2LCJpYXQiOjE3MjgyMzk3OTYsImlkIjoiNDY5ZDAwODMtZTJjMC00OWI0LWEyYTUtNDY0ZWFjYTdkOWMxIiwibG9naW4iOiJzYXJkb3JiZWsiLCJ0eXBlIjoicHVibGlzaGVyIn0.uwDcdwjK0_6O7D6ZRCuNRVbWg6Lug03eWseHWsg5siw`}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      // console.log("Submission successful:", response.data);
+      if (response.ok) {
+        setSuccessMessage("Announcement submitted successfully!");
+        resetForm(); // Reset the form after successful submission
+      }
     } catch (error) {
       console.error("Submission failed:", error);
       setErrorMessage("Submission failed. Please try again.");

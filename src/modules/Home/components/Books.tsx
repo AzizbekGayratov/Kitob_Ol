@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 export default function Books() {
   const arr = new Array(12).fill(null);
-
   return (
     <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
       {arr.map((_, index) => (
