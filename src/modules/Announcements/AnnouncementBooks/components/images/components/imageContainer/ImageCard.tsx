@@ -16,6 +16,8 @@ export default function ImageCard({
 }: ImageCardProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [file, setFile] = useState<File | null>(null); // Track the actual file
+  console.log(file, image);
+  
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
