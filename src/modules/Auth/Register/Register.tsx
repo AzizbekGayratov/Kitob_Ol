@@ -33,13 +33,12 @@ export default function Registration() {
     });
   };
 
-const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  const file: File | null = e.target.files ? e.target.files[0] : null;
-  if (file) {
-    setImage(URL.createObjectURL(file));
-  }
-};
-
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file: File | null = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
 
   const removeImage = () => {
     setImage(null); // Rasmdan voz kechish uchun
@@ -112,7 +111,7 @@ const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     console.log(formData);
   };
 
-return (
+  return (
     <section className=" mx-auto container px-4 sm:px-8">
       <h1 className="text-[28px] text-gray-900 font-semibold mt-6 mb-16">
         Ro'yxatdan o'tish
@@ -214,8 +213,7 @@ return (
               {extraEmails.map((emailField) => (
                 <div
                   key={emailField.id}
-
-className="flex items-center mt-10 space-x-4"
+                  className="flex items-center mt-10 space-x-4"
                 >
                   <input
                     className="bg-[#F4F4F4] rounded-sm px-6 py-3 w-full"
@@ -321,8 +319,7 @@ className="flex items-center mt-10 space-x-4"
                 <input
                   className="bg-[#F4F4F4] rounded-sm px-6 py-3 w-full"
                   type="text"
-
-name="extraLocation"
+                  name="extraLocation"
                   id="extraLocation"
                   placeholder="Namangan"
                   value={formData.extraLocation}

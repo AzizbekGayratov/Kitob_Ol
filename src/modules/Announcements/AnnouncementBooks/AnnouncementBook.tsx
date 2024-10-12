@@ -78,7 +78,7 @@ function AnnouncementBook() {
   };
 
   const resetForm = () => {
-    // setFormData(initialForm);
+    setFormData(initialForm);
     console.log("Form has been reset");
   };
 
