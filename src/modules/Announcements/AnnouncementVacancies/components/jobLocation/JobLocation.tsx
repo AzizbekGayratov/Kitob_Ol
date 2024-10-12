@@ -20,6 +20,8 @@ export default function JobLocation({
 
   const [cityId, setCityId] = useState<string>("");
   const [districtId, setDistrictId] = useState<string>("");
+  console.log(districtId, "districtId");
+  
 
   // Fetch cities list on component mount
   useEffect(() => {

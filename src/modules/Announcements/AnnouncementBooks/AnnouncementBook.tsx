@@ -40,6 +40,8 @@ function AnnouncementBook() {
   const userToken = token?.access_token || "";
   console.log(userToken);
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   useEffect(() => {
     const getAuthorId = async () => {
       try {
@@ -63,13 +65,10 @@ function AnnouncementBook() {
     e.preventDefault();
 
     try {
-      const response = await api.post("/books/create", formData, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-
+      const response = await api.post("/books/create", formData);
       console.log("Submission successful:", response.data);
+      setSuccessMessage("Announcement submitted successfully!");
+      console.log(successMessage);
 
       resetForm(); // Reset the form after successful submission
     } catch (error) {

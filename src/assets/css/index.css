@@ -6,6 +6,18 @@
   #root {
     @apply min-h-screen flex flex-col justify-between bg-rootBg font-Inter;
   }
+  /* Remove arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Remove arrows in Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
   .container {
     @apply max-w-[1382px] mx-auto px-2;
