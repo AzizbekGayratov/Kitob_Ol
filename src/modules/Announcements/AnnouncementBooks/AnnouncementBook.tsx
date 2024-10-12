@@ -23,26 +23,32 @@ function AnnouncementBook() {
       city_id: "",
       district_id: "",
     },
-    price: "",
+    price: 0,
     published_year: "",
     shitrix_code: "",
     publisher_id: "",
     stock: 0,
     title: "",
-    total_pages: "",
+    total_pages: 0,
     translator_id: "",
     writing_type: "",
   };
 
   const [formData, setFormData] = useState(initialForm);
 
+  const token = JSON.parse(localStorage.getItem("token") as string);
+  const userToken = token?.access_token || "";
+  console.log(userToken);
+
   useEffect(() => {
     const getAuthorId = async () => {
       try {
         const response = await api.get("/authors/list");
+
         setFormData((prevFormData) => ({
           ...prevFormData,
           author_id: response.data.id,
+          publisher_id: userToken,
         }));
         console.log(response.data);
       } catch (error) {
@@ -51,13 +57,17 @@ function AnnouncementBook() {
     };
 
     getAuthorId();
-  }, []); // Empty dependency array ensures it only runs once
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/books/create", formData);
+      const response = await api.post("/books/create", formData, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
 
       console.log("Submission successful:", response.data);
 
@@ -68,7 +78,7 @@ function AnnouncementBook() {
   };
 
   const resetForm = () => {
-    setFormData(initialForm);
+    // setFormData(initialForm);
     console.log("Form has been reset");
   };
 

@@ -10,7 +10,7 @@ export default function ProtectedRoute() {
       navigate("/authorization/phone");
     }
   }, []);
-  
+
   return (
     <>
       <Outlet />

@@ -22,12 +22,16 @@ export default function AboutAnnouncement({
   );
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | any>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, type, value, checked } = e.target;
+    const { name, type, value } = e.target;
+
+    const inputValue =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
+
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: inputValue,
     });
   };
 
@@ -35,7 +39,18 @@ export default function AboutAnnouncement({
     const fetchPublishers = async () => {
       try {
         const response = await api.get("/publishers/list");
-        setPublishers(response.data.publishers || []);
+        setPublishers(
+          response.data.publishers || [
+            {
+              id: "123",
+              name: "Test Publisher 1",
+            },
+            {
+              id: "456",
+              name: "Test Publisher 2",
+            },
+          ]
+        );
       } catch (error) {
         console.error("Error fetching publishers", error);
       }
@@ -126,8 +141,8 @@ export default function AboutAnnouncement({
               type="checkbox"
               name="bookCondition"
               id="bookCondition"
-              checked={formData.bookCondition}
-              onChange={handleInputChange}
+              // checked={formData.bookCondition}
+              // onChange={handleInputChange}
               className="size-5"
             />
             <label
@@ -192,7 +207,7 @@ export default function AboutAnnouncement({
           <TextInput
             type="number"
             name="total_pages"
-            value={formData.total_pages}
+            value={formData.total_pages.toString()}
             placeholder="e.g 345"
             onChange={handleInputChange}
             required
@@ -212,6 +227,7 @@ export default function AboutAnnouncement({
             <option value="" disabled>
               Nashriyot
             </option>
+
             {publishers.map((publisher: PublishersType) => (
               <option key={publisher.id} value={publisher.id}>
                 {publisher.name}
@@ -237,7 +253,7 @@ export default function AboutAnnouncement({
             <TextInput
               type="number"
               name="price"
-              value={formData.price}
+              value={formData.price.toString()}
               placeholder="Narx"
               onChange={handleInputChange}
               required
@@ -245,10 +261,10 @@ export default function AboutAnnouncement({
             />
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              value={formData.bookCurrency}
+              // value={formData.bookCurrency}
               name="bookCurrency"
               id="bookCurrency"
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
               required
             >
               <option value="UZS">UZS</option>

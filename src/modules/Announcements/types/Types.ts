@@ -1,49 +1,3 @@
-// export interface FormDataType {
-//   bookName: string;
-//   bookCategory: string;
-//   bookAuthor: string;
-//   bookID: string;
-//   isInternationalBook: boolean;
-//   selectedBookLanguage: string;
-//   selectedTextType: string;
-//   bookTranslator: string;
-//   bookPages: string;
-//   bookPublisher: string;
-//   bookYear: string;
-//   bookPrice: string;
-//   bookCurrency: string;
-//   paperFormat: string;
-//   bookCover: string;
-//   bookCondition: string;
-//   images: [];
-// }
-
-// export interface FormDataType {
-//   bookName: string;
-//   bookCategory: string;
-//   bookAuthor: string;
-//   bookID: string;
-//   isInternationalBook: boolean;
-//   selectedBookLanguage: string;
-//   selectedTextType: string;
-//   bookTranslator: string;
-//   bookPages: string;
-//   bookPublisher: string;
-//   bookYear: string;
-//   bookPrice: string;
-//   bookCurrency: string;
-//   paperFormat: string;
-//   bookCover: string;
-//   bookCondition: string;
-//   applicant: string;
-//   email: string;
-//   phoneNumber: string;
-//   description: string;
-//   usefulInformations: string;
-//   location: string;
-//   images: (string | ArrayBuffer | null)[];
-// }
-
 export interface FormDataType {
   title: string;
   category_id: string;
@@ -53,10 +7,10 @@ export interface FormDataType {
   is_new: boolean | string;
   writing_type: string;
   translator_id: string;
-  total_pages: string;
+  total_pages: number;
   publisher_id: string;
   published_year: string;
-  price: string;
+  price: number;
   cover_format: string;
   cover_type: string;
   description: string;
@@ -81,8 +35,8 @@ export interface initialJobForm {
   description: string;
   status: string;
   title: string;
-  salary_from: number | undefined;
-  salary_to: number | undefined;
+  salary_from: number | any;
+  salary_to: number | any;
   working_types: string;
   typeOfTraining: string;
   working_styles: string;
@@ -158,3 +112,13 @@ export interface DistrictProps {
 }
 
 export type languagesType = "uz" | "ru" | "en";
+
+export interface TextInputProps {
+  type?: string;
+  name?: string;
+  value?: string;
+  placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+  className?: string;
+}

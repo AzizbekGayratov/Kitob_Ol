@@ -1,14 +1,4 @@
-import React from "react";
-
-interface TextInputProps {
-  type?: string;
-  name: string;
-  value: string;
-  placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
-  className?: string;
-}
+import { TextInputProps } from "modules/Announcements/types/Types";
 
 export default function TextInput({
   type,
@@ -26,8 +16,8 @@ export default function TextInput({
       name={name}
       id={name}
       className={`${className} form_input `}
-      value={value}
-      onChange={onChange}
+      value={value || ""}
+      onChange={onChange || undefined}
       required={required}
     />
   );

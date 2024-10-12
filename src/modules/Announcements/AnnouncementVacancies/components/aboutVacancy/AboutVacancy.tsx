@@ -76,6 +76,7 @@ export default function AboutVacancy({
 
         <FormContainer>
           <Label htmlFor="salary_from">Maosh*</Label>
+
           <div className="grid grid-cols-6 gap-2">
             <input
               type="number"
