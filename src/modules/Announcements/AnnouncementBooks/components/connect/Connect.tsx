@@ -40,8 +40,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="email"
             className="form_input"
             placeholder="Nasibjon70@gmail.com"
-            // value={formData.email}
-            // onChange={handleInputChange}
+            value={formData.email}
+            onChange={handleInputChange}
             autoComplete="email"
           />
         </FormContainer>
@@ -55,8 +55,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="phoneNumber"
             className="form_input"
             placeholder="+998 88 155 72 73"
-            // value={formData.phoneNumber}
-            // onChange={handleInputChange}
+            value={formData.phoneNumber}
+            onChange={handleInputChange}
           />
         </FormContainer>
       </div>

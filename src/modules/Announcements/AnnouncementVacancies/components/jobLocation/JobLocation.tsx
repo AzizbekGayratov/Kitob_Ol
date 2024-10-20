@@ -20,7 +20,8 @@ export default function JobLocation({
 
   const [cityId, setCityId] = useState<string>("");
   const [districtId, setDistrictId] = useState<string>("");
-  
+
+  console.log(districtId);
 
   // Fetch cities list on component mount
   useEffect(() => {
@@ -42,10 +43,12 @@ export default function JobLocation({
 
       try {
         const response = await api.get(`/districts/list?city_id=${cityId}`);
-        const data = response.data.Districts.districts.map((district: DistrictProps) => ({
-          ...district,
-          name: district.name,
-        }));
+        const data = response.data.Districts.districts.map(
+          (district: DistrictProps) => ({
+            ...district,
+            name: district.name,
+          })
+        );
         setDistrictList(data);
       } catch (error) {
         console.error("Error fetching districts:", error);
