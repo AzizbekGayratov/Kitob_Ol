@@ -23,7 +23,7 @@ export default function Location({
     const fetchCities = async () => {
       try {
         const response = await api.get("/cities/list");
-        setCities(response.data.cities);
+        setCities(response.data.Cities.cities);
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
@@ -31,28 +31,25 @@ export default function Location({
     fetchCities();
   }, []);
 
+  // Fetch district list when location or cities change
   useEffect(() => {
     const fetchData = async () => {
-      const city_id = cities.filter((c) => {
-        let id;
-        if (location === c.name.en) {
-          id = c.id;
-          setCity_id(c.id);
-        }
-        return id;
-      });
+      if (cities.length === 0) return; // Ensure cities are loaded before proceeding
+
+      const selectedCity = cities.find((c) => c.name.en === location);
+      if (selectedCity) {
+        setCity_id(selectedCity.id);
+      } else {
+        return; // City not found
+      }
 
       try {
-        if (!city_id[0]) return;
-
         const response = await api.get(
-          `/districts/list?city_id=${city_id[0]?.id}`
+          `/districts/list?city_id=${selectedCity.id}`
         );
-        const data = response.data;
-
-        setDistrictList(data.districts);
+        setDistrictList(response.data.Districts.districts);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching districts:", error);
       }
     };
 
@@ -80,7 +77,6 @@ export default function Location({
           <option value="" disabled hidden>
             Shaharni tanlang
           </option>
-
           {cities.map((city) => (
             <option key={city.id} value={city.name.en}>
               {city.name.en}
@@ -92,9 +88,10 @@ export default function Location({
         {location && (
           <select
             onChange={(e) => {
-              const selectedDistrict = districtList.find(
-                (d) => JSON.parse(d.name_json).en === e.target.value
-              );
+              const selectedDistrict = districtList.find((d) => {
+                const nameJson = d.name_json;
+                return nameJson && JSON.parse(nameJson).en === e.target.value;
+              });
               if (selectedDistrict) {
                 handleInputChange(selectedDistrict.id);
               }
@@ -106,11 +103,8 @@ export default function Location({
               Tumanni tanlang
             </option>
             {districtList.map((district) => (
-              <option
-                key={district.id}
-                value={JSON.parse(district.name_json).en}
-              >
-                {JSON.parse(district.name_json).en}
+              <option key={district.id} value={district.name.en}>
+                {district.name.en}
               </option>
             ))}
           </select>

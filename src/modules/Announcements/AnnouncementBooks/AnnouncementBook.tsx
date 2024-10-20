@@ -38,7 +38,7 @@ function AnnouncementBook() {
 
   const token = JSON.parse(localStorage.getItem("token") as string);
   const userToken = token?.access_token || "";
-  console.log(userToken);
+  // console.log(userToken);
 
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -52,7 +52,7 @@ function AnnouncementBook() {
           author_id: response.data.id,
           publisher_id: userToken,
         }));
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Failed to fetch author ID:", error);
       }

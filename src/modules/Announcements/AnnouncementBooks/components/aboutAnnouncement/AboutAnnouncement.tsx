@@ -39,18 +39,7 @@ export default function AboutAnnouncement({
     const fetchPublishers = async () => {
       try {
         const response = await api.get("/publishers/list");
-        setPublishers(
-          response.data.publishers || [
-            {
-              id: "123",
-              name: "Test Publisher 1",
-            },
-            {
-              id: "456",
-              name: "Test Publisher 2",
-            },
-          ]
-        );
+        setPublishers(response.data.publishers)
       } catch (error) {
         console.error("Error fetching publishers", error);
       }
@@ -58,12 +47,11 @@ export default function AboutAnnouncement({
 
     const fetchCategories = async () => {
       try {
-        const response = await api.get("/categories/list");
-        const parsedCategories = response.data.categories.map((c: any) => {
-          const parsedNames = JSON.parse(c.name);
+        const response = await api.get("/categories/list");        
+        const parsedCategories = response.data.Categories.categories.map((c: any) => {          
           return {
             ...c,
-            name: parsedNames[language] || "Unknown Category",
+            name: c.name[language] || "Unknown Category",
           };
         });
         setCategories(parsedCategories);
