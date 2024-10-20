@@ -25,8 +25,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="applicant"
             className="form_input"
             placeholder="Nasibjon"
-            // value={formData.applicant}
-            // onChange={handleInputChange}
+            value={formData.applicant}
+            onChange={handleInputChange}
             required
           />
         </FormContainer>
