@@ -1,13 +1,13 @@
-import React from "react";
 import Label from "../aboutAnnouncement/components/label/Label";
 import FormContainer from "../aboutAnnouncement/components/formContainer/FormContainer";
 import { ComponentPropsType } from "modules/Announcements/types/Types";
 
 export default function Connect({ formData, setFormData }: ComponentPropsType) {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+  console.log(formData, setFormData);
 
   return (
     <div className="container bg-white p-7">
@@ -25,8 +25,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="applicant"
             className="form_input"
             placeholder="Nasibjon"
-            value={formData.applicant}
-            onChange={handleInputChange}
+            // value={formData.applicant}
+            // onChange={handleInputChange}
             required
           />
         </FormContainer>
@@ -40,8 +40,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="email"
             className="form_input"
             placeholder="Nasibjon70@gmail.com"
-            value={formData.email}
-            onChange={handleInputChange}
+            // value={formData.email}
+            // onChange={handleInputChange}
             autoComplete="email"
           />
         </FormContainer>
@@ -55,8 +55,8 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="phoneNumber"
             className="form_input"
             placeholder="+998 88 155 72 73"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
+            // value={formData.phoneNumber}
+            // onChange={handleInputChange}
           />
         </FormContainer>
       </div>
