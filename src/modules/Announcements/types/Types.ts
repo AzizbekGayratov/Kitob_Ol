@@ -7,10 +7,10 @@ export interface FormDataType {
   is_new: boolean | string;
   writing_type: string;
   translator_id: string;
-  total_pages: number;
+  total_pages: number | null;
   publisher_id: string;
   published_year: string;
-  price: number;
+  price: number | null;
   cover_format: string;
   cover_type: string;
   description: string;
@@ -21,15 +21,6 @@ export interface FormDataType {
   image_url: string;
   img_url: string;
   stock: number; // new field
-
-  // Optional fields
-  bookCurrency?: string; // optional
-  bookCondition?: boolean; // optional
-  applicant?: string; // optional
-  email?: string; // optional
-  phoneNumber?: string; // optional
-  usefulInformations?: string; // optional
-  useSecondaryInformations?: string; // optional
 }
 export interface initialJobForm {
   description: string;
@@ -52,11 +43,13 @@ export interface initialJobForm {
 export interface ComponentPropsType {
   formData: FormDataType;
   setFormData: React.Dispatch<React.SetStateAction<FormDataType>> | any;
+  reset?: string | boolean;
 }
 
 export interface ComponentPropsTypeJob {
   jobFormData: initialJobForm;
   setJobFormData: React.Dispatch<React.SetStateAction<initialJobForm>> | any;
+  reset?: string | boolean;
 }
 
 export interface PublishersType {
@@ -121,4 +114,32 @@ export interface TextInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   className?: string;
+}
+
+export interface BookAuthorsType {
+  id: string;
+  name: string;
+  surname: string;
+  biography: string;
+}
+
+export interface BookTranslatorsType {
+  id: string;
+  name: string;
+  surname: string;
+  biography: string;
+}
+
+export interface BookLanguagesType {
+  id: string;
+  name: string;
+}
+
+export interface TextAreaProps {
+  name: string;
+  rows: number;
+  maxLength: number;
+  placeholder: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }

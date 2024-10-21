@@ -3,7 +3,10 @@ import Label from "./components/label/Label";
 import TextInput from "./components/textInput/TextInput";
 import FormContainer from "./components/formContainer/FormContainer";
 import {
+  BookAuthorsType,
   BookCategoriesType,
+  BookLanguagesType,
+  BookTranslatorsType,
   ComponentPropsType,
   languagesType,
   PublishersType,
@@ -17,6 +20,10 @@ export default function AboutAnnouncement({
 }: ComponentPropsType) {
   const [publishers, setPublishers] = useState<PublishersType[]>([]);
   const [categories, setCategories] = useState<BookCategoriesType[]>([]);
+  const [authors, setAuthors] = useState<BookAuthorsType[]>([]);
+  const [translators, setTranslators] = useState<BookTranslatorsType[]>([]);
+  const [languages, setLanguages] = useState<BookLanguagesType[]>([]);
+
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
@@ -36,45 +43,49 @@ export default function AboutAnnouncement({
   };
 
   useEffect(() => {
-    const fetchPublishers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await api.get("/publishers/list");
-        setPublishers(
-          response.data.publishers || [
-            {
-              id: "123",
-              name: "Test Publisher 1",
-            },
-            {
-              id: "456",
-              name: "Test Publisher 2",
-            },
-          ]
+        const publishersRes = await api.get("/publishers/list");
+        const translatorsRes = await api.get("/translators/list");
+        const categoriesRes = await api.get("/categories/list");
+        const authorsRes = await api.get("/authors/list");
+        const languagesRes = await api.get("/languages/list");
+
+        const parseNames = (items: any[], key: string) => {
+          return (
+            items &&
+            items.map((item: any) => {
+              const parsedNames = item.name; // item.name is already an object, no need to parse
+              return {
+                ...item,
+                name: parsedNames[language] || `Unknown ${key}`,
+              };
+            })
+          );
+        };
+
+        const parsedCategories = parseNames(
+          categoriesRes?.data?.Categories?.categories || [],
+          "Categories"
         );
-      } catch (error) {
-        console.error("Error fetching publishers", error);
-      }
-    };
 
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get("/categories/list");
-        const parsedCategories = response.data.categories.map((c: any) => {
-          const parsedNames = JSON.parse(c.name);
-          return {
-            ...c,
-            name: parsedNames[language] || "Unknown Category",
-          };
-        });
+        const parsedLanguages = parseNames(
+          languagesRes?.data?.languages?.languages || [],
+          "Languages"
+        );
+
+        setPublishers(publishersRes.data.publishers || []);
+        setTranslators(translatorsRes.data.translators || []);
+        setAuthors(authorsRes.data.authors || []);
         setCategories(parsedCategories);
+        setLanguages(parsedLanguages);
       } catch (error) {
-        console.error("Error fetching categories", error);
+        console.error("Error fetching data", error);
       }
     };
 
-    fetchPublishers();
-    fetchCategories();
-  }, [language]); // Add language as a dependency if it changes
+    fetchData();
+  }, [language]);
 
   return (
     <div className="container bg-white p-7">
@@ -85,6 +96,7 @@ export default function AboutAnnouncement({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-16 mt-7">
         <FormContainer>
           <Label htmlFor="title">Kitob nomini kiriting*</Label>
+
           <TextInput
             name="title"
             value={formData.title}
@@ -96,6 +108,7 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="category_id">Kategoriya</Label>
+
           <select
             name="category_id"
             id="category_id"
@@ -107,6 +120,7 @@ export default function AboutAnnouncement({
             <option value="" disabled>
               Kategoriya
             </option>
+
             {categories.map((category: BookCategoriesType) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -117,17 +131,30 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="author_id">Kitob muallifini kiriting*</Label>
-          <TextInput
+
+          <select
             name="author_id"
+            id="author_id"
+            className="form_input"
             value={formData.author_id}
-            placeholder="Muallif"
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="" disabled>
+              Muallif
+            </option>
+
+            {authors.map((author) => (
+              <option key={author.id} value={author.id}>
+                {author.name} {author.surname}
+              </option>
+            ))}
+          </select>
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="shitrix_code">Kitob IDsini kiriting*</Label>
+
           <TextInput
             type="number"
             name="shitrix_code"
@@ -141,10 +168,9 @@ export default function AboutAnnouncement({
               type="checkbox"
               name="bookCondition"
               id="bookCondition"
-              // checked={formData.bookCondition}
-              // onChange={handleInputChange}
               className="size-5"
             />
+
             <label
               htmlFor="bookCondition"
               className="font-light text-xl font-Inter text-primary"
@@ -156,6 +182,7 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="language_id">Kitob tili*</Label>
+
           <select
             name="language_id"
             id="language_id"
@@ -167,14 +194,18 @@ export default function AboutAnnouncement({
             <option value="" disabled>
               Til
             </option>
-            <option value="uzbek">Uzbek</option>
-            <option value="english">English</option>
-            <option value="russian">Russian</option>
+
+            {languages.map((lang) => (
+              <option key={lang.id} value={lang.id}>
+                {lang.name}
+              </option>
+            ))}
           </select>
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="writing_type">Yozuv turi*</Label>
+
           <select
             name="writing_type"
             id="writing_type"
@@ -186,6 +217,7 @@ export default function AboutAnnouncement({
             <option value="" disabled>
               Yozuv
             </option>
+
             <option value="latin">Latin</option>
             <option value="cyrillic">Cyrillic</option>
           </select>
@@ -193,21 +225,38 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="translator_id">Kitob tarjimonini kiriting*</Label>
-          <TextInput
+
+          <select
             name="translator_id"
-            value={formData.translator_id}
-            placeholder="Tarjimon"
+            id="translator_id"
             onChange={handleInputChange}
+            value={formData.translator_id}
+            className="form_input"
             required
-          />
+          >
+            <option value="" disabled>
+              Tarjimon
+            </option>
+
+            {translators.map((translator: BookTranslatorsType) => (
+              <option key={translator.id} value={translator.id}>
+                {translator.name} {translator.surname}
+              </option>
+            ))}
+          </select>
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="total_pages">Kitob sahifasi kiriting*</Label>
+
           <TextInput
             type="number"
             name="total_pages"
-            value={formData.total_pages.toString()}
+            value={
+              formData.total_pages !== null
+                ? formData.total_pages.toString()
+                : ""
+            }
             placeholder="e.g 345"
             onChange={handleInputChange}
             required
@@ -216,12 +265,13 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="publisher_id">Nashriyotni kiriting*</Label>
+
           <select
             name="publisher_id"
             id="publisher_id"
             className="form_input"
-            value={formData.publisher_id}
             onChange={handleInputChange}
+            value={formData.publisher_id}
             required
           >
             <option value="" disabled>
@@ -238,6 +288,7 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="published_year">Kitob yili*</Label>
+
           <TextInput
             type="date"
             name="published_year"
@@ -249,22 +300,22 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="price">Kitob narxi*</Label>
+
           <div className="grid grid-cols-6 gap-2">
             <TextInput
               type="number"
               name="price"
-              value={formData.price.toString()}
+              value={formData.price !== null ? formData.price.toString() : ""}
               placeholder="Narx"
               onChange={handleInputChange}
               required
               className="col-span-4 lg:col-span-5 form_input"
             />
+
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              // value={formData.bookCurrency}
               name="bookCurrency"
               id="bookCurrency"
-              // onChange={handleInputChange}
               required
             >
               <option value="UZS">UZS</option>
@@ -274,7 +325,8 @@ export default function AboutAnnouncement({
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="cover_format">Qog'oz formatini kiriting*</Label>
+          <Label htmlFor="cover_format">Qog'oz formatini tanlang*</Label>
+
           <select
             className="form_input"
             name="cover_format"
@@ -286,8 +338,60 @@ export default function AboutAnnouncement({
             <option value="" disabled>
               Qog'oz formati
             </option>
+
             <option value="A4">A4</option>
             <option value="A5">A5</option>
+          </select>
+        </FormContainer>
+
+        <FormContainer>
+          <Label htmlFor="cover_type">Qog'oz muqovasini tanlang*</Label>
+
+          <select
+            className="form_input"
+            name="cover_type"
+            id="cover_type"
+            value={formData.cover_type}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="" disabled>
+              Muqova
+            </option>
+
+            <option value="soft">Soft</option>
+            <option value="hard">Hard</option>
+          </select>
+        </FormContainer>
+
+        <FormContainer>
+          <Label htmlFor="is_new">Holati*</Label>
+
+          <select
+            className="form_input"
+            name="is_new"
+            id="is_new"
+            required
+            value={
+              formData.is_new === true
+                ? "true"
+                : formData.is_new === false
+                ? "false"
+                : ""
+            }
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                is_new: e.target.value === "true",
+              });
+            }}
+          >
+            <option value="" disabled>
+              Holati
+            </option>
+
+            <option value="true">Yangi</option>
+            <option value="false">Eski</option>
           </select>
         </FormContainer>
       </div>

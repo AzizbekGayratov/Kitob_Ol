@@ -1,15 +1,12 @@
 import FormContainer from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/formContainer/FormContainer";
 import Label from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/label/Label";
 import { ComponentPropsTypeJob } from "modules/Announcements/types/Types";
-import { useState } from "react";
+import Input from "react-phone-number-input/input";
 
 export default function AboutVacancy({
   jobFormData,
   setJobFormData,
 }: ComponentPropsTypeJob) {
-  const [fromJobCurrency, setFromJobCurrency] = useState("UZS");
-  const [toJobCurrency, setToJobCurrency] = useState("UZS");
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -91,8 +88,7 @@ export default function AboutVacancy({
 
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              value={fromJobCurrency}
-              onChange={(e) => setFromJobCurrency(e.target.value)}
+              name="salary_from"
               required
             >
               <option value="UZS">UZS</option>
@@ -117,8 +113,7 @@ export default function AboutVacancy({
 
             <select
               className="form_input px-2 col-span-2 lg:col-span-1"
-              value={toJobCurrency}
-              onChange={(e) => setToJobCurrency(e.target.value)}
+              name="salary_to"
               required
             >
               <option value="UZS">UZS</option>
@@ -188,14 +183,18 @@ export default function AboutVacancy({
         <FormContainer>
           <Label htmlFor="phone_number">Telefon raqam*</Label>
 
-          <input
-            type="number"
+          <Input
             name="phone_number"
             id="phone_number"
             className="form_input"
             placeholder="+998 99 999 99 99"
             value={jobFormData.phone_number}
-            onChange={handleInputChange}
+            onChange={(value) => {
+              setJobFormData({
+                ...jobFormData,
+                phone_number: value,
+              });
+            }}
             required
           />
         </FormContainer>

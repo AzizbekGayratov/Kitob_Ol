@@ -3,64 +3,75 @@ import {
   ComponentPropsType,
   CityProps,
   DistrictProps,
+  languagesType,
 } from "modules/Announcements/types/Types";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Location({
   formData,
   setFormData,
+  reset,
 }: ComponentPropsType) {
-  // City and district lists
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
-
-  // Selected city and location
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Shaharni tanlang");
   const [city_id, setCity_id] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const { language } = useSelector(
+    (state: { language: { language: languagesType } }) => state.language
+  );
 
   // Fetch cities list on component mount
   useEffect(() => {
     const fetchCities = async () => {
       try {
         const response = await api.get("/cities/list");
-        setCities(response.data.cities);
+        setCities(response.data.Cities?.cities || []);
       } catch (error) {
         console.error("Error fetching cities:", error);
+        setCities([]);
       }
     };
     fetchCities();
   }, []);
 
+  // Reset state based on `reset` prop
   useEffect(() => {
-    const fetchData = async () => {
-      const city_id = cities.filter((c) => {
-        let id;
-        if (location === c.name.en) {
-          id = c.id;
-          setCity_id(c.id);
-        }
-        return id;
-      });
+    setCity_id("");
+    setLocation("Shaharni tanlang");
+    setSelectedDistrict("");
+    setDistrictList([]);
+  }, [reset]);
 
+  // Fetch districts when location (city) changes
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      const selectedCity = cities.find((c) => c.name[language] === location);
+      if (!selectedCity) return;
+
+      setCity_id(selectedCity.id);
       try {
-        if (!city_id[0]) return;
-
         const response = await api.get(
-          `/districts/list?city_id=${city_id[0]?.id}`
+          `/districts/list?city_id=${selectedCity.id}`
         );
-        const data = response.data;
-
-        setDistrictList(data.districts);
+        setDistrictList(response.data.Districts?.districts || []);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching districts:", error);
+        setDistrictList([]);
       }
     };
 
-    fetchData();
-  }, [location, cities]);
+    if (location !== "Shaharni tanlang") {
+      fetchDistricts();
+    }
+  }, [location, cities, language]);
 
+  // Handle district selection
   const handleInputChange = (district_id: string) => {
     setFormData({ ...formData, location: { city_id, district_id } });
+    setSelectedDistrict(district_id);
   };
 
   return (
@@ -70,49 +81,52 @@ export default function Location({
       </h2>
 
       <div className="grid grid-cols-2 gap-5 mt-4">
-        {/* City selection */}
+        {/* City selection dropdown */}
         <select
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={(e) => {
+            setLocation(e.target.value);
+            setSelectedDistrict(""); // Reset district when city changes
+          }}
           className="form_input"
           id="location"
-          defaultValue=""
+          value={location}
         >
-          <option value="" disabled hidden>
+          <option value="Shaharni tanlang" disabled hidden>
             Shaharni tanlang
           </option>
 
-          {cities.map((city) => (
-            <option key={city.id} value={city.name.en}>
-              {city.name.en}
-            </option>
-          ))}
+          {cities.length > 0 ? (
+            cities.map((city) => (
+              <option key={city.id} value={city.name[language]}>
+                {city.name[language]}
+              </option>
+            ))
+          ) : (
+            <option disabled>No cities available</option>
+          )}
         </select>
 
-        {/* District selection (visible when city is selected) */}
-        {location && (
+        {/* District selection dropdown */}
+        {location !== "Shaharni tanlang" && districtList.length > 0 && (
           <select
             onChange={(e) => {
-              const selectedDistrict = districtList.find(
-                (d) => JSON.parse(d.name_json).en === e.target.value
-              );
-              if (selectedDistrict) {
-                handleInputChange(selectedDistrict.id);
-              }
+              handleInputChange(e.target.value); // Use the district ID
             }}
             className="form_input"
-            defaultValue=""
+            value={selectedDistrict}
           >
             <option value="" disabled hidden>
               Tumanni tanlang
             </option>
-            {districtList.map((district) => (
-              <option
-                key={district.id}
-                value={JSON.parse(district.name_json).en}
-              >
-                {JSON.parse(district.name_json).en}
-              </option>
-            ))}
+            {districtList.length > 0 ? (
+              districtList.map((district) => (
+                <option key={district.id} value={district.id}>
+                  {district.name[language]}
+                </option>
+              ))
+            ) : (
+              <option disabled>No districts available</option>
+            )}
           </select>
         )}
       </div>

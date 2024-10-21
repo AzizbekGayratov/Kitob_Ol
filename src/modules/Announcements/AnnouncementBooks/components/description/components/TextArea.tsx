@@ -1,13 +1,4 @@
-import React from "react";
-
-interface TextAreaProps {
-  name: string;
-  rows: number;
-  maxLength: number;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}
+import { TextAreaProps } from "modules/Announcements/types/Types";
 
 export default function TextArea({
   name,

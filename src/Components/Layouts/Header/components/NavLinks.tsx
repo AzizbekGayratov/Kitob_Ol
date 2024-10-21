@@ -88,8 +88,6 @@ export default function NavLinks() {
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
   );
 
-  console.log(selected);
-
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
 
@@ -100,8 +98,6 @@ export default function NavLinks() {
   const handleDropdownClick = (dropdownName: DropDownType) => {
     dispatch(toggleDropDown(dropdownName));
   };
-
-  console.log(language);
 
   return (
     <ul className="flex items-center gap-5">

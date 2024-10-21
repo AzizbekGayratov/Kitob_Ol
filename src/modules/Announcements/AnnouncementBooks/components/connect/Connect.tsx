@@ -1,13 +1,20 @@
-import React from "react";
 import Label from "../aboutAnnouncement/components/label/Label";
 import FormContainer from "../aboutAnnouncement/components/formContainer/FormContainer";
-import { ComponentPropsType } from "modules/Announcements/types/Types";
+import Input from "react-phone-number-input/input";
+import { useEffect, useState } from "react";
 
-export default function Connect({ formData, setFormData }: ComponentPropsType) {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+export default function Connect({ reset }: any) {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+
+  useEffect(() => {
+    if (reset === "resetted") {
+      setName("");
+      setEmail("");
+      setPhoneNumber("");
+    }
+  }, [reset]);
 
   return (
     <div className="container bg-white p-7">
@@ -25,8 +32,10 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="applicant"
             className="form_input"
             placeholder="Nasibjon"
-            // value={formData.applicant}
-            // onChange={handleInputChange}
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             required
           />
         </FormContainer>
@@ -40,23 +49,24 @@ export default function Connect({ formData, setFormData }: ComponentPropsType) {
             id="email"
             className="form_input"
             placeholder="Nasibjon70@gmail.com"
-            // value={formData.email}
-            // onChange={handleInputChange}
             autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="phoneNumber">Telefon raqam</Label>
+          <Label htmlFor="phone_number">Telefon raqam</Label>
 
-          <input
-            type="number"
-            name="phoneNumber"
-            id="phoneNumber"
+          <Input
+            name="phone_number"
+            id="phone_number"
             className="form_input"
-            placeholder="+998 88 155 72 73"
-            // value={formData.phoneNumber}
-            // onChange={handleInputChange}
+            placeholder="+998 99 999 99 99"
+            value={phoneNumber}
+            onChange={(e: any) => {
+              setPhoneNumber(e.target.value);
+            }}
           />
         </FormContainer>
       </div>

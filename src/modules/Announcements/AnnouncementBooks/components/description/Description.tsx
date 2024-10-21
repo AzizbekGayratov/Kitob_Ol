@@ -6,7 +6,7 @@ export default function Description({
   formData,
   setFormData,
 }: ComponentPropsType) {
-  const { description = "", usefulInformations = "" } = formData;
+  const { description = "" } = formData;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,30 +37,6 @@ export default function Description({
                 : "Tayyor"}
             </p>
             <p>{description.length}/9000</p>
-          </label>
-        </div>
-
-        <div>
-          <TextArea
-            name="usefulInformations"
-            rows={15}
-            maxLength={250}
-            placeholder="Boshqa foydali malumotlar"
-            value={usefulInformations}
-            onChange={handleInputChange}
-          />
-          <label
-            htmlFor="usefulInformations"
-            className="flex justify-between font-Inter font-normal text-base mt-2"
-          >
-            <p className={usefulInformations.length < 25 ? "text-red-500" : ""}>
-              {usefulInformations.length < 25
-                ? `Yana kamida ${
-                    25 - usefulInformations.length
-                  } ta belgi yozing`
-                : "Tayyor"}
-            </p>
-            <p>{usefulInformations.length}/250</p>
           </label>
         </div>
       </div>

@@ -1,20 +1,23 @@
-import { FormDataType } from "modules/Announcements/types/Types";
-import React, { useState } from "react";
+import { ComponentPropsType } from "modules/Announcements/types/Types";
+import React, { useEffect, useState } from "react";
 import { TbTrash } from "react-icons/tb";
 import api from "Services/Api";
 
-export interface ImageCardProps {
+export interface ImageCardProps extends ComponentPropsType {
   imageIndex: number; // 0 for image_url, 1 for img_url
-  formData: FormDataType;
-  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
 }
 
 export default function ImageCard({
   imageIndex,
   formData,
   setFormData,
+  reset,
 }: ImageCardProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+
+  useEffect(() => {
+    if (reset === "resetted") removeImage();
+  }, [reset]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];

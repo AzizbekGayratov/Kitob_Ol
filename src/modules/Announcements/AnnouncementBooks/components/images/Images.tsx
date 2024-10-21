@@ -1,7 +1,11 @@
 import { ComponentPropsType } from "modules/Announcements/types/Types";
 import ImageCard from "./components/imageContainer/ImageCard";
 
-export default function Images({ formData, setFormData }: ComponentPropsType) {
+export default function Images({
+  formData,
+  setFormData,
+  reset,
+}: ComponentPropsType) {
   return (
     <div className="container bg-white p-7">
       <div>
@@ -24,6 +28,7 @@ export default function Images({ formData, setFormData }: ComponentPropsType) {
               imageIndex={index}
               formData={formData}
               setFormData={setFormData}
+              reset={reset}
             />
           ))}
       </div>
