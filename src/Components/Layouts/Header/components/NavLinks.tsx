@@ -84,6 +84,8 @@ export default function NavLinks() {
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
+  console.log(language);
+  
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
   );
