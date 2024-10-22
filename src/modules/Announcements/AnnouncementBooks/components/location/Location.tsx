@@ -133,6 +133,8 @@ export default function Location({
       selectedLocation={formData.location}
       setSelectedLocation={(location) => setFormData({ ...formData, location })}
       reset={reset}
+      stylesForLabel=""
+      padding="p-10"
     />
   );
 }

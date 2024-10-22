@@ -17,12 +17,16 @@ interface LocationSelectProps {
     district_id: string;
   }) => void;
   reset: boolean | any;
+  stylesForLabel:string;
+  padding: string;
 }
 
 export default function LocationSelect({
   selectedLocation,
   setSelectedLocation,
   reset,
+  stylesForLabel,
+  padding,
 }: LocationSelectProps) {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
@@ -33,6 +37,8 @@ export default function LocationSelect({
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
+
+  console.log(selectedLocation);
 
   // Fetch cities on mount
   useEffect(() => {
@@ -83,15 +89,15 @@ export default function LocationSelect({
 
   // Handle district selection
   const handleDistrictChange = (district_id: string) => {
-    setSelectedLocation({ city_id, district_id });
-    setSelectedDistrict(district_id);
+      setSelectedLocation({ city_id, district_id });
+      setSelectedDistrict(district_id);
   };
 
   return (
-    <div className="container bg-white p-7">
-      <h2 className="font-semibold text-[32px] text-primary">
+    <div className={`container bg-white ${padding}`}>
+      <h4 className={stylesForLabel}>
         <label htmlFor="location">Manzilni kiriting*</label>
-      </h2>
+      </h4>
 
       <div className="grid grid-cols-2 gap-5 mt-4">
         {/* City selection dropdown */}

@@ -1,3 +1,5 @@
+import { FaRegUser } from "react-icons/fa";
+
 export default function ImageUpload({
   formData,
   setFormData,
@@ -27,13 +29,19 @@ export default function ImageUpload({
       />
       <label
         htmlFor="image"
-        className="w-full h-64 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer"
+        className="rounded-full h-[140px] w-[140px] border-[10px] bg-[#D9D9D9] border-rootBg flex flex-col items-center justify-center cursor-pointer overflow-hidden"
       >
-        <img
-          src={formData.image_url}
-          alt="image"
-          className="w-full h-full object-cover rounded-lg" 
-        />
+        {formData.image_url ? (
+          <img
+            src={formData.image_url}
+            alt="image"
+            className="w-full h-full object-cover rounded-lg"
+          />
+        ) : (
+          <>
+            <FaRegUser  size={34}/>
+          </>
+        )}
       </label>
     </div>
   );
