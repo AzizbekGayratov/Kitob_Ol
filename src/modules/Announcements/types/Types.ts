@@ -21,6 +21,7 @@ export interface FormDataType {
   image_url: string;
   img_url: string;
   stock: number; // new field
+  sellerId: string;
 }
 export interface initialJobForm {
   description: string;
@@ -142,4 +143,15 @@ export interface TextAreaProps {
   placeholder: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+export interface SelectInputType {
+  name: string;
+  id: string;
+  className?: string;
+  value?: string | boolean;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  required?: boolean;
+  defaultValue?: string;
+  options: { id: string; name: string; surname?: string }[];
 }

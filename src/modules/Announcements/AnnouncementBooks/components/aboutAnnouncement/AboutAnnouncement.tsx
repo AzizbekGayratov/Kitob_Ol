@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Label from "./components/label/Label";
-import TextInput from "./components/textInput/TextInput";
-import FormContainer from "./components/formContainer/FormContainer";
+import Label from "../../../components/label/Label";
+import TextInput from "../../../components/textInput/TextInput";
+import FormContainer from "../../../components/formContainer/FormContainer";
 import {
   BookAuthorsType,
   BookCategoriesType,
@@ -13,6 +13,8 @@ import {
 } from "modules/Announcements/types/Types";
 import api from "Services/Api";
 import { useSelector } from "react-redux";
+import SelectInput from "modules/Announcements/components/selectInput/SelectInput";
+import { customDatas } from "../../../CustomData";
 
 export default function AboutAnnouncement({
   formData,
@@ -55,7 +57,7 @@ export default function AboutAnnouncement({
           return (
             items &&
             items.map((item: any) => {
-              const parsedNames = item.name; // item.name is already an object, no need to parse
+              const parsedNames = item.name;
               return {
                 ...item,
                 name: parsedNames[language] || `Unknown ${key}`,
@@ -109,47 +111,27 @@ export default function AboutAnnouncement({
         <FormContainer>
           <Label htmlFor="category_id">Kategoriya</Label>
 
-          <select
+          <SelectInput
             name="category_id"
             id="category_id"
-            className="form_input"
             value={formData.category_id}
             onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>
-              Kategoriya
-            </option>
-
-            {categories.map((category: BookCategoriesType) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+            defaultValue="Kategoriya"
+            options={categories}
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="author_id">Kitob muallifini kiriting*</Label>
 
-          <select
+          <SelectInput
             name="author_id"
             id="author_id"
-            className="form_input"
             value={formData.author_id}
             onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>
-              Muallif
-            </option>
-
-            {authors.map((author) => (
-              <option key={author.id} value={author.id}>
-                {author.name} {author.surname}
-              </option>
-            ))}
-          </select>
+            defaultValue="Muallif"
+            options={authors}
+          />
         </FormContainer>
 
         <FormContainer>
@@ -183,67 +165,40 @@ export default function AboutAnnouncement({
         <FormContainer>
           <Label htmlFor="language_id">Kitob tili*</Label>
 
-          <select
+          <SelectInput
             name="language_id"
             id="language_id"
-            className="form_input"
             value={formData.language_id}
             onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>
-              Til
-            </option>
-
-            {languages.map((lang) => (
-              <option key={lang.id} value={lang.id}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
+            defaultValue="Til"
+            options={languages}
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="writing_type">Yozuv turi*</Label>
 
-          <select
+          <SelectInput
             name="writing_type"
             id="writing_type"
-            className="form_input"
             value={formData.writing_type}
             onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>
-              Yozuv
-            </option>
-
-            <option value="latin">Latin</option>
-            <option value="cyrillic">Cyrillic</option>
-          </select>
+            defaultValue="Yozuv"
+            options={customDatas.writing_type}
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="translator_id">Kitob tarjimonini kiriting*</Label>
 
-          <select
+          <SelectInput
             name="translator_id"
             id="translator_id"
             onChange={handleInputChange}
             value={formData.translator_id}
-            className="form_input"
-            required
-          >
-            <option value="" disabled>
-              Tarjimon
-            </option>
-
-            {translators.map((translator: BookTranslatorsType) => (
-              <option key={translator.id} value={translator.id}>
-                {translator.name} {translator.surname}
-              </option>
-            ))}
-          </select>
+            defaultValue="Tarjimon"
+            options={translators}
+          />
         </FormContainer>
 
         <FormContainer>
@@ -266,24 +221,14 @@ export default function AboutAnnouncement({
         <FormContainer>
           <Label htmlFor="publisher_id">Nashriyotni kiriting*</Label>
 
-          <select
+          <SelectInput
             name="publisher_id"
             id="publisher_id"
-            className="form_input"
             onChange={handleInputChange}
             value={formData.publisher_id}
-            required
-          >
-            <option value="" disabled>
-              Nashriyot
-            </option>
-
-            {publishers.map((publisher: PublishersType) => (
-              <option key={publisher.id} value={publisher.id}>
-                {publisher.name}
-              </option>
-            ))}
-          </select>
+            defaultValue="Nashriyot"
+            options={publishers}
+          />
         </FormContainer>
 
         <FormContainer>
@@ -312,87 +257,52 @@ export default function AboutAnnouncement({
               className="col-span-4 lg:col-span-5 form_input"
             />
 
-            <select
-              className="form_input px-2 col-span-2 lg:col-span-1"
+            <SelectInput
               name="bookCurrency"
               id="bookCurrency"
-              required
-            >
-              <option value="UZS">UZS</option>
-              <option value="USD">USD</option>
-            </select>
+              className="px-2 col-span-2 lg:col-span-1"
+              options={customDatas.currencies}
+            />
           </div>
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="cover_format">Qog'oz formatini tanlang*</Label>
 
-          <select
-            className="form_input"
+          <SelectInput
             name="cover_format"
             id="cover_format"
-            required
             value={formData.cover_format}
             onChange={handleInputChange}
-          >
-            <option value="" disabled>
-              Qog'oz formati
-            </option>
-
-            <option value="A4">A4</option>
-            <option value="A5">A5</option>
-          </select>
+            defaultValue="Qog'oz formati"
+            options={customDatas.cover_format}
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="cover_type">Qog'oz muqovasini tanlang*</Label>
 
-          <select
-            className="form_input"
+          <SelectInput
             name="cover_type"
             id="cover_type"
             value={formData.cover_type}
             onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>
-              Muqova
-            </option>
-
-            <option value="soft">Soft</option>
-            <option value="hard">Hard</option>
-          </select>
+            defaultValue="Muqova"
+            options={customDatas.cover_type}
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="is_new">Holati*</Label>
 
-          <select
-            className="form_input"
+          <SelectInput
             name="is_new"
             id="is_new"
-            required
-            value={
-              formData.is_new === true
-                ? "true"
-                : formData.is_new === false
-                ? "false"
-                : ""
-            }
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                is_new: e.target.value === "true",
-              });
-            }}
-          >
-            <option value="" disabled>
-              Holati
-            </option>
-
-            <option value="true">Yangi</option>
-            <option value="false">Eski</option>
-          </select>
+            value={formData.is_new}
+            onChange={handleInputChange}
+            defaultValue="Holati"
+            options={customDatas.is_new}
+          />
         </FormContainer>
       </div>
     </div>

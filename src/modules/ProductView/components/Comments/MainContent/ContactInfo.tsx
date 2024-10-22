@@ -11,7 +11,6 @@ export type Profile = {
   avatar: string;
 };
 
-
 export default function ContactInfo() {
   const { profile } = useSelector(
     (state: { project: { profile: Profile } }) => state.project
@@ -19,13 +18,17 @@ export default function ContactInfo() {
 
   // #responsive design da savol bor
   return (
-    <div className="flex items-center gap-5">
-      <div className="sm:w-[120px] sm:h-[120px] w-[100px] h-[100px] overflow-hidden rounded-full">
+    <div className="flex flex-col md:flex-row items-center gap-5">
+      <div className="sm:size-[120px] size-[100px] overflow-hidden rounded-full">
         <img src={profile?.avatar} alt="user avatar" />
       </div>
-      <address className="flex flex-col pt-[10px] pb-4 gap-[10px]">
-        <p className="text-[#2C3033] font-semibold">{profile?.name}</p>
+
+      <address className="flex flex-col pt-[10px] pb-4 gap-[10px] text-center md:text-left">
+        <p className="text-[#2C3033] font-semibold text-lg md:text-base">
+          {profile?.name}
+        </p>
         <span className="text-[#2C3033] opacity-70">Toshkent, Chilonzor</span>
+
         <Input
           value={profile.phone}
           disabled
@@ -34,7 +37,7 @@ export default function ContactInfo() {
           onChange={() => {
             // onchange yozilmaganda error bergani sabab yozib quydim
           }}
-          className="text-[#2C3033] font-semibold text-xl leading-[24px] bg-transparent border-none"
+          className="text-[#2C3033] font-semibold text-xl leading-[24px] bg-transparent border-none text-center md:text-left"
         />
       </address>
     </div>

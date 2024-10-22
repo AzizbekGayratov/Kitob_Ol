@@ -1,7 +1,10 @@
-import FormContainer from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/formContainer/FormContainer";
-import Label from "modules/Announcements/AnnouncementBooks/components/aboutAnnouncement/components/label/Label";
+import TextInput from "modules/Announcements/components/textInput/TextInput";
+import FormContainer from "modules/Announcements/components/formContainer/FormContainer";
+import Label from "modules/Announcements/components/label/Label";
 import { ComponentPropsTypeJob } from "modules/Announcements/types/Types";
 import Input from "react-phone-number-input/input";
+import SelectInput from "modules/Announcements/components/selectInput/SelectInput";
+import { customDatas } from "modules/Announcements/CustomData";
 
 export default function AboutVacancy({
   jobFormData,
@@ -59,10 +62,10 @@ export default function AboutVacancy({
 
         <FormContainer>
           <Label htmlFor="title">Ish nomi*</Label>
-          <input
+
+          <TextInput
             type="text"
             name="title"
-            id="title"
             placeholder="Ish nomi"
             className="form_input"
             value={jobFormData.title}
@@ -75,109 +78,89 @@ export default function AboutVacancy({
           <Label htmlFor="salary_from">Maosh*</Label>
 
           <div className="grid grid-cols-6 gap-2">
-            <input
+            <TextInput
               type="number"
               name="salary_from"
-              id="salary_from"
-              value={jobFormData.salary_from}
+              value={
+                jobFormData.salary_from === 0 ? null : jobFormData.salary_from
+              }
               placeholder="700 dan"
               onChange={handleInputChange}
               required
-              className="col-span-4 lg:col-span-5 form_input"
+              className="col-span-4 lg:col-span-5"
             />
 
-            <select
-              className="form_input px-2 col-span-2 lg:col-span-1"
+            <SelectInput
               name="salary_from"
-              required
-            >
-              <option value="UZS">UZS</option>
-              <option value="USD">USD</option>
-            </select>
+              id="salary_from"
+              className="px-2 col-span-2 lg:col-span-1"
+              options={customDatas.currencies}
+            />
           </div>
         </FormContainer>
 
         <FormContainer>
           <div className="size-8"></div>
           <div className="grid grid-cols-6 gap-2">
-            <input
+            <TextInput
               type="number"
               name="salary_to"
-              id="salary_to"
-              value={jobFormData.salary_to}
+              value={jobFormData.salary_to === 0 ? null : jobFormData.salary_to}
               placeholder="1200 gacha"
               onChange={handleInputChange}
               required
-              className="col-span-4 lg:col-span-5 form_input"
+              className="col-span-4 lg:col-span-5"
             />
 
-            <select
-              className="form_input px-2 col-span-2 lg:col-span-1"
+            <SelectInput
               name="salary_to"
-              required
-            >
-              <option value="UZS">UZS</option>
-              <option value="USD">USD</option>
-            </select>
+              id="salary_to"
+              className="px-2 col-span-2 lg:col-span-1"
+              options={customDatas.currencies}
+            />
           </div>
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="working_types">Ish turi</Label>
 
-          <select
-            className="form_input px-2"
-            value={jobFormData.working_types}
+          <SelectInput
             name="working_types"
             id="working_types"
+            className="px-2"
+            options={customDatas.working_types}
             onChange={handleInputChange}
-          >
-            <option value="" disabled>
-              Ish turi
-            </option>
-
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
-          </select>
+            value={jobFormData.working_types}
+            defaultValue="Ish turi"
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="typeOfTraining">Mashg'ulot turi</Label>
 
-          <select
-            className="form_input px-2"
-            value={jobFormData.typeOfTraining}
+          <SelectInput
             name="typeOfTraining"
             id="typeOfTraining"
+            className="px-2"
+            options={customDatas.typeOfTraining}
             onChange={handleInputChange}
-          >
-            <option value="" disabled>
-              Mashg'ulot turi
-            </option>
-
-            <option value="practice">Practice</option>
-            <option value="realJob">Real Job</option>
-          </select>
+            value={jobFormData.typeOfTraining}
+            defaultValue="Mashg'ulot turi"
+          />
         </FormContainer>
 
         <FormContainer>
           <Label htmlFor="working_styles">Ish tarzi</Label>
 
-          <select
-            className="form_input px-2"
-            value={jobFormData.working_styles}
+          <SelectInput
             name="working_styles"
             id="working_styles"
+            className="px-2"
+            options={customDatas.working_styles}
             onChange={handleInputChange}
-          >
-            <option value="" disabled>
-              Ish tarzi
-            </option>
-
-            <option value="remote">Remote</option>
-            <option value="offline">Offline</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
+            value={jobFormData.working_styles}
+            defaultValue="Ish tarzi"
+          />
         </FormContainer>
 
         <FormContainer>

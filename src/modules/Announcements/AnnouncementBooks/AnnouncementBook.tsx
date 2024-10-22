@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AboutAnnouncement from "./components/aboutAnnouncement/AboutAnnouncement";
-import Connect from "./components/connect/Connect";
 import Description from "./components/description/Description";
 import Images from "./components/images/Images";
 import Location from "./components/location/Location";
@@ -8,6 +7,7 @@ import SubmitForm from "./components/submitForm/SubmitForm";
 import { FormDataType } from "../types/Types";
 import api from "Services/Api";
 import { Storage } from "Services";
+import { useNavigate } from "react-router-dom";
 
 const initialForm: FormDataType = {
   author_id: "",
@@ -32,13 +32,16 @@ const initialForm: FormDataType = {
   total_pages: null,
   translator_id: "",
   writing_type: "",
+  sellerId: "",
 };
 
 function AnnouncementBook() {
   const [formData, setFormData] = useState(initialForm);
   const [reset, setReset] = useState("");
 
-  console.log(formData);
+  const navigate = useNavigate();
+
+  console.log({ ...formData, is_new: formData.is_new === "true" });
 
   const token = Storage.get("token");
   let access_token = token ? JSON.parse(token).access_token : "";
@@ -56,16 +59,17 @@ function AnnouncementBook() {
           : null,
       };
 
-      // Sending form data with proper headers
       const response = await api.post("/books/create", submissionData, {
         headers: {
-          Authorization: `Bearer ${access_token}`, // Replace with your actual token
+          Authorization: `Bearer ${access_token}`,
         },
       });
 
+      console.log("Submission successful:", response.data);
+
       resetForm();
 
-      console.log("Submission successful:", response.data);
+      navigate("/profile");
     } catch (error) {
       console.error("Submission failed:", error);
     }
@@ -85,7 +89,6 @@ function AnnouncementBook() {
         <Images formData={formData} setFormData={setFormData} reset={reset} />
         <Description formData={formData} setFormData={setFormData} />
         <Location formData={formData} setFormData={setFormData} reset={reset} />
-        <Connect reset={reset} />
         <SubmitForm />
       </form>
     </section>
