@@ -145,7 +145,6 @@ export default function MainContent({
         <LocationSelect
           setSelectedLocation={(location) => {
             const { city_id, district_id } = location;
-
             setData({ ...data, city_id, district_id });
           }}
           reset={reset}

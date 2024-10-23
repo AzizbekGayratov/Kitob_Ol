@@ -136,7 +136,6 @@ export default function JobLocation({
     // </div>
 
     <LocationSelect
-      selectedLocation={jobFormData.location}
       setSelectedLocation={(location) =>
         setJobFormData({ ...jobFormData, location })
       }
