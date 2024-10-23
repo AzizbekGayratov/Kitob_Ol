@@ -1,3 +1,5 @@
+import api from "Services/Api";
+import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 
 export default function ImageUpload({
@@ -7,16 +9,43 @@ export default function ImageUpload({
   formData: any;
   setFormData: any;
 }) {
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  console.log(image);
+  
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData({ ...formData, image_url: reader.result });
+        // setFormData({ ...formData, image_url: reader.result });
+        setImage(reader.result);
       };
       reader.readAsDataURL(selectedFile);
+      await uploadImage(selectedFile);
     }
   };
+
+  const uploadImage = async (selectedFile: File) => {
+    try {
+      const formDataToUpload = new FormData();
+      formDataToUpload.append("file", selectedFile);
+
+      const response = await api.post("/img-upload", formDataToUpload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      const { Message, Url } = response.data;
+      console.log("Response:", Message, Url);
+
+      setFormData({ ...formData, image_url: Url });
+      console.log(formData);
+      
+    } catch (error) {
+      console.error("Uploading image:", error);
+    }
+  };
+
   return (
     <div className="relative">
       <input
@@ -39,7 +68,7 @@ export default function ImageUpload({
           />
         ) : (
           <>
-            <FaRegUser  size={34}/>
+            <FaRegUser size={34} />
           </>
         )}
       </label>

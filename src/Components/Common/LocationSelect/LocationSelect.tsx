@@ -8,21 +8,16 @@ import {
 import { useSelector } from "react-redux";
 
 interface LocationSelectProps {
-  selectedLocation: {
-    city_id: string;
-    district_id: string;
-  };
   setSelectedLocation: (location: {
     city_id: string;
     district_id: string;
   }) => void;
   reset: boolean | any;
-  stylesForLabel:string;
+  stylesForLabel: string;
   padding: string;
 }
 
 export default function LocationSelect({
-  selectedLocation,
   setSelectedLocation,
   reset,
   stylesForLabel,
@@ -37,8 +32,6 @@ export default function LocationSelect({
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
-
-  console.log(selectedLocation);
 
   // Fetch cities on mount
   useEffect(() => {
@@ -89,8 +82,8 @@ export default function LocationSelect({
 
   // Handle district selection
   const handleDistrictChange = (district_id: string) => {
-      setSelectedLocation({ city_id, district_id });
-      setSelectedDistrict(district_id);
+    setSelectedLocation({ city_id, district_id });
+    setSelectedDistrict(district_id);
   };
 
   return (
@@ -99,7 +92,11 @@ export default function LocationSelect({
         <label htmlFor="location">Manzilni kiriting*</label>
       </h4>
 
-      <div className="grid grid-cols-2 gap-5 mt-4">
+      <div
+        className={`grid grid-cols-${
+          location === "Shaharni tanlang" ? "1" : "2"
+        } gap-5 mt-4`}
+      >
         {/* City selection dropdown */}
         <select
           onChange={(e) => {

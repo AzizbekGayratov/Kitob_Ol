@@ -41,7 +41,7 @@ function AnnouncementBook() {
 
   const navigate = useNavigate();
 
-  console.log({ ...formData, is_new: formData.is_new === "true" });
+  // console.log({ ...formData, is_new: formData.is_new === "true" });
 
   const token = Storage.get("token");
   let access_token = token ? JSON.parse(token).access_token : "";

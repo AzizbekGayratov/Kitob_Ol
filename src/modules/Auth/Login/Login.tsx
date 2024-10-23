@@ -1,17 +1,51 @@
 import { Divider, TextField } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { RiEyeLine } from "react-icons/ri";
 
 export default function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  // const submitAuthData = () => {
-  //   try {
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLogged = localStorage.getItem("publisher_token");
+    if (isLogged) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/publisher/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            login,
+            password,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Response failed");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("publisher_token", JSON.stringify(data));
+      navigate("/");
+    } catch (error) {
+      console.error("Submission failed:", error);
+    }
+  };
 
   return (
     <div className="h-screen flex sm:items-center justify-center">
@@ -26,10 +60,7 @@ export default function Login() {
         </div>
         <Divider sx={{ opacity: 0.2, backgroundColor: "#2C3033" }} />
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            // submitAuthData();
-          }}
+          onSubmit={handleSubmit}
           className="sm:px-20 px-4 pt-10 sm:h-auto flex flex-col justify-between h-[85vh] sm:pb-[100px] pb-20"
         >
           <div>
@@ -40,13 +71,26 @@ export default function Login() {
                 value={login}
                 onChange={(e) => setLogin(e.target.value)}
               />
-              <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="flex">
+                <TextField
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  variant="outlined"
+                  className="w-full"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div
+                  className="-ml-10 mt-[15px] z-30 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <RiEyeCloseLine size={24} />
+                  ) : (
+                    <RiEyeLine size={24} />
+                  )}
+                </div>
+              </div>
             </div>
             <Link
               to="/"
