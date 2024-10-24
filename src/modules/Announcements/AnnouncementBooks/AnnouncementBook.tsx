@@ -8,6 +8,7 @@ import { FormDataType } from "../types/Types";
 import api from "Services/Api";
 import { Storage } from "Services";
 import { useNavigate } from "react-router-dom";
+import AnnouncementPreviewModal from "../components/announcementPreview/AnnouncementPreviewModal";
 
 const initialForm: FormDataType = {
   author_id: "",
@@ -38,6 +39,7 @@ const initialForm: FormDataType = {
 function AnnouncementBook() {
   const [formData, setFormData] = useState(initialForm);
   const [reset, setReset] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -82,6 +84,46 @@ function AnnouncementBook() {
     console.log("Form has been reset");
   };
 
+  // Modal Content
+  const modalChildren = (
+    <>
+      <h1 className="text-center text-3xl font-bold">
+        Kitob nomi: {formData.title ? `"${formData.title}"` : "Berilmagan"}
+      </h1>
+      <p>
+        <strong>Muallif ID:</strong> {formData.author_id || "Berilmagan"}
+      </p>
+
+      <p>
+        <strong>Tur:</strong> {formData.cover_type || "Berilmagan"}
+      </p>
+
+      <p>
+        <strong>Nashr yili:</strong> {formData.published_year || "Berilmagan"}
+      </p>
+
+      <p>
+        <strong>Shitrix kodi:</strong> {formData.shitrix_code || "Berilmagan"}
+      </p>
+
+      <p>
+        <strong>Bahosi:</strong>{" "}
+        {formData.price ? `${formData.price} so'm` : "Noma'lum"}
+      </p>
+
+      <p>
+        <strong>Sahifalar soni:</strong> {formData.total_pages || "Berilmagan"}
+      </p>
+
+      <p>
+        <strong>Tavsif:</strong> {formData.description || "Yo'q"}
+      </p>
+
+      <img src={formData.image_url} alt="Rasm 1" />
+      <img src={formData.img_url} alt="Rasm 2" />
+    </>
+  );
+
   return (
     <section className="sm:p-2 flex flex-col gap-10">
       <form className="p-2 flex flex-col gap-10" onSubmit={handleSubmit}>
@@ -89,7 +131,17 @@ function AnnouncementBook() {
         <Images formData={formData} setFormData={setFormData} reset={reset} />
         <Description formData={formData} setFormData={setFormData} />
         <Location formData={formData} setFormData={setFormData} reset={reset} />
-        <SubmitForm />
+
+        {/* Modal for preview */}
+        <AnnouncementPreviewModal
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        >
+          {modalChildren}
+        </AnnouncementPreviewModal>
+
+        {/* Submit form buttons */}
+        <SubmitForm modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </form>
     </section>
   );

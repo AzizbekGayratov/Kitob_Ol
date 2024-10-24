@@ -6,7 +6,6 @@ import SubmitForm from "../AnnouncementBooks/components/submitForm/SubmitForm";
 import api from "Services/Api";
 import { Storage } from "Services";
 
-// Initial form data (moved outside the component for better performance)
 const initialJobForm = {
   description: "",
   status: "",
@@ -26,6 +25,7 @@ const initialJobForm = {
 function AnnouncementVacancy() {
   const [jobFormData, setJobFormData] = useState(initialJobForm);
   const [reset, setReset] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const token = Storage.get("token");
   let access_token = token ? JSON.parse(token).access_token : "";
@@ -45,10 +45,9 @@ function AnnouncementVacancy() {
           : null,
       };
 
-      // Sending form data with proper headers
       const response = await api.post("/vacancies/create", submissionData, {
         headers: {
-          Authorization: `Bearer ${access_token}`, // Replace with your actual token
+          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -90,7 +89,7 @@ function AnnouncementVacancy() {
           reset={reset}
         />
 
-        <SubmitForm />
+        <SubmitForm modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </form>
     </section>
   );
