@@ -8,21 +8,20 @@ import {
 import { useSelector } from "react-redux";
 
 interface LocationSelectProps {
-  selectedLocation: {
-    city_id: string;
-    district_id: string;
-  };
   setSelectedLocation: (location: {
     city_id: string;
     district_id: string;
   }) => void;
   reset: boolean | any;
+  stylesForLabel: string;
+  padding: string;
 }
 
 export default function LocationSelect({
-  selectedLocation,
   setSelectedLocation,
   reset,
+  stylesForLabel,
+  padding,
 }: LocationSelectProps) {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
@@ -88,12 +87,16 @@ export default function LocationSelect({
   };
 
   return (
-    <div className="container bg-white p-7">
-      <h2 className="font-semibold text-[32px] text-primary">
+    <div className={`container bg-white ${padding}`}>
+      <h4 className={stylesForLabel}>
         <label htmlFor="location">Manzilni kiriting*</label>
-      </h2>
+      </h4>
 
-      <div className="grid grid-cols-2 gap-5 mt-4">
+      <div
+        className={`grid grid-cols-${
+          location === "Shaharni tanlang" ? "1" : "2"
+        } gap-5 mt-4`}
+      >
         {/* City selection dropdown */}
         <select
           onChange={(e) => {

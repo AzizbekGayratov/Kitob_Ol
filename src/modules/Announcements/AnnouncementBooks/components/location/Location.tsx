@@ -130,9 +130,10 @@ export default function Location({
     // </div>
 
     <LocationSelect
-      selectedLocation={formData.location}
       setSelectedLocation={(location) => setFormData({ ...formData, location })}
       reset={reset}
+      stylesForLabel="font-Inter text-[24px] leading-[29px] inline-block"
+      padding="p-10"
     />
   );
 }

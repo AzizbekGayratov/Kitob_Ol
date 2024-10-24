@@ -54,20 +54,16 @@ const routes = createBrowserRouter([
             path: "/announcements/book",
             element: <AnnouncementBook />,
           },
-          {
-            path: "/announcements/vacancy",
-            element: <AnnouncementVacancy />,
-          },
         ],
       },
       {
         path: "/",
         element: <PublisherRoutes />,
         children: [
-          // {
-          //   path: "/announcements/vacancy",
-          //   element: <AnnouncementVacancy />,
-          // },
+          {
+            path: "/announcements/vacancy",
+            element: <AnnouncementVacancy />,
+          },
         ],
       },
       {

@@ -6,7 +6,7 @@ export default function PublisherRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!Storage.get("publisherToken")) {
+    if (!Storage.get("publisher_token")) {
       navigate("/login");
     }
   }, []);

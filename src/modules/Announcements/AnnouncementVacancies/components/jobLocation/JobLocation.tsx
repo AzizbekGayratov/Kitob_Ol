@@ -136,11 +136,12 @@ export default function JobLocation({
     // </div>
 
     <LocationSelect
-      selectedLocation={jobFormData.location}
       setSelectedLocation={(location) =>
         setJobFormData({ ...jobFormData, location })
       }
       reset={reset}
+      stylesForLabel="font-Inter text-[24px] leading-[29px] inline-block"
+      padding="p-10"
     />
   );
 }
