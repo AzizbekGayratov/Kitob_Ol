@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { ImageUpload } from "./components";
+import { ImageUpload, RegisterModal } from "./components";
 import MainContent from "./components/MainContent/MainContent";
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
   // State larni yaratish
@@ -16,6 +17,10 @@ export default function Registration() {
     phone_number: "+998",
   });
   const [reset, setReset] = useState("");
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [status, setStatus] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const resetForm = () => {
     setReset("");
@@ -47,7 +52,12 @@ export default function Registration() {
           body: JSON.stringify(formData),
         }
       );
-      console.log(response);
+      if (response.ok) {
+        resetForm();
+      }
+      const data = await response.json();
+      setStatus(data.message);
+      setOpenModal(true);
     } catch (error) {
       console.error("Submission failed:", error);
     }
@@ -87,6 +97,14 @@ export default function Registration() {
           </div>
         </div>
       </form>
+      <RegisterModal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(!openModal);
+          navigate("/");
+        }}
+        status={status}
+      />
     </section>
   );
 }

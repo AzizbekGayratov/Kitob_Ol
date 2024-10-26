@@ -59,7 +59,7 @@ export default function MainContent({
             value={data.name}
             placeholder="Ismingizni kiriting"
             onChange={handleInputChange}
-            required
+            // required
           />
         </div>
         <div>
@@ -70,7 +70,7 @@ export default function MainContent({
             value={data.email}
             placeholder="Email manzilingizni kiriting"
             onChange={handleInputChange}
-            required
+            // required
           />
         </div>
       </RegisterFormContainer>
@@ -86,7 +86,7 @@ export default function MainContent({
             onChange={(value) =>
               setData({ ...data, phone_number: value || "" })
             }
-            required
+            // required
           />
         </div>
         <div>
@@ -113,7 +113,7 @@ export default function MainContent({
             value={data.login}
             placeholder="Loginni kiriting"
             onChange={handleInputChange}
-            required
+            // required
           />
         </div>
         <div>
@@ -126,7 +126,7 @@ export default function MainContent({
               className="form_input"
               placeholder="Parolni kiriting"
               onChange={handleInputChange}
-              required
+              // required
             />
             <div
               className="-ml-10 mt-[15px] cursor-pointer"
