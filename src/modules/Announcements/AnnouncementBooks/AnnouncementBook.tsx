@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AboutAnnouncement from "./components/aboutAnnouncement/AboutAnnouncement";
 import Description from "./components/description/Description";
 import Images from "./components/images/Images";
 import Location from "./components/location/Location";
 import SubmitForm from "./components/submitForm/SubmitForm";
-import { FormDataType } from "../types/Types";
+import { FormDataType, languagesType } from "../types/Types";
 import api from "Services/Api";
 import { Storage } from "Services";
 import { useNavigate } from "react-router-dom";
 import AnnouncementPreviewModal from "../components/announcementPreview/AnnouncementPreviewModal";
+import { useSelector } from "react-redux";
 
 const initialForm: FormDataType = {
   author_id: "",
@@ -20,10 +21,7 @@ const initialForm: FormDataType = {
   img_url: "",
   is_new: "",
   language_id: "",
-  location: {
-    city_id: "",
-    district_id: "",
-  },
+  location: { city_id: "", district_id: "" },
   price: null,
   published_year: "",
   shitrix_code: "",
@@ -38,19 +36,113 @@ const initialForm: FormDataType = {
 
 function AnnouncementBook() {
   const [formData, setFormData] = useState(initialForm);
-  const [reset, setReset] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [reset, setReset] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
+
+  // State to store fetched data
+  const [author, setAuthor] = useState<string>("Unknown");
+  const [category, setCategory] = useState<string>("Unknown");
+  const [publisher, setPublisher] = useState<string>("Unknown");
+  const [bookLanguage, setBookLanguage] = useState<string>("Unknown");
+  const [city, setCity] = useState<string>("Unknown");
+  const [district, setDistrict] = useState<string>("Unknown");
+  const [translator, setTranslator] = useState<string>("Unknown");
+
+  const { language } = useSelector(
+    (state: { language: { language: languagesType } }) => state.language
+  );
 
   const navigate = useNavigate();
-
-  // console.log({ ...formData, is_new: formData.is_new === "true" });
-
   const token = Storage.get("token");
-  let access_token = token ? JSON.parse(token).access_token : "";
+  const access_token = token ? JSON.parse(token).access_token : "";
+
+  const fetchFromId = async ({
+    apiPath,
+    id,
+    setValue,
+  }: {
+    apiPath: string;
+    id: string;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+  }) => {
+    try {
+      setLoading(true);
+      const response = await api.get(`${apiPath}?id=${id}`);
+
+      setValue(
+        response.data[language]
+          ? `${response.data[language]} ${response.data.surname || ""}`.trim()
+          : response.data.name
+          ? `${response.data.name} ${response.data.surname || ""}`.trim()
+          : response.data.title || "Unknown"
+      );
+    } catch (error) {
+      console.error(`Error fetching ${apiPath} data:`, error);
+      setValue("Unknown");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(formData.language_id);
+
+  useEffect(() => {
+    if (modalOpen) {
+      if (formData.author_id) {
+        fetchFromId({
+          apiPath: "/authors/get",
+          id: formData.author_id,
+          setValue: setAuthor,
+        });
+      }
+      if (formData.category_id) {
+        fetchFromId({
+          apiPath: "/categories/get",
+          id: formData.category_id,
+          setValue: setCategory,
+        });
+      }
+      if (formData.publisher_id) {
+        fetchFromId({
+          apiPath: "/publishers/get",
+          id: formData.publisher_id,
+          setValue: setPublisher,
+        });
+      }
+      if (formData.language_id) {
+        fetchFromId({
+          apiPath: "/languages/get",
+          id: formData.language_id,
+          setValue: setBookLanguage,
+        });
+      }
+      if (formData.location.city_id) {
+        fetchFromId({
+          apiPath: "/cities/get",
+          id: formData.location.city_id,
+          setValue: setCity,
+        });
+      }
+      if (formData.location.district_id) {
+        fetchFromId({
+          apiPath: "/districts/get",
+          id: formData.location.district_id,
+          setValue: setDistrict,
+        });
+      }
+      if (formData.translator_id) {
+        fetchFromId({
+          apiPath: "/translators/get",
+          id: formData.translator_id,
+          setValue: setTranslator,
+        });
+      }
+    }
+  }, [modalOpen, formData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(access_token);
 
     try {
       const submissionData = {
@@ -59,18 +151,15 @@ function AnnouncementBook() {
         total_pages: formData.total_pages
           ? parseFloat(formData.total_pages.toString())
           : null,
+        is_new: Boolean(formData.is_new),
       };
 
       const response = await api.post("/books/create", submissionData, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
+        headers: { Authorization: `Bearer ${access_token}` },
       });
 
       console.log("Submission successful:", response.data);
-
       resetForm();
-
       navigate("/profile");
     } catch (error) {
       console.error("Submission failed:", error);
@@ -84,43 +173,70 @@ function AnnouncementBook() {
     console.log("Form has been reset");
   };
 
-  // Modal Content
   const modalChildren = (
     <>
-      <h1 className="text-center text-3xl font-bold">
-        Kitob nomi: {formData.title ? `"${formData.title}"` : "Berilmagan"}
+      <h1 className="text-center text-2xl sm:text-3xl font-bold pb-6">
+        Kitob nomi: <u>{formData.title ? `"${formData.title}"` : "Unknown"}</u>
       </h1>
-      <p>
-        <strong>Muallif ID:</strong> {formData.author_id || "Berilmagan"}
-      </p>
 
-      <p>
-        <strong>Tur:</strong> {formData.cover_type || "Berilmagan"}
-      </p>
+      <div className="flex flex-col gap-3 text-lg sm:text-xl leading-relaxed">
+        <p>
+          <strong>Author:</strong> <u>{author}</u>
+        </p>
+        <p>
+          <strong>Category:</strong> <u>{category || "Unknown"}</u>
+        </p>
+        <p>
+          <strong>Publisher:</strong> <u>{publisher}</u>
+        </p>
+        <p>
+          <strong>Language:</strong> <u>{bookLanguage}</u>
+        </p>
+        <p>
+          <strong>City:</strong> <u>{city}</u>
+        </p>
+        <p>
+          <strong>District:</strong> <u>{district}</u>
+        </p>
+        <p>
+          <strong>Translator:</strong> <u>{translator}</u>
+        </p>
+        <p>
+          <strong>Price:</strong>{" "}
+          <u>{formData.price ? `${formData.price} so'm` : "Unknown"}</u>
+        </p>
+        <p>
+          <strong>Is new:</strong>{" "}
+          <u>
+            {formData.is_new ? (formData.is_new ? "Yes" : "No") : "Unknown"}
+          </u>
+        </p>
+        <p>
+          <strong>Total Pages:</strong>{" "}
+          <u>{formData.total_pages || "Unknown"}</u>
+        </p>
+        <p>
+          <strong>Description:</strong>{" "}
+          <u>{formData.description || "Unknown"}</u>
+        </p>
+      </div>
 
-      <p>
-        <strong>Nashr yili:</strong> {formData.published_year || "Berilmagan"}
-      </p>
-
-      <p>
-        <strong>Shitrix kodi:</strong> {formData.shitrix_code || "Berilmagan"}
-      </p>
-
-      <p>
-        <strong>Bahosi:</strong>{" "}
-        {formData.price ? `${formData.price} so'm` : "Noma'lum"}
-      </p>
-
-      <p>
-        <strong>Sahifalar soni:</strong> {formData.total_pages || "Berilmagan"}
-      </p>
-
-      <p>
-        <strong>Tavsif:</strong> {formData.description || "Yo'q"}
-      </p>
-
-      <img src={formData.image_url} alt="Rasm 1" />
-      <img src={formData.img_url} alt="Rasm 2" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8">
+        {formData.image_url && (
+          <img
+            className="w-full h-auto rounded-lg border border-gray-300 shadow-sm"
+            src={formData.image_url}
+            alt="Rasm 1"
+          />
+        )}
+        {formData.img_url && (
+          <img
+            className="w-full h-auto rounded-lg border border-gray-300 shadow-sm"
+            src={formData.img_url}
+            alt="Rasm 2"
+          />
+        )}
+      </div>
     </>
   );
 
