@@ -38,7 +38,7 @@ function AnnouncementBook() {
   const [formData, setFormData] = useState(initialForm);
   const [reset, setReset] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false); // Loading state
+  const [loading, setLoading] = useState<boolean>(false);
 
   // State to store fetched data
   const [author, setAuthor] = useState<string>("Unknown");
@@ -54,8 +54,18 @@ function AnnouncementBook() {
   );
 
   const navigate = useNavigate();
-  const token = Storage.get("token");
-  const access_token = token ? JSON.parse(token).access_token : "";
+  const user_token = Storage.get("token");
+  const user_access_token = user_token
+    ? JSON.parse(user_token).access_token
+    : "";
+
+  const publisherToken = Storage.get("publisher_token");
+  formData.sellerId = publisherToken
+    ? JSON.parse(publisherToken).access_token
+    : "";
+
+  console.log(`Seller id: ${formData.sellerId}`);
+  console.log(`User id: ${user_access_token}`);
 
   const fetchFromId = async ({
     apiPath,
@@ -85,7 +95,7 @@ function AnnouncementBook() {
     }
   };
 
-  console.log(formData.language_id);
+  console.log(formData);
 
   useEffect(() => {
     if (modalOpen) {
@@ -155,7 +165,7 @@ function AnnouncementBook() {
       };
 
       const response = await api.post("/books/create", submissionData, {
-        headers: { Authorization: `Bearer ${access_token}` },
+        headers: { Authorization: `Bearer ${user_access_token}` },
       });
 
       console.log("Submission successful:", response.data);

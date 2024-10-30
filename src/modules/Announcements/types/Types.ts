@@ -25,12 +25,10 @@ export interface FormDataType {
 }
 export interface initialJobForm {
   description: string;
-  status: string;
   title: string;
   salary_from: number | any;
   salary_to: number | any;
   working_types: string;
-  typeOfTraining: string;
   working_styles: string;
   phone_number: string;
   location: {

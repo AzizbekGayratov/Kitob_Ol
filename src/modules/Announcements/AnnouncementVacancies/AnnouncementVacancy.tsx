@@ -5,14 +5,15 @@ import JobLocation from "./components/jobLocation/JobLocation";
 import SubmitForm from "../AnnouncementBooks/components/submitForm/SubmitForm";
 import api from "Services/Api";
 import { Storage } from "Services";
+import AnnouncementPreviewModal from "../components/announcementPreview/AnnouncementPreviewModal";
 
 const initialJobForm = {
   description: "",
-  status: "",
+  // status: "",
   title: "",
   salary_from: 0,
   salary_to: 0,
-  typeOfTraining: "",
+  // typeOfTraining: "",
   working_types: "",
   working_styles: "",
   phone_number: "",
@@ -66,6 +67,40 @@ function AnnouncementVacancy() {
     console.log("Form has been reset");
   };
 
+  const modalChildren = (
+    <>
+      <h1 className="text-center text-2xl sm:text-3xl font-bold pb-6">
+        Ish nomi:{" "}
+        <u>{jobFormData.title ? `"${jobFormData.title}"` : "Unknown"}</u>
+      </h1>
+
+      <div className="flex flex-col gap-3 text-lg sm:text-xl leading-relaxed">
+        <p>
+          <strong>Salary from:</strong>{" "}
+          <u>
+            {jobFormData.salary_from
+              ? `${jobFormData.salary_from} so'm`
+              : "Unknown"}
+          </u>
+        </p>
+
+        <p>
+          <strong>Salary to:</strong>{" "}
+          <u>
+            {jobFormData.salary_to
+              ? `${jobFormData.salary_to} so'm`
+              : "Unknown"}
+          </u>
+        </p>
+
+        <p>
+          <strong>Description:</strong>{" "}
+          <u>{jobFormData.description || "Unknown"}</u>
+        </p>
+      </div>
+    </>
+  );
+
   return (
     <section className="p-2 flex flex-col gap-10">
       <form
@@ -88,6 +123,14 @@ function AnnouncementVacancy() {
           setJobFormData={setJobFormData}
           reset={reset}
         />
+
+        {/* Modal for preview */}
+        <AnnouncementPreviewModal
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        >
+          {modalChildren}
+        </AnnouncementPreviewModal>
 
         <SubmitForm modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </form>

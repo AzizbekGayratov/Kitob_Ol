@@ -5,6 +5,7 @@ import { ComponentPropsTypeJob } from "modules/Announcements/types/Types";
 import Input from "react-phone-number-input/input";
 import SelectInput from "modules/Announcements/components/selectInput/SelectInput";
 import { customDatas } from "modules/Announcements/CustomData";
+import { useState } from "react";
 
 export default function AboutVacancy({
   jobFormData,
@@ -18,6 +19,14 @@ export default function AboutVacancy({
     setJobFormData({ ...jobFormData, [name]: value });
   };
   console.log(jobFormData);
+
+  const [status, setStatus] = useState("");
+
+  const handleInputStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus(e.target.value);
+  };
+
+  const [typeOfTraining, setTypeOfTraining] = useState("");
 
   return (
     <div className="container bg-white p-7">
@@ -36,8 +45,8 @@ export default function AboutVacancy({
                 name="status"
                 id="employer"
                 value="employer"
-                checked={jobFormData.status === "employer"}
-                onChange={handleInputChange}
+                checked={status === "employer"}
+                onChange={handleInputStatusChange}
                 className="size-5 accent-primary"
                 required
               />
@@ -50,8 +59,8 @@ export default function AboutVacancy({
                 name="status"
                 id="jobSeeker"
                 value="jobSeeker"
-                checked={jobFormData.status === "jobSeeker"}
-                onChange={handleInputChange}
+                checked={status === "jobSeeker"}
+                onChange={handleInputStatusChange}
                 className="size-5 accent-primary"
                 required
               />
@@ -143,8 +152,10 @@ export default function AboutVacancy({
             id="typeOfTraining"
             className="px-2"
             options={customDatas.typeOfTraining}
-            onChange={handleInputChange}
-            value={jobFormData.typeOfTraining}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setTypeOfTraining(e.target.value);
+            }}
+            value={typeOfTraining}
             defaultValue="Mashg'ulot turi"
           />
         </FormContainer>
