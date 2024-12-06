@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage, setTotalItems } from "Store/paginationSlice/paginationSlice";
-import { setState } from "Store/FilterSlice/bookFilterSlice";
 import { BookViewPage } from "./Hero/components";
 
 export interface BookProps {
@@ -39,6 +38,8 @@ export default function Books() {
   const { itemsPerPage, currentPage } = useSelector(
     (state: any) => state.paginationValue
   );
+  console.log(itemsPerPage, currentPage);
+  
   const dispatch = useDispatch();
   const bookFilter = useSelector((state: any) => state.bookFilter);
   const [arr, setArr] = useState<BookProps[]>([]);

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage, setTotalItems } from "Store/paginationSlice/paginationSlice";
-import { setState } from "Store/FilterSlice/bookFilterSlice";
 import { VacancyViewPage } from "./Hero/components";
 
 export interface VacancyProps {
@@ -28,6 +27,9 @@ export default function Vacancies() {
   const { itemsPerPage, currentPage } = useSelector(
     (state: any) => state.paginationValue
   );
+  
+  console.log(itemsPerPage, currentPage);
+  
   const dispatch = useDispatch();
   const [arr, setArr] = useState<VacancyProps[]>([]);
   console.log(arr);
