@@ -21,7 +21,7 @@ const bookFilterSlice = createSlice({
   initialState,
   reducers: {
     setState(state, action) {
-      state = { ...action.payload };
+      Object.assign(state, action.payload);
     },
   },
 });
