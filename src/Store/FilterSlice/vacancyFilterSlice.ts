@@ -19,7 +19,7 @@ const vacancyFilterSlice = createSlice({
   initialState,
   reducers: {
     setSearch(state, action) {
-      state = action.payload;
+      state = { ...action.payload };
     },
   },
 });

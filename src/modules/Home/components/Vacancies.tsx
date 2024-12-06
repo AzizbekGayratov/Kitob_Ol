@@ -30,11 +30,12 @@ export default function Vacancies() {
 
   console.log(itemsPerPage, currentPage);
   const VacancyFilter = useSelector((state: any) => state.VacancyFilter);
+  console.log(VacancyFilter);
+  
   
 
   const dispatch = useDispatch();
   const [arr, setArr] = useState<VacancyProps[]>([]);
-  console.log(arr);
 
   useEffect(() => {
     const fetchData = async () => {

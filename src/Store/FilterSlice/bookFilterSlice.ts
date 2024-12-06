@@ -22,8 +22,6 @@ const bookFilterSlice = createSlice({
   reducers: {
     setState(state, action) {
       state = { ...action.payload };
-      console.log(state, "state");
-      
     },
   },
 });
