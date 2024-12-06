@@ -6,15 +6,18 @@ import {
   languagesType,
 } from "modules/Announcements/types/Types";
 import { useSelector } from "react-redux";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 interface LocationSelectProps {
   setSelectedLocation: (location: {
     city_id: string;
     district_id: string;
   }) => void;
-  reset: boolean | any;
-  stylesForLabel: string;
-  padding: string;
+  reset?: boolean | any;
+  stylesForLabel?: string;
+  padding?: string;
+  showTitle?: boolean;
+  isForHomePage?: boolean;
 }
 
 export default function LocationSelect({
@@ -22,6 +25,8 @@ export default function LocationSelect({
   reset,
   stylesForLabel,
   padding,
+  showTitle = true,
+  isForHomePage = false,
 }: LocationSelectProps) {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
@@ -87,61 +92,118 @@ export default function LocationSelect({
   };
 
   return (
-    <div className={`container bg-white ${padding}`}>
-      <h4 className={stylesForLabel}>
-        <label htmlFor="location">Manzilni kiriting*</label>
-      </h4>
+    <div className={`container ${isForHomePage && "px-0 mt-0"} bg-white ${padding}`}>
+      {showTitle && (
+        <h4 className={stylesForLabel} style={{ marginBottom: "20px" }}>
+          <label htmlFor="location">Manzilni kiriting*</label>
+        </h4>
+      )}
 
       <div
         className={`grid grid-cols-${
           location === "Shaharni tanlang" ? "1" : "2"
-        } gap-5 mt-4`}
+        } gap-5 mt-0 ${isForHomePage && "mt-0"}`}
       >
-        {/* City selection dropdown */}
-        <select
-          onChange={(e) => {
-            setLocation(e.target.value);
-            setSelectedDistrict(""); // Reset district when city changes
-          }}
-          className="form_input"
-          id="location"
-          value={location}
-        >
-          <option value="Shaharni tanlang" disabled hidden>
-            Shaharni tanlang
-          </option>
-
-          {cities.length > 0 ? (
-            cities.map((city) => (
-              <option key={city.id} value={city.name[language]}>
-                {city.name[language]}
-              </option>
-            ))
-          ) : (
-            <option disabled>No cities available</option>
-          )}
-        </select>
-
-        {/* District selection dropdown */}
-        {location !== "Shaharni tanlang" && districtList.length > 0 && (
-          <select
-            onChange={(e) => handleDistrictChange(e.target.value)}
-            className="form_input"
-            value={selectedDistrict}
-          >
-            <option value="" disabled hidden>
-              Tumanni tanlang
-            </option>
-            {districtList.length > 0 ? (
-              districtList.map((district) => (
-                <option key={district.id} value={district.id}>
-                  {district.name[language]}
-                </option>
-              ))
-            ) : (
-              <option disabled>No districts available</option>
+        {isForHomePage ? (
+          <>
+            <FormControl
+              fullWidth
+              sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
+            >
+              {/* City selection dropdown */}
+              {/* <InputLabel id="location_city_label">Shaharni tanlang</InputLabel> */}
+              <Select
+                labelId="location_city_label"
+                id="location_city_select"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  setSelectedDistrict(""); // Reset district when city changes
+                }}
+                value={location}
+              >
+                <MenuItem value="Shaharni tanlang" disabled>Shaharni tanlang</MenuItem>
+                {cities.map((city) => (
+                  <MenuItem key={city.id} value={city.name[language]}>
+                    {city.name[language]}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {/* District selection dropdown */}
+            {location !== "Shaharni tanlang" && districtList.length > 0 && (
+              <FormControl
+                fullWidth
+                sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
+              >
+                <InputLabel id="location_district_label">
+                  Tumanni tanlang
+                </InputLabel>
+                <Select
+                  labelId="location_district_label"
+                  id="location_district_select"
+                  onChange={(e) => {
+                    handleDistrictChange(e.target.value);
+                  }}
+                  value={selectedDistrict}
+                >
+                  {districtList.map((district) => (
+                    <MenuItem key={district.id} value={district.id}>
+                      {district.name[language]}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             )}
-          </select>
+          </>
+        ) : (
+          <>
+            {/* City selection dropdown */}
+            <select
+              onChange={(e) => {
+                setLocation(e.target.value);
+                setSelectedDistrict(""); // Reset district when city changes
+              }}
+              className="form_input"
+              id="location"
+              value={location}
+            >
+              <option value="Shaharni tanlang" disabled hidden>
+                Shaharni tanlang
+              </option>
+
+              {cities.length > 0 ? (
+                cities.map((city) => (
+                  <option key={city.id} value={city.name[language]}>
+                    {city.name[language]}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No cities available</option>
+              )}
+            </select>
+
+            {/* District selection dropdown */}
+            {location !== "Shaharni tanlang" && districtList.length > 0 && (
+              <select
+                onChange={(e) => handleDistrictChange(e.target.value)}
+                className="form_input"
+                value={selectedDistrict}
+              >
+                <option value="" disabled hidden>
+                  Tumanni tanlang
+                </option>
+                {districtList.length > 0 ? (
+                  districtList.map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name[language]}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No districts available</option>
+                )}
+              </select>
+            )}
+          </>
         )}
       </div>
     </div>

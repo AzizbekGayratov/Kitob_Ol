@@ -11,10 +11,10 @@ export default function AuthEmailOTP() {
   const submitData = (e: any) => {
     e.preventDefault();
     const email = window.sessionStorage.getItem("email");
+    const requestType = window.sessionStorage.getItem("auth_response_type");
+    console.log(requestType);
 
     const fetchData = async () => {
-      const requestType = window.sessionStorage.getItem("auth_response_type");
-
       try {
         const response = await fetch(
           `${
@@ -33,7 +33,7 @@ export default function AuthEmailOTP() {
         );
 
         if (response.ok) {
-          window.sessionStorage.clear();
+          // window.sessionStorage.clear();
         } else if (response.status === 500) {
           setError("Siz kiritgan kod noto'g'ri");
         } else {
@@ -43,7 +43,14 @@ export default function AuthEmailOTP() {
         if (response.ok) {
           const data = await response.json();
           Storage.set("token", data);
-          navigate("/");
+
+          if (requestType === "register") {
+            navigate("/authorization/user/register", {
+              replace: true,
+            });
+          } else if (requestType === "login") {
+            navigate("/");
+          }
         }
       } catch (error) {
         console.error(error);

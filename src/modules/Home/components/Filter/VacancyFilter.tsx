@@ -7,25 +7,38 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import SliderForPrice from "./components/SliderForPrice";
+import LocationSelect from "Components/Common/LocationSelect/LocationSelect";
+import { VacancyProps } from "./FilterTypes";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "Store/FilterSlice/vacancyFilterSlice";
 
 export default function VacancyFilter() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [graphic, setGraphic] = useState("");
-  const [who, setWho] = useState("");
-  const [work, setWork] = useState("");
-  const [region, setRegion] = useState("");
-  const [value, setValue] = useState<number[]>([25, 75]);
+  const [data, setData] = useState<VacancyProps>({
+    name: "",
+    type: "",
+    graphic: "",
+    who: "",
+    work: "",
+    city_id: "",
+    district_id: "",
+    value: [25, 75],
+  });
+  const vacancyFilter = useSelector((state: any) => state.VacancyFilter);
+  const dispatch = useDispatch();
 
   function submitData() {
-    console.log({ name, type, graphic, who, work, region, value });
-    setName("");
-    setType("");
-    setGraphic("");
-    setWho("");
-    setWork("");
-    setRegion("");
-    setValue([25, 75]);
+    dispatch(
+      setSearch({
+        ...vacancyFilter,
+        vacancy_title: data.name,
+        city_id: data.city_id,
+        district_id: data.district_id,
+        salary_from: data.value[0] * 1000,
+        salary_to: data.value[1] * 1000,
+        working_types: data.type,
+        working_styles: data.graphic,
+      })
+    );
   }
 
   return (
@@ -42,8 +55,8 @@ export default function VacancyFilter() {
           <TextField
             label="Ish nomini kiriting"
             variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={data.name}
+            onChange={(e) => setData({ ...data, name: e.target.value })}
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)", border: "none" }}
             fullWidth
           />
@@ -57,11 +70,11 @@ export default function VacancyFilter() {
             <Select
               labelId="books-type-select-label"
               id="books-type-select"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              value={data.type}
+              onChange={(e) => setData({ ...data, type: e.target.value })}
             >
-              <MenuItem value={"Dasturlash"}>Dasturlash</MenuItem>
-              <MenuItem value={"Ustozlik"}>Ustozlik</MenuItem>
+              <MenuItem value={"fulltime"}>To'liq ish kuni</MenuItem>
+              <MenuItem value={"parttime"}>Ma'lim soatlarda</MenuItem>
             </Select>
           </FormControl>
           <FormControl
@@ -72,13 +85,12 @@ export default function VacancyFilter() {
             <Select
               labelId="books-graphic-select-label"
               id="books-graphic-select"
-              value={graphic}
+              value={data.graphic}
               //   label="Kategoriya"
-              onChange={(e) => setGraphic(e.target.value)}
+              onChange={(e) => setData({ ...data, graphic: e.target.value })}
             >
-              <MenuItem value={"Onlayn"}>Onlayn</MenuItem>
-              <MenuItem value={"Part-time"}>Part time</MenuItem>
-              <MenuItem value={"Full-time"}>Full time</MenuItem>
+              <MenuItem value={"doimiy"}>Doimiy</MenuItem>
+              <MenuItem value={"vaqtincha"}>Vaqtincha</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -91,15 +103,14 @@ export default function VacancyFilter() {
             <Select
               labelId="books-who-select-label"
               id="books-who-select"
-              value={who}
-              onChange={(e) => setWho(e.target.value)}
+              value={data.who}
+              onChange={(e) => setData({ ...data, who: e.target.value })}
             >
-              <MenuItem value={"Web developer"}>Web Developer</MenuItem>
-              <MenuItem value={"Mentor"}>Ustoz</MenuItem>
-              <MenuItem value={"Boshqa"}>Boshqa</MenuItem>
+              <MenuItem value={"Ish beruvchiman"}>Ish beruvchiman</MenuItem>
+              <MenuItem value={"Ish izlayapman"}>Ish izlayapman</MenuItem>
             </Select>
           </FormControl>
-          <SliderForPrice value={value} setValue={setValue} />
+          <SliderForPrice value={data} setValue={setData as any} />
         </div>
         <div className="flex flex-col sm:gap-[34px] gap-2">
           <FormControl
@@ -110,21 +121,26 @@ export default function VacancyFilter() {
             <Select
               labelId="books-ish-select-label"
               id="books-ish-select"
-              value={work}
-              onChange={(e) => setWork(e.target.value)}
+              value={data.work}
+              onChange={(e) => setData({ ...data, work: e.target.value })}
             >
-              <MenuItem value={"mentor"}>Ustozlik</MenuItem>
-              <MenuItem value={"developer"}>Dasturlchilik</MenuItem>
-              <MenuItem value={"other"}>Boshqa</MenuItem>
+              <MenuItem value={"online"}>Online</MenuItem>
+              <MenuItem value={"offline"}>Offline</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            label="Manzil"
-            sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
-            variant="outlined"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-            fullWidth
+          <LocationSelect
+            setSelectedLocation={(location: {
+              city_id: string;
+              district_id: string;
+            }) =>
+              setData({
+                ...data,
+                city_id: location.city_id,
+                district_id: location.district_id,
+              })
+            }
+            showTitle={false}
+            isForHomePage={true}
           />
           <button
             className="text-white hover:bg-opacity-80 transition-opacity w-full text-center py-4 bg-primary rounded text-[20px] leading-[24px]"

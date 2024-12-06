@@ -1,39 +1,79 @@
-import { evenlyCard, perCard } from "../../../assets/images/jpg";
-import LikeBtn from "./LikeBtn";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "Services/Api";
+import { useDispatch, useSelector } from "react-redux";
+import { setPage, setTotalItems } from "Store/paginationSlice/paginationSlice";
+import { setState } from "Store/FilterSlice/bookFilterSlice";
+import { BookViewPage } from "./Hero/components";
+
+export interface BookProps {
+  author_id: string;
+  category_id: string;
+  cover_format: string;
+  cover_type: string;
+  created_at: string;
+  description: string;
+  id: string;
+  image_url: string;
+  img_url: string;
+  is_new: true;
+  language_id: string;
+  location: {
+    city_id: string;
+    district_id: string;
+  };
+  city_id: string;
+  district_id: string;
+  price: number;
+  published_year: string;
+  publisher_id: string;
+  shitrix_code: string;
+  title: string;
+  total_pages: number;
+  translator_id: string;
+  user_id: string;
+  view_count: number;
+  writing_type: string;
+}
 
 export default function Books() {
-  const arr = new Array(12).fill(null);
+  const { itemsPerPage, currentPage } = useSelector(
+    (state: any) => state.paginationValue
+  );
+  const dispatch = useDispatch();
+  const bookFilter = useSelector((state: any) => state.bookFilter);
+  const [arr, setArr] = useState<BookProps[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/books/list", {
+          params: {
+            ...bookFilter,
+            limit: itemsPerPage,
+          },
+        });
+
+        if (!response.data) {
+          throw new Error("Data not found");
+        }
+
+        dispatch(setTotalItems(response.data.count));
+        setArr(response.data.books);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+
+    return () => {
+      dispatch(setPage(1));
+    };
+  }, [dispatch]);
+
   return (
     <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
-      {arr.map((_, index) => (
-        <div key={index} className="rounded bg-white">
-          <div className="w-full">
-            <img
-              src={index % 2 === 1 ? perCard : evenlyCard}
-              alt="oynani oldida ochiq turgan kitob"
-              className="w-full"
-            />
-          </div>
-          <div className="pb-8 pt-4 pl-5 pr-4">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <Link to="/product/book">
-                  <h3 className="text-primary font-medium text-xl leading-5">
-                    Milk and honey
-                  </h3>
-                </Link>
-                <p className="text-primary text-xs opacity-80">
-                  Namangan shahar
-                </p>
-              </div>
-              <LikeBtn />
-            </div>
-            <span className="text-[#CE3738] text-2xl font-semibold leading-7">
-              24.000 so'm
-            </span>
-          </div>
-        </div>
+      {arr.map((i) => (
+        <BookViewPage key={i.id} data={i} />
       ))}
     </div>
   );

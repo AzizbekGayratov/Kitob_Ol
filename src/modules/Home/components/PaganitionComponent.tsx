@@ -1,9 +1,14 @@
 import { Pagination } from "@mui/material";
+import { setPage } from "Store/paginationSlice/paginationSlice";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PaganitionComponent() {
   const [windowSize, setWindowSize] = useState(window.screen.width);
-
+  const { totalItems, itemsPerPage } = useSelector(
+    (state: any) => state.paginationValue
+  );
+  const dispatch = useDispatch();
   window.onresize = () => {
     setWindowSize(window.innerWidth);
   };
@@ -11,12 +16,15 @@ export default function PaganitionComponent() {
   return (
     <div className="flex justify-center mt-10 sm:mt-20">
       <Pagination
-        count={8}
+        count={Math.ceil(totalItems / itemsPerPage)}
         variant="outlined"
         shape="rounded"
         size="medium"
         siblingCount={windowSize > 500 ? 1 : 0}
         boundaryCount={windowSize > 500 ? 1 : 0}
+        onChange={(_, page) => {
+          dispatch(setPage(page));          
+        }}
         sx={{
           "& .MuiPaginationItem-root": {
             backgroundColor: "#2C30334D",

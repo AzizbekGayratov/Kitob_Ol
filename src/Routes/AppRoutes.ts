@@ -16,6 +16,9 @@ const AnnouncementVacancy = lazy(
   () =>
     import("modules/Announcements/AnnouncementVacancies/AnnouncementVacancy")
 );
+const UpdateProfileData = lazy(
+  () => import("modules/Auth/UpdateProfileData/UpdateProfileData")
+);
 
 export {
   Error,
@@ -27,4 +30,5 @@ export {
   Authorization,
   AnnouncementBook,
   AnnouncementVacancy,
+  UpdateProfileData,
 };

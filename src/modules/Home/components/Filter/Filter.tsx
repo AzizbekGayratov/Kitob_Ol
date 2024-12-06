@@ -5,27 +5,74 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SliderForPrice from "./components/SliderForPrice";
+import {
+  CategoryType,
+  FilterType,
+  LanguageProps,
+  PublisherType,
+} from "./FilterTypes";
+import { useDispatch, useSelector } from "react-redux";
+// import useGetList from "Hooks/UseGetList/UseGetList";
+import UseGetList from "Hooks/UseGetList/UseGetList";
+import LocationSelect from "Components/Common/LocationSelect/LocationSelect";
+import { setState } from "Store/FilterSlice/bookFilterSlice";
+
+export type languagesType = "uz" | "ru" | "en";
 
 export default function Filter() {
-  const [name, setName] = useState("");
-  const [author, setAuthor] = useState("");
-  const [category, setCategory] = useState("");
-  const [nashriyot, setNashriyot] = useState("");
-  const [language, setLanguage] = useState("");
-  const [region, setRegion] = useState("");
-  const [value, setValue] = useState<number[]>([25, 75]);
+  const [data, setData] = useState<FilterType>({
+    name: "",
+    author: "",
+    category: "",
+    nashriyot: "",
+    language: "",
+    city_id: "",
+    district_id: "",
+    value: [25, 75],
+  });
+  const { language } = useSelector(
+    (state: { language: { language: languagesType } }) => state.language
+  );
+  const bookFilter = useSelector((state: any) => state.bookFilter);
+  const dispatch = useDispatch();
+
+  const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);
+  const [publishersList, setPublishersList] = useState<PublisherType[]>([]);
+  const [languagesList, setLanguagesList] = useState<LanguageProps[]>([]);
+  const [authorsList, setAuthorsList] = useState<any[]>([]);
+
+  useEffect(() => {
+    UseGetList("/categories/list").then((res) => {
+      setCategoriesList(res.Categories.categories);
+    });
+    UseGetList("/publishers/list").then((res) => {
+      setPublishersList(res.publishers);
+    });
+    UseGetList("/languages/list").then((res) => {
+      setLanguagesList(res.languages.languages);
+    });
+    UseGetList("/authors/list").then((res) => {
+      setAuthorsList(res.authors);
+    });
+  }, []);
 
   function submitData() {
-    console.log({ name, author, category, nashriyot, language, region, value });
-    setName("");
-    setAuthor("");
-    setCategory("");
-    setNashriyot("");
-    setLanguage("");
-    setRegion("");
-    setValue([25, 75]);
+    dispatch(
+      setState({
+        ...bookFilter,
+        title: data.name,
+        price_from: data.value[0] * 1000,
+        price_to: data.value[1] * 1000,
+        author_id: data.author,
+        category_id: data.category,
+        publisher_id: data.nashriyot,
+        language_id: data.language,
+        city_id: data.city_id,
+        district_id: data.district_id,
+      })
+    );
   }
 
   return (
@@ -42,19 +89,34 @@ export default function Filter() {
           <TextField
             label="Kitob nomini kiriting"
             variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={data.name}
+            onChange={(e) => setData({ ...data, name: e.target.value })}
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)", border: "none" }}
             fullWidth
           />
-          <TextField
-            label="Kitob muallifi kiriting"
-            variant="outlined"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            sx={{ backgroundColor: "rgba(44, 48, 51,0.1)", border: "none" }}
+          <FormControl
             fullWidth
-          />
+            sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
+          >
+            <InputLabel id="books-category-select-label">
+              Kitob muallifi kiriting
+            </InputLabel>
+            <Select
+              labelId="books-author-select-label"
+              id="books-author-select"
+              value={data.author}
+              //   label="Kategoriya"
+              onChange={(e) => setData({ ...data, author: e.target.value })}
+            >
+              {authorsList.map((item: any, index: number) => {
+                return (
+                  <MenuItem key={index} value={item.id}>
+                    {item.name} {item.surname}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           <FormControl
             fullWidth
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
@@ -63,12 +125,17 @@ export default function Filter() {
             <Select
               labelId="books-category-select-label"
               id="books-category-select"
-              value={category}
+              value={data.category}
               //   label="Kategoriya"
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setData({ ...data, category: e.target.value })}
             >
-              <MenuItem value={"Badiiy"}>Badiiy</MenuItem>
-              <MenuItem value={"Roman"}>Roman</MenuItem>
+              {categoriesList.map((item: any, index: number) => {
+                return (
+                  <MenuItem key={index} value={item.id}>
+                    {item.name[language]}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </div>
@@ -81,15 +148,19 @@ export default function Filter() {
             <Select
               labelId="books-nashriyot-select-label"
               id="books-nashriyot-select"
-              value={nashriyot}
-              onChange={(e) => setNashriyot(e.target.value)}
+              value={data.nashriyot}
+              onChange={(e) => setData({ ...data, nashriyot: e.target.value })}
             >
-              <MenuItem value={"Azon"}>Azon</MenuItem>
-              <MenuItem value={"Qamar"}>Qamar</MenuItem>
-              <MenuItem value={"Hilol nashr"}>Hilol nashr</MenuItem>
+              {publishersList.map((item: any, index: number) => {
+                return (
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
-          <SliderForPrice value={value} setValue={setValue} />
+          <SliderForPrice value={data} setValue={(setData as any)} />
         </div>
         <div className="flex flex-col sm:gap-[34px] gap-2">
           <FormControl
@@ -100,22 +171,33 @@ export default function Filter() {
             <Select
               labelId="books-til-select-label"
               id="books-til-select"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={data.language}
+              onChange={(e) => setData({ ...data, language: e.target.value })}
             >
-              <MenuItem value={"uzb"}>Uzbek tili</MenuItem>
-              <MenuItem value={"rus"}>Rus tili</MenuItem>
-              <MenuItem value={"eng"}>Ingliz tili</MenuItem>
+              {languagesList.map((item: any, index: number) => {
+                return (
+                  <MenuItem key={index} value={item.id}>
+                    {item.name[language]}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
-          <TextField
-            label="Manzil"
-            sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
-            variant="outlined"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-            fullWidth
+          <LocationSelect
+            setSelectedLocation={(location: {
+              city_id: string;
+              district_id: string;
+            }) =>
+              setData({
+                ...data,
+                city_id: location.city_id,
+                district_id: location.district_id,
+              })
+            }
+            showTitle={false}
+            isForHomePage={true}
           />
+          {/* onChange={(e) => setData({ ...data, region: e.target.value })} */}
           <button
             className="text-white hover:bg-opacity-80 transition-opacity w-full text-center py-4 bg-primary rounded text-[20px] leading-[24px]"
             type="submit"

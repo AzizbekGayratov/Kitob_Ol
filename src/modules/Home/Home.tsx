@@ -9,7 +9,6 @@ import {
 
 const Home = () => {
   const location = useLocation();
-
   return (
     <div className="container">
       <Hero />
@@ -64,7 +63,6 @@ const Home = () => {
       </section>
     </div>
   );
-  
 };
 
 export default Home;

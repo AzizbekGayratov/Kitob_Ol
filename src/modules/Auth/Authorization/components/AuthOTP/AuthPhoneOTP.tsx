@@ -11,10 +11,11 @@ export default function AuthPhoneOTP() {
   const submitData = (e: any) => {
     e.preventDefault();
     const phone = window.sessionStorage.getItem("phone");
+    const requestType = window.sessionStorage.getItem("auth_response_type");
+
+    console.log(requestType);
 
     const fetchData = async () => {
-      const requestType = window.sessionStorage.getItem("auth_response_type");
-
       try {
         const response = await fetch(
           `${
@@ -33,7 +34,7 @@ export default function AuthPhoneOTP() {
         );
 
         if (response.ok) {
-          window.sessionStorage.clear();
+          // window.sessionStorage.clear();
         } else if (response.status === 500) {
           setError("Siz kiritgan kod noto'g'ri");
         } else {
@@ -43,7 +44,12 @@ export default function AuthPhoneOTP() {
         if (response.ok) {
           const data = await response.json();
           Storage.set("token", data);
-          navigate("/");
+
+          if (requestType === "register") {
+            navigate("/authorization/user/register", { replace: true });
+          } else if (requestType === "login") {
+            navigate("/");
+          }
         }
       } catch (error) {
         console.error(error);

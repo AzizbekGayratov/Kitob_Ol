@@ -1,9 +1,10 @@
 import { Slider, TextField } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { FilterType, VacancyProps } from "../FilterTypes";
 
 interface Props {
-  value: number[];
-  setValue: (value: number[]) => void;
+  value: FilterType | VacancyProps;
+  setValue: React.Dispatch<React.SetStateAction<FilterType | VacancyProps>>;
 }
 
 export default function SliderForPrice({ value, setValue }: Props) {
@@ -15,9 +16,10 @@ export default function SliderForPrice({ value, setValue }: Props) {
       </p>
       <Slider
         getAriaLabel={() => "Temperature range"}
-        value={value}
+        value={value.value}
         onChange={(_, newValue) => {
-          setValue(newValue as number[]);
+          // setValue(newValue as number[]);
+          setValue({ ...value, value: newValue as number[] });
         }}
         valueLabelDisplay="auto"
         getAriaValueText={(value) => `${value} 000`}
@@ -41,17 +43,27 @@ export default function SliderForPrice({ value, setValue }: Props) {
       />
       <div className="grid grid-cols-2 mt-5">
         <TextField
-          value={value[0]}
+          value={`${new Intl.NumberFormat("en-US", {
+            useGrouping: true,
+          }).format(value.value[0] * 1000)} so'm`}
           onChange={(e) => {
-            setValue([Number(e.target.value), value[1]]);
+            setValue({
+              ...value,
+              value: [Number(e.target.value), value.value[1]],
+            });
           }}
           variant="outlined"
           sx={{ backgroundColor: "#E9E9E9", border: "none" }}
         />
         <TextField
-          value={value[1]}
+          value={`${new Intl.NumberFormat("en-US", {
+            useGrouping: true,
+          }).format(value.value[1] * 1000)} so'm`}
           onChange={(e) => {
-            setValue([value[0], Number(e.target.value)]);
+            setValue({
+              ...value,
+              value: [value.value[0], Number(e.target.value)],
+            });
           }}
           variant="outlined"
           sx={{ backgroundColor: "#E9E9E9", border: "none" }}

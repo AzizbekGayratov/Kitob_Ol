@@ -22,6 +22,7 @@ import AuthPhoneOTP from "../modules/Auth/Authorization/components/AuthOTP/AuthP
 import AnnouncementVacancy from "../modules/Announcements/AnnouncementVacancies/AnnouncementVacancy";
 import ProtectedRoute from "../Components/Layouts/ProtectedRoute/ProtectedRoute";
 import PublisherRoutes from "Components/Layouts/ProtectedRoute/PublisherRoutes";
+import UpdateProfileData from "modules/Auth/UpdateProfileData/UpdateProfileData";
 
 const routes = createBrowserRouter([
   {
@@ -104,6 +105,11 @@ const routes = createBrowserRouter([
         element: <EmailLogin />,
       },
     ],
+  },
+  {
+    path: "/authorization/user/register",
+    element: <UpdateProfileData />,
+    errorElement: <Error />,
   },
   {
     path: "/authorization/email/otp",

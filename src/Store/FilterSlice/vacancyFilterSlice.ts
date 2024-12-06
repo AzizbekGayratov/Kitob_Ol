@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  search: "",
-  category: "",
-  author: "",
-  language: "",
-  publisher: "",
-  year: "",
+  vacancy_title: "",
+  working_styles: "",
+  working_types: "",
+  salary_from: "",
+  salary_to: "",
+  status: "",
+  publisher_id: "",
+  city_id: "",
+  district_id: "",
+  limit: "",
+  offset: "",
 };
 
 const vacancyFilterSlice = createSlice({
@@ -14,7 +19,7 @@ const vacancyFilterSlice = createSlice({
   initialState,
   reducers: {
     setSearch(state, action) {
-      state.search = action.payload;
+      state = action.payload;
     },
   },
 });
