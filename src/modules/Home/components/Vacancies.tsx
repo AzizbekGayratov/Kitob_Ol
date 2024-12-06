@@ -27,9 +27,11 @@ export default function Vacancies() {
   const { itemsPerPage, currentPage } = useSelector(
     (state: any) => state.paginationValue
   );
-  
+
   console.log(itemsPerPage, currentPage);
+  const VacancyFilter = useSelector((state: any) => state.VacancyFilter);
   
+
   const dispatch = useDispatch();
   const [arr, setArr] = useState<VacancyProps[]>([]);
   console.log(arr);
@@ -39,6 +41,7 @@ export default function Vacancies() {
       try {
         const response = await api.get("/vacancies/list", {
           params: {
+            ...VacancyFilter,
             limit: itemsPerPage,
           },
         });

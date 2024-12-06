@@ -39,6 +39,8 @@ function AnnouncementBook() {
   const [reset, setReset] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  console.log(loading);
+  
 
   // State to store fetched data
   const [author, setAuthor] = useState<string>("Unknown");
