@@ -1,21 +1,16 @@
 import { useSelector } from "react-redux";
 import Input from "react-phone-number-input/input";
-
-export type Profile = {
-  name: string;
-  lastName: string;
-  birthDate: string;
-  phone: string;
-  email: string;
-  gender: "Erkak" | "Ayol";
-  avatar: string;
-};
-
+import { ProfileProps } from "modules/Profile/Profile";
 
 export default function ProfileInfo() {
-  const { profile } = useSelector(
-    (state: { project: { profile: Profile } }) => state.project
+  const profileDataFromRedux = useSelector(
+    (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
+  const profileData = JSON.parse(
+    window.sessionStorage.getItem("profile") || ""
+  );
+  const profile = profileData || profileDataFromRedux;
+  const role = "user" ? "Foydalanuvchi" : "Do’kon yoki Nashriyot";
 
   return (
     <ul className="profileWrapper">
@@ -24,7 +19,7 @@ export default function ProfileInfo() {
           Ism
         </label>
         <input
-          value={profile.name}
+          value={profile.first_name}
           disabled
           id="user_name"
           name="user_name"
@@ -36,7 +31,7 @@ export default function ProfileInfo() {
           Familiya
         </label>
         <input
-          value={profile.lastName}
+          value={profile.last_name}
           disabled
           id="user_lastName"
           name="user_lastName"
@@ -48,7 +43,7 @@ export default function ProfileInfo() {
           Tug'ulgan sana
         </label>
         <input
-          value={profile.birthDate}
+          value={profile.date_of_birth}
           disabled
           id="user_birthDate"
           name="user_birthDate"
@@ -60,7 +55,7 @@ export default function ProfileInfo() {
           Telefon raqam
         </label>
         <Input
-          value={profile.phone}
+          value={profile.phone_number}
           disabled
           id="user_phone"
           name="user_phone"
@@ -84,10 +79,10 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_gender" className="form_label">
-          Jinsi
+          Kim sifatida ro'yxatdan o'tgan
         </label>
         <input
-          value={profile.gender}
+          value={role}
           disabled
           id="user_gender"
           name="user_gender"

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PhoneInput from "react-phone-number-input/input";
 import {
   Select,
@@ -7,64 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../../../../Components/Ui/select";
-import {
-  setIsProfileUpdating,
-  updateProfileData,
-} from "Store/profileSlice/profileSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { ProfileProps } from "modules/Profile/Profile";
 
-export type Profile = {
-  name: string;
-  lastName: string;
-  birthDate: string;
-  phone: string;
-  email: string;
-  gender: "Erkak" | "Ayol";
-  avatar: string;
-};
-
-export default function UpdateForm() {
-  const { profile } = useSelector(
-    (state: { project: { profile: Profile } }) => state.project
-  );
-
-  const [name, setName] = useState<string>(profile.name);
-  const [lastName, setLastName] = useState<string>(profile.lastName);
-  const [birthDate, setBirthDate] = useState<string>(profile.birthDate);
-  const [phone, setPhone] = useState<string | undefined>(profile.phone);
-  const [email, setEmail] = useState<string>(profile.email);
-  const [gender, setGender] = useState<"Erkak" | "Ayol">(profile.gender);
-
-  const dispatch = useDispatch();
-
-  const cancelSubmit = () => {
-    setName(profile.name);
-    setLastName(profile.lastName);
-    setBirthDate(profile.birthDate);
-    setPhone(profile.phone);
-    setEmail(profile.email);
-    setGender(profile.gender);
-
-    dispatch(setIsProfileUpdating(false));
-  };
-
-  const submit = () => {
-    const newData = {
-      name,
-      lastName,
-      birthDate,
-      phone,
-      email,
-      gender,
-      avatar: profile.avatar,
-    };
-
-    console.log(newData);
-
-    dispatch(updateProfileData(newData));
-    dispatch(setIsProfileUpdating(false));
-  };
-
+export default function UpdateForm({
+  data,
+  setData,
+  submit,
+  cancelSubmit,
+}: {
+  data: ProfileProps;
+  setData: React.Dispatch<React.SetStateAction<ProfileProps>>;
+  submit: () => void;
+  cancelSubmit: () => void;
+}) {
   return (
     <>
       <ul className="profileWrapper">
@@ -73,8 +27,8 @@ export default function UpdateForm() {
             Ism
           </label>
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={data.first_name}
+            onChange={(e) => setData({ ...data, first_name: e.target.value })}
             id="user_name"
             name="user_name"
             className="form_active_input"
@@ -85,8 +39,8 @@ export default function UpdateForm() {
             Familiya
           </label>
           <input
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={data.last_name}
+            onChange={(e) => setData({ ...data, last_name: e.target.value })}
             id="user_lastName"
             name="user_lastName"
             className="form_active_input"
@@ -98,8 +52,10 @@ export default function UpdateForm() {
           </label>
           <input
             type="date"
-            value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
+            value={data.date_of_birth}
+            onChange={(e) =>
+              setData({ ...data, date_of_birth: e.target.value })
+            }
             id="user_birthDate"
             name="user_birthDate"
             className="form_active_input"
@@ -110,12 +66,12 @@ export default function UpdateForm() {
             Telefon raqami
           </label>
           <PhoneInput
-            value={phone}
+            value={data.phone_number}
             id="user_phone"
             name="user_phone"
             onChange={(value) => {
               // bu yerda kichik muammo bulishi mumkun
-              setPhone(value);
+              setData({ ...data, phone_number: value });
             }}
             className="form_active_input"
           />
@@ -126,8 +82,8 @@ export default function UpdateForm() {
           </label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
             id="user_email"
             name="user_email"
             className="form_active_input"
@@ -135,23 +91,22 @@ export default function UpdateForm() {
         </li>
         <li>
           <label htmlFor="user_gender" className="form_label">
-            Jinsi
+            Kim sifatida ro'yxatdan o'tgan
           </label>
           <Select
-            value={gender}
+            value={data.role}
             name="user_gender"
-            onValueChange={(value) => {
-              // #problem
-              setGender(value as "Erkak" | "Ayol");
-              console.log(value);
-            }}
+            // onValueChange={(value) => {
+            //   // #problem
+            //   setData({ ...data, role: value as "user" | "publisher" });
+            // }}
           >
             <SelectTrigger className="h-[56px] rounded border border-[#2c30331a] text-[16px] py-[18px] px-5 cursor-pointer text-[#2C3033] outline-none leading-5 w-full">
-              <SelectValue className="form_input" placeholder="Jinsi" />
+              <SelectValue className="form_input" placeholder={data.role} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Erkak">Erkak</SelectItem>
-              <SelectItem value="Ayol">Ayol</SelectItem>
+              <SelectItem value="user">Foydalanuvchi</SelectItem>
+              <SelectItem value="publisher">Nashriyot yoki Do’kon</SelectItem>
             </SelectContent>
           </Select>
         </li>

@@ -1,12 +1,12 @@
 import { BookProps } from "../../Books";
 import { Link } from "react-router-dom";
 import LikeBtn from "../../LikeBtn";
-import { FaRegImage } from "react-icons/fa";
+import { LogoSvg } from "assets/images/svg";
 
 export default function BookViewPage({ data }: { data: BookProps }) {
   return (
-    <div className="rounded bg-white flex flex-col justify-between">
-      <div className="w-[304px] h-[260px] outline-none -mr-20">
+    <div className="rounded bg-white flex flex-col justify-between ">
+      <div className="h-[260px]">
         {data.image_url &&
         data.image_url[0] +
           data.image_url[1] +
@@ -20,8 +20,8 @@ export default function BookViewPage({ data }: { data: BookProps }) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="px-5 bg-[#2C30330D]">
-            <FaRegImage className="w-full h-full" />
+          <div className="bg-[#2C30330D] h-[260px]">
+            <img src={LogoSvg} alt="logo image"  className="w-full h-full"/>
           </div>
         )}
       </div>

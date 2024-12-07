@@ -4,13 +4,15 @@ const profileSlice = createSlice({
   name: "project",
   initialState: {
     profile: {
-      name: "John",
-      lastName: "Doe",
-      birthDate: "2011-03-05",
-      phone: "+998901234567",
-      email: "qHl6t@example.com",
-      gender: "Erkak",
-      avatar: "https://picsum.photos/120/120",
+      date_of_birth: "",
+      email: "",
+      first_name: "",
+      id: "",
+      image_url:
+        "https://t4.ftcdn.net/jpg/00/64/67/27/240_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg",
+      last_name: "",
+      phone_number: "+998",
+      role: "",
     },
     isProfileUpdating: false,
   },

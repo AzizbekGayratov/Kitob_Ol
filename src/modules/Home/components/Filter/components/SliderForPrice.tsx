@@ -46,27 +46,29 @@ export default function SliderForPrice({ value, setValue }: Props) {
           value={`${new Intl.NumberFormat("en-US", {
             useGrouping: true,
           }).format(value.value[0] * 1000)} so'm`}
-          onChange={(e) => {
-            setValue({
-              ...value,
-              value: [Number(e.target.value), value.value[1]],
-            });
-          }}
+          // onChange={(e) => {
+          //   setValue({
+          //     ...value,
+          //     value: [Number(e.target.value), value.value[1]],
+          //   });
+          // }}
           variant="outlined"
           sx={{ backgroundColor: "#E9E9E9", border: "none" }}
+          disabled
         />
         <TextField
           value={`${new Intl.NumberFormat("en-US", {
             useGrouping: true,
           }).format(value.value[1] * 1000)} so'm`}
-          onChange={(e) => {
-            setValue({
-              ...value,
-              value: [value.value[0], Number(e.target.value)],
-            });
-          }}
+          // onChange={(e) => {
+          //   setValue({
+          //     ...value,
+          //     value: [value.value[0], Number(e.target.value)],
+          //   });
+          // }}
           variant="outlined"
           sx={{ backgroundColor: "#E9E9E9", border: "none" }}
+          disabled
         />
       </div>
     </div>

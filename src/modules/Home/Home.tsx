@@ -6,9 +6,46 @@ import {
   BooksIcon,
   VacancyIcon,
 } from "assets/images/svg";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateProfileData } from "Store/profileSlice/profileSlice";
 
 const Home = () => {
   const location = useLocation();
+  const { access_token } = JSON.parse(localStorage.getItem("token") || "");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const getUserProfile = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_AUTH_URL}/auth/profile`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          dispatch(updateProfileData(data));
+          window.sessionStorage.setItem("profile", JSON.stringify(data));
+        } else if (response.status === 401) {
+          window.localStorage.removeItem("token");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getUserProfile();
+  }, []);
+
   return (
     <div className="container">
       <Hero />
