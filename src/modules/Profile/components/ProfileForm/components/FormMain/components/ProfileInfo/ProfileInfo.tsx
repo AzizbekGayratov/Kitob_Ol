@@ -6,9 +6,8 @@ export default function ProfileInfo() {
   const profileDataFromRedux = useSelector(
     (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
-  const profileData = JSON.parse(
-    window.sessionStorage.getItem("profile") || ""
-  );
+  const rawData = window.sessionStorage.getItem("profile");
+  const profileData = rawData ? JSON.parse(rawData) : null;
   const profile = profileData || profileDataFromRedux;
   const role = "user" ? "Foydalanuvchi" : "Do’kon yoki Nashriyot";
 
