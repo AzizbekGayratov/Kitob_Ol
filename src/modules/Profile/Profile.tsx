@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { MyAnnouncement, ProfileForm } from "./components";
 
 export type ProfileProps = {
@@ -12,6 +13,10 @@ export type ProfileProps = {
 };
 
 export default function Profile() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="py-10">
       <ProfileForm />

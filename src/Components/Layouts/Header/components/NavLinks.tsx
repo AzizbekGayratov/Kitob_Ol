@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
 import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
 import { DropDownType, languagesType } from "modules/Announcements/types/Types";
+import { ProfileProps } from "modules/Profile/Profile";
 
 interface Props {
   icon: JSX.Element;
@@ -85,9 +86,13 @@ export default function NavLinks() {
     (state: { language: { language: languagesType } }) => state.language
   );
   console.log(language);
-  
+
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
+  );
+
+  const profileData = useSelector(
+    (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
 
   const handleLanguageSelect = (e: string) => {
@@ -201,10 +206,7 @@ export default function NavLinks() {
                       >
                         <div className="flex items-center gap-4 z-40">
                           <div className="rounded-full overflow-hidden">
-                            <img
-                              src="https://picsum.photos/50"
-                              alt="user avatar"
-                            />
+                            <img src={profileData.image_url} alt="user avatar" className="h-[50px]"/>
                           </div>
                           <div>
                             <h3 className="text-primary font-Poppins font-medium">

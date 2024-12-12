@@ -38,6 +38,7 @@ const Layout = () => {
         if (response.ok) {
           const data = await response.json();
           dispatch(updateProfileData(data));
+          window.sessionStorage.setItem("profile", JSON.stringify(data));
         }
       } catch (error) {
         console.error(error);
