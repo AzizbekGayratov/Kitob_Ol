@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage, setTotalItems } from "Store/paginationSlice/paginationSlice";
+import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { BookViewPage } from "./Hero/components";
+import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 export interface BookProps {
   author_id: string;
@@ -38,44 +40,50 @@ export default function Books() {
   const { itemsPerPage, currentPage } = useSelector(
     (state: any) => state.paginationValue
   );
-  console.log(itemsPerPage, currentPage);
-  
-  const dispatch = useDispatch();
   const bookFilter = useSelector((state: any) => state.bookFilter);
-  const [arr, setArr] = useState<BookProps[]>([]);
+
+  const dispatch = useDispatch();
+  const [books, setBooks] = useState<BookProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchBooks = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/books/list", {
+        params: {
+          ...bookFilter, // Include all filter criteria
+          limit: itemsPerPage,
+          offset: (currentPage - 1) * itemsPerPage, // Calculate offset based on page
+        },
+      });
+
+      if (!response.data) {
+        throw new Error("Data not found");
+      }
+
+      dispatch(setTotalItems(response.data.count)); // Update total items for pagination
+      setBooks(response.data.books); // Set the fetched books
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/books/list", {
-          params: {
-            ...bookFilter,
-            limit: itemsPerPage,
-          },
-        });
-
-        if (!response.data) {
-          throw new Error("Data not found");
-        }
-
-        dispatch(setTotalItems(response.data.count));
-        setArr(response.data.books);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-
-    return () => {
-      dispatch(setPage(1));
-    };
-  }, [dispatch]);
+    fetchBooks();
+    // Reset to page 1 when component unmounts
+  }, [dispatch, bookFilter, currentPage]); // Re-run when filters or page changes
 
   return (
     <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
-      {arr.map((i) => (
-        <BookViewPage key={i.id} data={i} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : books ? (
+        books.map((book) => <BookViewPage key={book.id} data={book} />)
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 }

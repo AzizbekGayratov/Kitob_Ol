@@ -73,6 +73,17 @@ export default function Filter() {
         district_id: data.district_id,
       })
     );
+
+    setData({
+      name: "",
+      author: "",
+      category: "",
+      nashriyot: "",
+      language: "",
+      city_id: "",
+      district_id: "",
+      value: [25, 75],
+    });
   }
 
   return (

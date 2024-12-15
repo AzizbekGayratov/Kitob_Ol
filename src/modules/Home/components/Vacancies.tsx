@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage, setTotalItems } from "Store/paginationSlice/paginationSlice";
+import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { VacancyViewPage } from "./Hero/components";
+import Loading from "./Loading";
+import NotFound from "./NotFound";
 
 export interface VacancyProps {
   created_at: string;
@@ -27,48 +29,51 @@ export default function Vacancies() {
   const { itemsPerPage, currentPage } = useSelector(
     (state: any) => state.paginationValue
   );
-
-  console.log(itemsPerPage, currentPage);
-  const VacancyFilter = useSelector((state: any) => state.VacancyFilter);
-  console.log(VacancyFilter);
-  
-  
+  const vacancyFilter = useSelector((state: any) => state.VacancyFilter);
 
   const dispatch = useDispatch();
-  const [arr, setArr] = useState<VacancyProps[]>([]);
+  const [vacancies, setVacancies] = useState<VacancyProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchVacancies = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/vacancies/list", {
+        params: {
+          ...vacancyFilter, // Include filter criteria
+          limit: itemsPerPage,
+          offset: (currentPage - 1) * itemsPerPage, // Calculate offset based on the current page
+        },
+      });
+
+      if (!response.data) {
+        throw new Error("Data not found");
+      }
+
+      dispatch(setTotalItems(response.data.count)); // Update total items for pagination
+      setVacancies(response.data.vacancies); // Set the fetched vacancies
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/vacancies/list", {
-          params: {
-            ...VacancyFilter,
-            limit: itemsPerPage,
-          },
-        });
-
-        if (!response.data) {
-          throw new Error("Data not found");
-        }
-
-        dispatch(setTotalItems(response.data.count));
-        setArr(response.data.vacancies);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-
-    return () => {
-      dispatch(setPage(1));
-    };
-  }, []);
+    fetchVacancies();
+  }, [dispatch, vacancyFilter, currentPage]); // Re-run when filters or page changes
 
   return (
     <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-4">
-      {arr.map((i) => (
-        <VacancyViewPage key={i.id} data={i} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : vacancies ? (
+        vacancies.map((vacancy) => (
+          <VacancyViewPage key={vacancy.id} data={vacancy} />
+        ))
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 }

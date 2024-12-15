@@ -9,7 +9,7 @@ export default function UpdateProfileData() {
   const phone = window.sessionStorage.getItem("phone");
   const { access_token } = JSON.parse(localStorage.getItem("token") || "");
 
-  const { avatar } = useSelector(
+  const { image_url: avatar } = useSelector(
     (state: { project: { profile: any } }) => state.project.profile
   );
 

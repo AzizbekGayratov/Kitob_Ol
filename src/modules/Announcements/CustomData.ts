@@ -21,22 +21,22 @@ export const customDatas = {
   ],
   cover_type: [
     {
-      id: "Hard",
+      id: "hard",
       name: "Hard",
     },
     {
-      id: "Soft",
+      id: "soft",
       name: "Soft",
     },
   ],
   is_new: [
     {
       id: "true",
-      name: "True",
+      name: "Yangi",
     },
     {
       id: "false",
-      name: "False",
+      name: "Eski",
     },
   ],
   writing_type: [

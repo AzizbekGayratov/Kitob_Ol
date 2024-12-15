@@ -6,13 +6,54 @@ import { Storage } from "../../../../../Services";
 export default function AuthEmailOTP() {
   const [otp, setOtp] = React.useState("");
   const [error, setError] = React.useState("");
+  const [timer, setTimer] = React.useState(60); // Timer state
+  const [isResending, setIsResending] = React.useState(false);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (timer > 0) {
+      const countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(countdown); // Cleanup interval
+    }
+  }, [timer]);
+
+  const resendOTP = async () => {
+    const email = window.sessionStorage.getItem("email");
+    const requestType = window.sessionStorage.getItem("auth_response_type");
+    setIsResending(true);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/sms/${requestType}/email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (response.ok) {
+        setTimer(60); // Reset timer to 60 seconds
+      } else {
+        setError("Kodni qayta yuborishda xatolik yuz berdi.");
+      }
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      setError("Serverda xatolik yuz berdi.");
+    } finally {
+      setIsResending(false);
+    }
+  };
 
   const submitData = (e: any) => {
     e.preventDefault();
     const email = window.sessionStorage.getItem("email");
     const requestType = window.sessionStorage.getItem("auth_response_type");
-    console.log(requestType);
 
     const fetchData = async () => {
       try {
@@ -33,14 +74,6 @@ export default function AuthEmailOTP() {
         );
 
         if (response.ok) {
-          // window.sessionStorage.clear();
-        } else if (response.status === 500) {
-          setError("Siz kiritgan kod noto'g'ri");
-        } else {
-          throw new Error("Request failed");
-        }
-
-        if (response.ok) {
           const data = await response.json();
           Storage.set("token", data);
 
@@ -51,9 +84,14 @@ export default function AuthEmailOTP() {
           } else if (requestType === "login") {
             navigate("/");
           }
+        } else if (response.status === 500) {
+          setError("Siz kiritgan kod noto'g'ri");
+        } else {
+          throw new Error("Request failed");
         }
       } catch (error) {
         console.error(error);
+        setError("Serverda xatolik yuz berdi.");
       }
     };
 
@@ -73,9 +111,23 @@ export default function AuthEmailOTP() {
         </p>
         <AuthOTP otp={otp} setOtp={setOtp} />
         {error && <p className="text-red-500 mt-6">{error}</p>}
+        <p className="mt-5 text-base leading-[19px] font-light text-primary opacity-70">
+          {timer === 0 ? (
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={resendOTP}
+              role="button"
+            >
+              Kodni qayta yuborish
+            </span>
+          ) : (
+            `Kodni ${timer} sekunddan so'ng qayta yuborish`
+          )}
+        </p>
       </div>
       <div className="grid grid-cols-2 sm:mt-0 mt-[350px]">
         <button
+          type="button"
           onClick={() => {
             setOtp("");
             navigate(-1);
@@ -84,8 +136,12 @@ export default function AuthEmailOTP() {
         >
           Orqaga
         </button>
-        <button className="bg-primary text-white py-[18px] text-base leading-[19px]">
-          Keyingisi
+        <button
+          type="submit"
+          className="bg-primary text-white py-[18px] text-base leading-[19px]"
+          disabled={isResending}
+        >
+          {isResending ? "Yuborilmoqda..." : "Keyingisi"}
         </button>
       </div>
     </form>

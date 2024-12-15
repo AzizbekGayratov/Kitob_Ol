@@ -9,9 +9,12 @@ import "swiper/css/navigation";
 // pagination
 import "swiper/css/pagination";
 import "./SwiperStyles.css";
-import { swiperImage } from "assets/images/png";
+import { Book } from "modules/ProductView/ProductView";
 
-export default function SwiperComponent() {
+export default function SwiperComponent({ data }: { data: Book }) {
+  
+  console.log(data);
+  
   return (
     <section className="md:p-10 py-5 px-5 bg-white rounded">
       <Swiper
@@ -30,16 +33,10 @@ export default function SwiperComponent() {
         // }}
       >
         <SwiperSlide>
-          <img src={swiperImage} alt="img" />
+          <img src={data?.image_url} alt="img" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={swiperImage} alt="img" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={swiperImage} alt="img" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={swiperImage} alt="img" />
+          <img src={data?.img_url} alt="img" />
         </SwiperSlide>
       </Swiper>
       {/* <>

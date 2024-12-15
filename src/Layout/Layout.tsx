@@ -17,11 +17,34 @@ const Layout = () => {
   const rawToken = window.localStorage.getItem("token");
   const token: null | TokenProps = rawToken ? JSON.parse(rawToken) : null;
 
+  const refreshToken = async (refresh_token: string | undefined) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/refresh`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ refresh_token }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        window.localStorage.setItem("token", JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
     const getUserProfile = async () => {
       const access_token = token?.access_token;
+      const refresh_token = token?.refresh_token;
 
       try {
         const response = await fetch(
@@ -39,6 +62,11 @@ const Layout = () => {
           const data = await response.json();
           dispatch(updateProfileData(data));
           window.sessionStorage.setItem("profile", JSON.stringify(data));
+        } else {
+          const data = await response.json();
+          if (data.details.includes("Token is expired")) {
+            refreshToken(refresh_token);
+          }
         }
       } catch (error) {
         console.error(error);
