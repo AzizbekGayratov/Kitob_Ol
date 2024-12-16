@@ -18,25 +18,7 @@ const Layout = () => {
   const token: null | TokenProps = rawToken ? JSON.parse(rawToken) : null;
 
   const refreshToken = async (refresh_token: string | undefined) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/refresh`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ refresh_token }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        window.localStorage.setItem("token", JSON.stringify(data));
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    console.log("Refresh token:", refresh_token);
   };
 
   useEffect(() => {

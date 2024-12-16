@@ -1,18 +1,16 @@
+import { Link } from "react-router-dom";
 import LikeBtn from "../../LikeBtn";
 import { VacancyProps } from "../../Vacancies";
 
-export default function VacancyViewPage({
-  data,
-}: {
-  data: VacancyProps;
-}) {
-
+export default function VacancyViewPage({ data }: { data: VacancyProps }) {
   return (
     <div className="rounded bg-white pt-6 pb-12 px-4">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-primary font-medium text-xl leading-5">
-          {data.title}
-        </h3>
+        <Link to={`/vacancy/${data.id}`}>
+          <h3 className="text-primary font-medium text-xl leading-5">
+            {data.title}
+          </h3>
+        </Link>
         <LikeBtn />
       </div>
       <ul className="mt-2 mb-4 flex flex-col gap-1 pl-4 list-disc">

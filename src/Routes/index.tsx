@@ -23,6 +23,9 @@ import AnnouncementVacancy from "../modules/Announcements/AnnouncementVacancies/
 import ProtectedRoute from "../Components/Layouts/ProtectedRoute/ProtectedRoute";
 import PublisherRoutes from "Components/Layouts/ProtectedRoute/PublisherRoutes";
 import UpdateProfileData from "modules/Auth/UpdateProfileData/UpdateProfileData";
+import VacancyView from "modules/VacancyView/VacancyView";
+import MainProductViewContent from "../modules/ProductView/MainProductViewContent";
+import MainVacancyContent from "modules/VacancyView/MainVacancyContent";
 
 const routes = createBrowserRouter([
   {
@@ -78,6 +81,20 @@ const routes = createBrowserRouter([
           {
             path: "",
             element: <MainProductViewWithContent />,
+          },
+          {
+            path: "comments",
+            element: <CommentsRoute />,
+          },
+        ],
+      },
+      {
+        path: "/vacancy/:name",
+        element: <VacancyView />,
+        children: [
+          {
+            path: "",
+            element: <MainVacancyContent />,
           },
           {
             path: "comments",
