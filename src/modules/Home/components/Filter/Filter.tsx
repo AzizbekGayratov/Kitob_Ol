@@ -119,7 +119,7 @@ export default function Filter() {
               //   label="Kategoriya"
               onChange={(e) => setData({ ...data, author: e.target.value })}
             >
-              {authorsList.map((item: any, index: number) => {
+              {authorsList?.map((item: any, index: number) => {
                 return (
                   <MenuItem key={index} value={item.id}>
                     {item.name} {item.surname}
@@ -140,7 +140,7 @@ export default function Filter() {
               //   label="Kategoriya"
               onChange={(e) => setData({ ...data, category: e.target.value })}
             >
-              {categoriesList.map((item: any, index: number) => {
+              {categoriesList?.map((item: any, index: number) => {
                 return (
                   <MenuItem key={index} value={item.id}>
                     {item.name[language]}
@@ -162,7 +162,7 @@ export default function Filter() {
               value={data.nashriyot}
               onChange={(e) => setData({ ...data, nashriyot: e.target.value })}
             >
-              {publishersList.map((item: any, index: number) => {
+              {publishersList?.map((item: any, index: number) => {
                 return (
                   <MenuItem key={index} value={item.id}>
                     {item.name}
@@ -185,7 +185,7 @@ export default function Filter() {
               value={data.language}
               onChange={(e) => setData({ ...data, language: e.target.value })}
             >
-              {languagesList.map((item: any, index: number) => {
+              {languagesList?.map((item: any, index: number) => {
                 return (
                   <MenuItem key={index} value={item.id}>
                     {item.name[language]}
