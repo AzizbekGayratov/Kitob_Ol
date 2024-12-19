@@ -17,16 +17,44 @@ const Layout = () => {
   const rawToken = window.localStorage.getItem("token");
   const token: null | TokenProps = rawToken ? JSON.parse(rawToken) : null;
 
-  const refreshToken = async (refresh_token: string | undefined) => {
-    console.log("Refresh token:", refresh_token);
-  };
+  // const refreshToken = async (refresh_token: string | undefined) => {
+  //   try {
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/refresh/token`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ token: refresh_token }),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error("Request failed");
+  //     }
+
+  //     const data = await response.json();
+
+  //     window.localStorage.setItem(
+  //       "token",
+  //       JSON.stringify({
+  //         access_token: data.access_token,
+  //         refresh_token: data.refresh_token,
+  //         role: data.role,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
     const getUserProfile = async () => {
       const access_token = token?.access_token;
-      const refresh_token = token?.refresh_token;
+      // const refresh_token = token?.refresh_token;
 
       try {
         const response = await fetch(
@@ -47,7 +75,9 @@ const Layout = () => {
         } else {
           const data = await response.json();
           if (data.details.includes("Token is expired")) {
-            refreshToken(refresh_token);
+            // refreshToken(access_token);
+            window.localStorage.removeItem("token");
+            window.location.reload();
           }
         }
       } catch (error) {
