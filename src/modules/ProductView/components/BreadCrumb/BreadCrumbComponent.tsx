@@ -11,7 +11,7 @@ import { RxDividerVertical } from "react-icons/rx";
 
 export default function BreadCrumbComponent({ name }: { name: string }) {
   return (
-    <div className="px-4 py-5 xl:px-0 hidden sm:block">
+    <div className="px-6 py-5 xl:px-4 hidden sm:block">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
