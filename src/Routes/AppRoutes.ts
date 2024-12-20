@@ -19,6 +19,27 @@ const AnnouncementVacancy = lazy(
 const UpdateProfileData = lazy(
   () => import("modules/Auth/UpdateProfileData/UpdateProfileData")
 );
+const Books = lazy(() => import("modules/Home/components/Books"));
+const Vacancies = lazy(() => import("modules/Home/components/Vacancies"));
+const PhoneLogin = lazy(
+  () => import("modules/Auth/Authorization/components/PhoneLogin")
+);
+const EmailLogin = lazy(
+  () => import("modules/Auth/Authorization/components/EmailLogin")
+);
+const AuthEmailOTP = lazy(
+  () => import("modules/Auth/Authorization/components/AuthOTP/AuthEmailOTP")
+);
+const AuthPhoneOTP = lazy(
+  () => import("modules/Auth/Authorization/components/AuthOTP/AuthPhoneOTP")
+);
+const ProtectedRoute = lazy(
+  () => import("Components/Layouts/ProtectedRoute/ProtectedRoute")
+);
+const PublisherRoutes = lazy(
+  () => import("Components/Layouts/ProtectedRoute/PublisherRoutes")
+);
+const VacancyView = lazy(() => import("modules/VacancyView/VacancyView"));
 
 export {
   Error,
@@ -31,4 +52,13 @@ export {
   AnnouncementBook,
   AnnouncementVacancy,
   UpdateProfileData,
+  Books,
+  Vacancies,
+  PhoneLogin,
+  EmailLogin,
+  AuthEmailOTP,
+  AuthPhoneOTP,
+  ProtectedRoute,
+  PublisherRoutes,
+  VacancyView,
 };
