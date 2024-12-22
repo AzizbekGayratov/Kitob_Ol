@@ -23,6 +23,9 @@ export default function Accordation() {
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
   );
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
@@ -54,7 +57,12 @@ export default function Accordation() {
               id="panel1-header"
             >
               <Typography className="text-white flex items-center gap-3">
-                <img src={activeNavBtn3} alt="icon" /> Mening profilim
+                <img src={activeNavBtn3} alt="icon" />{" "}
+                {language === "uz"
+                  ? "Mening profilim"
+                  : language === "ru"
+                  ? "Мой профиль"
+                  : "My profile"}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -63,13 +71,21 @@ export default function Accordation() {
                   to="/authorization/phone"
                   className="text-white block pb-[18px] px-6"
                 >
-                  Avtorizatsiya
+                  {language === "uz"
+                    ? "Avtorizatsiya"
+                    : language === "ru"
+                    ? "Авторизация"
+                    : "Authorization"}
                 </Link>
               </p>
               <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
               <Link to="/login">
                 <p className="text-white block pt-[18px] px-6">
-                  Do’kon yoki nashriyot
+                  {language === "uz"
+                    ? "Do’kon yoki nashriyot"
+                    : language === "ru"
+                    ? "Издательство или магазин"
+                    : "Publisher or Shop"}
                 </p>
               </Link>
             </AccordionDetails>
@@ -81,7 +97,12 @@ export default function Accordation() {
                 to="/profile"
                 className="flex items-center gap-3 text-white text-sm"
               >
-                <img src={activeNavBtn3} alt="icon" /> Mening profilim
+                <img src={activeNavBtn3} alt="icon" />{" "}
+                {language === "uz"
+                  ? "Mening profilim"
+                  : language === "ru"
+                  ? "Мой профиль"
+                  : "My profile"}
               </Link>
             </button>
           </div>
@@ -103,7 +124,12 @@ export default function Accordation() {
             id="panel2-header"
           >
             <Typography className="text-white flex items-center gap-3">
-              <img src={activeNavBtn4} alt="icon" /> Til
+              <img src={activeNavBtn4} alt="icon" />{" "}
+              {language === "uz"
+                ? "Til"
+                : language === "ru"
+                ? "Язык"
+                : "Language"}
             </Typography>
           </AccordionSummary>
 
@@ -114,7 +140,11 @@ export default function Accordation() {
                 handleLanguageSelect("en");
               }}
             >
-              English
+              {language === "uz"
+                ? "Ingliz tili"
+                : language === "ru"
+                ? "Английский"
+                : "English"}
             </button>
 
             <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
@@ -125,7 +155,11 @@ export default function Accordation() {
                 handleLanguageSelect("ru");
               }}
             >
-              Русский
+              {language === "uz"
+                ? "Rus tili"
+                : language === "ru"
+                ? "Русский"
+                : "Russian"}
             </button>
 
             <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
@@ -136,7 +170,11 @@ export default function Accordation() {
                 handleLanguageSelect("uz");
               }}
             >
-              Uzbek
+              {language === "uz"
+                ? "O'zbek tili"
+                : language === "ru"
+                ? "Узбекский"
+                : "Uzbek"}
             </button>
           </AccordionDetails>
         </Accordion>

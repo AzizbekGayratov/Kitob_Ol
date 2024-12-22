@@ -9,6 +9,9 @@ export default function HeaderNav() {
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
   );
+  const { language } = useSelector(
+    (state: { language: { language: string } }) => state.language
+  );
 
   const handleDropdownClick = () => {
     dispatch(toggleDropDown("announcement"));
@@ -25,7 +28,11 @@ export default function HeaderNav() {
         className="bg-primary rounded text-base leading-[19px] text-white py-[18px] px-[53px]"
         onClick={handleDropdownClick}
       >
-        E'lon berish
+        {language === "uz"
+          ? "E'lon berish"
+          : language === "ru"
+          ? "Объявление"
+          : "Announce"}
       </button>
 
       {selected === "announcement" && (
@@ -44,7 +51,11 @@ export default function HeaderNav() {
               onClick={handleDropdownClick}
             >
               <Link to="/announcements/book" className="block py-3 px-2 w-52">
-                Kitob
+                {language === "uz"
+                  ? "Kitob"
+                  : language === "ru"
+                  ? "Книга"
+                  : "Book"}
               </Link>
             </button>
 
@@ -56,7 +67,11 @@ export default function HeaderNav() {
                 to="/announcements/vacancy"
                 className="block py-3 px-2 w-52"
               >
-                Ish
+                {language === "uz"
+                  ? "Ish"
+                  : language === "ru"
+                  ? "Вакансия"
+                  : "Vacancy"}
               </Link>
             </button>
           </div>

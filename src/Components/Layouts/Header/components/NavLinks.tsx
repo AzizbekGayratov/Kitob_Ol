@@ -85,7 +85,6 @@ export default function NavLinks() {
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
-  console.log(language);
 
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
@@ -148,21 +147,33 @@ export default function NavLinks() {
                       className="bg-rootBg rounded z-20 py-3 px-2 w-52"
                       onClick={() => handleLanguageSelect("en")}
                     >
-                      English
+                      {language === "uz"
+                        ? "Ingliz tili"
+                        : language === "ru"
+                        ? "Английский"
+                        : "English"}
                     </button>
 
                     <button
                       className="bg-rootBg rounded z-20 py-3 px-2 w-52"
                       onClick={() => handleLanguageSelect("ru")}
                     >
-                      Русский
+                      {language === "uz"
+                        ? "Rus tili"
+                        : language === "ru"
+                        ? "Русский"
+                        : "Russian"}
                     </button>
 
                     <button
                       className="bg-rootBg rounded z-10 py-3 px-2 w-52"
                       onClick={() => handleLanguageSelect("uz")}
                     >
-                      Uzbek
+                      {language === "uz"
+                        ? "O'zbek tili"
+                        : language === "ru"
+                        ? "Узбекский"
+                        : "Uzbek"}
                     </button>
                   </div>
                 </div>
@@ -206,7 +217,11 @@ export default function NavLinks() {
                       >
                         <div className="flex items-center gap-4 z-40">
                           <div className="rounded-full overflow-hidden">
-                            <img src={profileData.image_url} alt="user avatar" className="h-[50px]"/>
+                            <img
+                              src={profileData.image_url}
+                              alt="user avatar"
+                              className="h-[50px]"
+                            />
                           </div>
                           <div>
                             <h3 className="text-primary font-Poppins font-medium">

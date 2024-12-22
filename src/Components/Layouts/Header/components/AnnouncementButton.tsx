@@ -13,6 +13,9 @@ export default function AnnouncementButton() {
   const { selected } = useSelector(
     (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
   );
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   const handleDropdownClick = () => {
     dispatch(toggleDropDown("announcement"));
@@ -37,14 +40,22 @@ export default function AnnouncementButton() {
         >
           <Typography className="text-white flex items-center gap-3">
             <button className="text-white text-base py-2 px-4">
-              E'lon berish
+              {language === "uz"
+                ? "E'lon berish"
+                : language === "ru"
+                ? "Разместить объявление"
+                : "Post an announcement"}
             </button>
           </Typography>
         </AccordionSummary>
 
         <AccordionDetails>
           <Link to="/announcements/book" className="text-white block py-3 px-6">
-            Kitob
+            {language === "uz"
+              ? "Kitob"
+              : language === "ru"
+              ? "Книга"
+              : "Book"}
           </Link>
 
           <Divider sx={{ backgroundColor: "white", opacity: 0.4 }} />
@@ -53,7 +64,11 @@ export default function AnnouncementButton() {
             to="/announcements/vacancy"
             className="text-white block py-3 px-6"
           >
-            Ish
+            {language === "uz"
+              ? "Ish"
+              : language === "ru"
+              ? "Вакансия"
+              : "Vacancy"}
           </Link>
         </AccordionDetails>
       </Accordion>

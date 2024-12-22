@@ -7,12 +7,16 @@ import {
 import { Link } from "react-router-dom";
 import Accordation from "./Accordation";
 import AnnouncementButton from "./AnnouncementButton";
+import { useSelector } from "react-redux";
 
 export default function Menu({
   onCloseBtn,
 }: {
   onCloseBtn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
   return (
     <>
       <div className="flex items-center justify-between px-4 pt-1 pb-[10px]">
@@ -38,7 +42,11 @@ export default function Menu({
                 className="flex items-center gap-3 text-white text-sm"
               >
                 <img src={activeNavBtn1} alt="icon" />
-                Saqlanganlar
+                {language === "uz"
+                  ? "Saqlanganlar"
+                  : language === "ru"
+                  ? "Сохраненные"
+                  : "Saved"}
               </Link>
             </button>
           </li>
@@ -49,7 +57,11 @@ export default function Menu({
                 className="flex items-center gap-3 text-white text-sm"
               >
                 <img src={activeNavBtn2} alt="icon" />
-                Bildirishnomalar
+                {language === "uz"
+                  ? "Bildirishnomalar"
+                  : language === "ru"
+                  ? "Уведомления"
+                  : "Notifications"}
               </Link>
             </button>
           </li>
