@@ -6,16 +6,32 @@ export default function ProfileInfo() {
   const profileDataFromRedux = useSelector(
     (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
   const rawData = window.sessionStorage.getItem("profile");
   const profileData = rawData ? JSON.parse(rawData) : null;
   const profile = profileData || profileDataFromRedux;
-  const role = "user" ? "Foydalanuvchi" : "Do’kon yoki Nashriyot";
+
+  const userProp =
+    language === "uz"
+      ? "Foydalanuvchi"
+      : language === "ru"
+      ? "Пользователь"
+      : "User";
+  const otherProp =
+    language === "uz"
+      ? "Do’kon yoki Nashriyot"
+      : language === "ru"
+      ? "Издательство или магазин"
+      : "Publisher or Shop";
+  const role = "user" ? userProp : otherProp;
 
   return (
     <ul className="profileWrapper">
       <li>
         <label htmlFor="user_name" className="form_label">
-          Ism
+          {language === "uz" ? "Ism" : language === "ru" ? "Имя" : "First name"}
         </label>
         <input
           value={profile.first_name}
@@ -27,7 +43,11 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_lastName" className="form_label">
-          Familiya
+          {language === "uz"
+            ? "Familiya"
+            : language === "ru"
+            ? "Фамилия"
+            : "Last name"}
         </label>
         <input
           value={profile.last_name}
@@ -39,7 +59,11 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_birthDate" className="form_label">
-          Tug'ulgan sana
+          {language === "uz"
+            ? "Tug'ilgan sanasi"
+            : language === "ru"
+            ? "Дата рождения"
+            : "Date of birth"}
         </label>
         <input
           value={profile.date_of_birth}
@@ -51,7 +75,11 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_phone" className="form_label">
-          Telefon raqam
+          {language === "uz"
+            ? "Telefon raqami"
+            : language === "ru"
+            ? "Номер телефона"
+            : "Phone number"}
         </label>
         <Input
           value={profile.phone_number}
@@ -66,7 +94,11 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_email" className="form_label">
-          Email manzil
+          {language === "uz"
+            ? "Email manzil"
+            : language === "ru"
+            ? "Адрес электронной почты"
+            : "Email address"}
         </label>
         <input
           value={profile.email}
@@ -78,7 +110,11 @@ export default function ProfileInfo() {
       </li>
       <li>
         <label htmlFor="user_gender" className="form_label">
-          Kim sifatida ro'yxatdan o'tgan
+          {language === "uz"
+            ? "Kim sifatida ro'yxatdan o'tgan"
+            : language === "ru"
+            ? "Кто зарегистрировался"
+            : "Who is registered as"}
         </label>
         <input
           value={role}

@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "../../../../../../../Components/Ui/select";
 import { ProfileProps } from "modules/Profile/Profile";
+import { useSelector } from "react-redux";
 
 export default function UpdateForm({
   data,
@@ -19,12 +20,20 @@ export default function UpdateForm({
   submit: () => void;
   cancelSubmit: () => void;
 }) {
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
+
   return (
     <>
       <ul className="profileWrapper">
         <li>
           <label htmlFor="user_name" className="form_label">
-            Ism
+            {language === "uz"
+              ? "Ism"
+              : language === "ru"
+              ? "Имя"
+              : "First name"}
           </label>
           <input
             value={data.first_name}
@@ -36,7 +45,11 @@ export default function UpdateForm({
         </li>
         <li>
           <label htmlFor="user_lastName" className="form_label">
-            Familiya
+            {language === "uz"
+              ? "Familiya"
+              : language === "ru"
+              ? "Фамилия"
+              : "Last name"}
           </label>
           <input
             value={data.last_name}
@@ -48,7 +61,11 @@ export default function UpdateForm({
         </li>
         <li>
           <label htmlFor="user_birthDate" className="form_label">
-            Tug'ilgan sanasi
+            {language === "uz"
+              ? "Tug'ilgan sanasi"
+              : language === "ru"
+              ? "Дата рождения"
+              : "Date of birth"}
           </label>
           <input
             type="date"
@@ -63,7 +80,11 @@ export default function UpdateForm({
         </li>
         <li>
           <label htmlFor="user_phone" className="form_label">
-            Telefon raqami
+            {language === "uz"
+              ? "Telefon raqami"
+              : language === "ru"
+              ? "Номер телефона"
+              : "Phone number"}
           </label>
           <PhoneInput
             value={data.phone_number}
@@ -78,7 +99,11 @@ export default function UpdateForm({
         </li>
         <li>
           <label htmlFor="user_email" className="form_label">
-            Email manzil
+            {language === "uz"
+              ? "Email manzil"
+              : language === "ru"
+              ? "Адрес электронной почты"
+              : "Email address"}
           </label>
           <input
             type="email"
@@ -91,7 +116,11 @@ export default function UpdateForm({
         </li>
         <li>
           <label htmlFor="user_gender" className="form_label">
-            Kim sifatida ro'yxatdan o'tgan
+            {language === "uz"
+              ? "Kim sifatida ro'yxatdan o'tgan"
+              : language === "ru"
+              ? "Кто зарегистрировался"
+              : "Who is registered as"}
           </label>
           <Select
             value={data.role}
@@ -105,8 +134,20 @@ export default function UpdateForm({
               <SelectValue className="form_input" placeholder={data.role} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="user">Foydalanuvchi</SelectItem>
-              <SelectItem value="publisher">Nashriyot yoki Do’kon</SelectItem>
+              <SelectItem value="user">
+                {language === "uz"
+                  ? "Foydalanuvchi"
+                  : language === "ru"
+                  ? "Пользователь"
+                  : "User"}
+              </SelectItem>
+              <SelectItem value="publisher">
+                {language === "uz"
+                  ? "Nashriyot yoki Do’kon"
+                  : language === "ru"
+                  ? "Издательство или магазин"
+                  : "Publisher or Shop"}
+              </SelectItem>
             </SelectContent>
           </Select>
         </li>
@@ -116,7 +157,11 @@ export default function UpdateForm({
           className="rounded py-[18px] px-[20px] text-textColor leading-5 border border-[rgba(44, 48, 51, 0.7)]"
           onClick={() => cancelSubmit()}
         >
-          Bekor qilish
+          {language === "uz"
+            ? "Bekor qilish"
+            : language === "ru"
+            ? "Отменить"
+            : "Cancel"}
         </button>
         <button
           className="rounded py-[18px] px-[35px] bg-primary text-white leading-5"
@@ -125,7 +170,11 @@ export default function UpdateForm({
             submit();
           }}
         >
-          Saqlash
+          {language === "uz"
+            ? "Tahrirlash"
+            : language === "ru"
+            ? "Редактировать"
+            : "Edit"}
         </button>
       </div>
     </>
