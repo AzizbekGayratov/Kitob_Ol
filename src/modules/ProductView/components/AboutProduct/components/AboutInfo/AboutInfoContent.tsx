@@ -9,8 +9,13 @@ export default function AboutInfoContent({ data }: { data: Book }) {
   return (
     <div className="sm:pt-10 pt-0 sm:px-10 px-4 pb-[50px]">
       <div className="flex flex-col gap-[14px] sm:mb-[28px] mb-10">
-        <span className="text-[#2F2F2F] text-[13px] leading-4">Narx</span>
-        <p className="text-xl leading-6 font-bold">{data.price} so'm</p>
+        <span className="text-[#2F2F2F] text-[13px] leading-4">
+          {language === "uz" ? "Narx" : language === "ru" ? "Цена" : "Price"}
+        </span>
+        <p className="text-xl leading-6 font-bold">
+          {data.price}{" "}
+          {language === "uz" ? "so'm" : language === "ru" ? "сум" : "soums"}
+        </p>
       </div>
       <ul className="grid xl:grid-cols-3 gap-y-4 sm:gap-x-5 gap-x-10 md:grid-cols-4 grid-cols-2">
         <li className="flex flex-col py-2 gap-1">
@@ -23,7 +28,11 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Tarjimon
+            {language === "uz"
+              ? "Tarjimon"
+              : language === "ru"
+              ? "Переводчик"
+              : "Translator"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.translator_name} {data.translator_surname}
@@ -31,7 +40,11 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Tili
+            {language === "uz"
+              ? "Til"
+              : language === "ru"
+              ? "Язык"
+              : "Language"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.language_name[language]}
@@ -39,7 +52,11 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Kategoriya
+            {language === "uz"
+              ? "Kategoriya"
+              : language === "ru"
+              ? "Категория"
+              : "Category"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.category_name[language]}
@@ -55,7 +72,11 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Nashriyot
+            {language === "uz"
+              ? "Nashriyot"
+              : language === "ru"
+              ? "Издательство"
+              : "Publisher"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.publisher_name}
@@ -63,15 +84,23 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Muqova
+            {language === "uz"
+              ? "Muqova"
+              : language === "ru"
+              ? "Обложка"
+              : "Cover"}
           </span>
-          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
+          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
             {data.cover_type}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Safiha
+            {language === "uz"
+              ? "Sahifa soni"
+              : language === "ru"
+              ? "Количество страниц"
+              : "Number of pages"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.total_pages}
@@ -79,15 +108,23 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Yozuvi
+            {language === "uz"
+              ? "Yozuvi"
+              : language === "ru"
+              ? "Тип написания"
+              : "Type of writing"}
           </span>
-          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
+          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
             {data.writing_type}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Holati
+            {language === "uz"
+              ? "Holati"
+              : language === "ru"
+              ? "Состояние"
+              : "Condition"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.is_new ? "Yangi" : "Foydalanilgan"}
@@ -95,7 +132,11 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Qog'oz formati
+            {language === "uz"
+              ? "Qog'oz formati"
+              : language === "ru"
+              ? "Формат обложки"
+              : "Cover format"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.cover_format}
@@ -103,7 +144,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Yili
+            {language === "uz" ? "Yili" : language === "ru" ? "Год" : "Year"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.published_year}
@@ -111,7 +152,12 @@ export default function AboutInfoContent({ data }: { data: Book }) {
         </li>
       </ul>
       <p className="sm:hidden text-[16px] leading-6 mt-5 text-right">
-        Ko'rilgan: {data.view_count}
+        {language === "uz"
+          ? "Ko'rilgan:"
+          : language === "ru"
+          ? "Просмотрено:"
+          : "Viewed"}{" "}
+        {data.view_count}
       </p>
     </div>
   );
