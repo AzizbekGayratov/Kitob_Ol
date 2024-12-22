@@ -6,6 +6,27 @@ export default function AboutInfoContent({ data }: { data: Book }) {
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
 
+  // Xolati
+  const isNewTrue =
+    language === "uz" ? "Yangi" : language === "ru" ? "Новое" : "New";
+  const isNewFalse =
+    language === "uz" ? "Eski" : language === "ru" ? "Старое" : "Old";
+
+  // cover
+  const hard =
+    language === "uz" ? "Qattiq" : language === "ru" ? "Жесткий" : "Hard";
+  const soft =
+    language === "uz" ? "Yumshoq" : language === "ru" ? "Мягкий" : "Soft";
+
+  // type
+  const latin =
+    language === "uz" ? "Lotin" : language === "ru" ? "Латинский" : "Latin";
+  const cyrillic =
+    language === "uz"
+      ? "Kirilcha"
+      : language === "ru"
+      ? "Кириллица"
+      : "Cyrillic";
   return (
     <div className="sm:pt-10 pt-0 sm:px-10 px-4 pb-[50px]">
       <div className="flex flex-col gap-[14px] sm:mb-[28px] mb-10">
@@ -13,14 +34,19 @@ export default function AboutInfoContent({ data }: { data: Book }) {
           {language === "uz" ? "Narx" : language === "ru" ? "Цена" : "Price"}
         </span>
         <p className="text-xl leading-6 font-bold">
-          {data.price}{" "}
+          {String(data.price).replace(/(\d)(?=(\d{3})+$)/g, "$1.")}
+          {""}{" "}
           {language === "uz" ? "so'm" : language === "ru" ? "сум" : "soums"}
         </p>
       </div>
       <ul className="grid xl:grid-cols-3 gap-y-4 sm:gap-x-5 gap-x-10 md:grid-cols-4 grid-cols-2">
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Muallif
+            {language === "uz"
+              ? "Muallif"
+              : language === "ru"
+              ? "Автор"
+              : "Author"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
             {data.author_name} {data.author_surname}
@@ -91,7 +117,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Cover"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {data.cover_type}
+            {data.cover_type === "hard" ? hard : soft}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -115,7 +141,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Type of writing"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {data.writing_type}
+            {data.writing_type === "latin" ? latin : cyrillic}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -127,7 +153,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Condition"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.is_new ? "Yangi" : "Foydalanilgan"}
+            {data.is_new ? isNewTrue : isNewFalse}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
