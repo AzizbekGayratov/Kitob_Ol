@@ -30,10 +30,9 @@ export default function BookViewPage({ data }: { data: BookProps }) {
               modules={[Navigation, Autoplay, A11y]}
               spaceBetween={50}
               slidesPerView={1}
-              navigation
+              navigation={false}
               style={{ zIndex: 0 }}
-              autoplay={{ delay: 2400 }}
-              // pagination={{ clickable: true }}
+              autoplay={{ delay: 1800 }}              
             >
               <SwiperSlide>
                 <img src={image} alt="img" className="w-full h-full" />
