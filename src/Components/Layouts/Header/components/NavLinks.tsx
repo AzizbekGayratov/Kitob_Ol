@@ -225,7 +225,11 @@ export default function NavLinks() {
                           </div>
                           <div>
                             <h3 className="text-primary font-Poppins font-medium">
-                              Anonym user
+                              {language === "uz"
+                                ? "Noma'lum foydalanuvchi"
+                                : language === "ru"
+                                ? "Неизвестный пользователь"
+                                : "Anonym user"}
                             </h3>
                             <p className="text-[14px] font-medium leading-4 opacity-80">
                               +998 xxx xx xx
@@ -241,7 +245,11 @@ export default function NavLinks() {
                             to="/authorization/phone"
                             className="block py-3 px-2 w-52"
                           >
-                            Avtorizatsiya
+                            {language === "uz"
+                              ? "Avtorizatsiya"
+                              : language === "ru"
+                              ? "Авторизация"
+                              : "Authorization"}
                           </NavLink>
                         </button>
 
@@ -250,7 +258,11 @@ export default function NavLinks() {
                           // onClick={() => setShowDropdown(!showDropdown)}
                         >
                           <NavLink to="/login" className="block py-3 px-2 w-52">
-                            Do'kon yoki Nashriyot
+                            {language === "uz"
+                              ? "Do’kon yoki nashriyot"
+                              : language === "ru"
+                              ? "Издательство или магазин"
+                              : "Publisher or Shop"}
                           </NavLink>
                         </button>
                       </div>

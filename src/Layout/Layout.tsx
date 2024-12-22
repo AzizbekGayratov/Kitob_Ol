@@ -72,6 +72,8 @@ const Layout = () => {
           const data = await response.json();
           dispatch(updateProfileData(data));
           window.sessionStorage.setItem("profile", JSON.stringify(data));
+        }else if (!response.ok) {
+          window.localStorage.removeItem("token");
         } else {
           const data = await response.json();
           if (data.details.includes("Token is expired")) {
