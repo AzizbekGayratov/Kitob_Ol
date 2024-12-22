@@ -11,7 +11,7 @@ export default function VacancyViewPage({ data }: { data: VacancyProps }) {
             {data.title}
           </h3>
         </Link>
-        <LikeBtn />
+        <LikeBtn bookId={data.id} />
       </div>
       <ul className="mt-2 mb-4 flex flex-col gap-1 pl-4 list-disc">
         <li className="text-[12px] leading-[15px] text-primary opacity-80">
