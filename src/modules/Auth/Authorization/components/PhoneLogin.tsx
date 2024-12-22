@@ -1,10 +1,14 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneNumberInput from "Components/Common/Input/PhoneNumberInput";
+import { useSelector } from "react-redux";
 
 export default function PhoneLogin() {
   const [phone, setPhone] = React.useState("+998");
   const navigate = useNavigate();
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   const submitData = (e: any) => {
     e.preventDefault();
@@ -65,7 +69,11 @@ export default function PhoneLogin() {
     >
       <div className="sm:p-10 sm:pb-[100px] p-4">
         <p className="text-base leading-[19px] font-light text-primary opacity-70 mb-[10px] sm:px-5">
-          Telefon raqamingizni kiriting*
+          {language === "uz"
+            ? "Telefon raqamingizni kiriting*"
+            : language === "ru"
+            ? "Введите свой номер телефона*"
+            : "Enter your phone number*"}
         </p>
         {/* <Input
           value={phone}
@@ -75,13 +83,17 @@ export default function PhoneLogin() {
         /> */}
         <PhoneNumberInput phone={phone} setPhone={setPhone} />
         <p className="text-base leading-[19px] font-light text-primary opacity-70 max-w-[280px] mt-4 sm:px-5">
-          Avtorizatsiya qilish uchun iltimos email manzilingizni kiriting!
+          {language === "uz"
+            ? "Avtorizatsiya qilish uchun iltimos telefon raqamingizni kiriting!"
+            : language === "ru"
+            ? "Пожалуйста, введите свой номер телефона для авторизации!"
+            : "Please enter your phone number for authorization!"}
         </p>
         <Link
           to="/"
           className="text-blue-400 text-xs inline-block mt-3 sm:px-2"
         >
-          Visit homepage
+          Kitobol.uz
         </Link>
       </div>
       <div className="grid grid-cols-1 sm:mt-0 mt-[350px]">
@@ -89,7 +101,11 @@ export default function PhoneLogin() {
           type="submit"
           className="bg-primary text-white py-[18px] text-base leading-[19px]"
         >
-          Keyingisi
+          {language === "uz"
+            ? "Keyingisi"
+            : language === "ru"
+            ? "Далее"
+            : "Next"}
         </button>
       </div>
     </form>

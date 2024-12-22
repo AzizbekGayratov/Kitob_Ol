@@ -2,9 +2,13 @@ import { Divider } from "@mui/material";
 import { Storage } from "../../../Services";
 import { useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Authorization() {
   const navigate = useNavigate();
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   useEffect(() => {
     if (Storage.get("token")) {
@@ -24,7 +28,13 @@ export default function Authorization() {
                 : "text-base leading-[19px] text-primary py-[18px]"
             }
           >
-            <button>Telefon raqam</button>
+            <button>
+              {language === "uz"
+                ? "Telefon raqami"
+                : language === "ru"
+                ? "Номер телефона"
+                : "Phone number"}
+            </button>
           </NavLink>
           <NavLink
             to="/authorization/email"
@@ -34,7 +44,13 @@ export default function Authorization() {
                 : "text-base leading-[19px] text-primary py-[18px]"
             }
           >
-            <button>Email</button>
+            <button>
+              {language === "uz"
+                ? "Email"
+                : language === "ru"
+                ? "Электронная почта"
+                : "Email"}
+            </button>
           </NavLink>
         </nav>
         <Divider sx={{ opacity: 0.2, backgroundColor: "#2C3033" }} />

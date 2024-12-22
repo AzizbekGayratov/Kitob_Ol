@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AuthOTP from "./AuthOTP";
 import { Storage } from "../../../../../Services";
+import { useSelector } from "react-redux";
 
 export default function AuthPhoneOTP() {
   const [otp, setOtp] = React.useState("");
@@ -9,7 +10,18 @@ export default function AuthPhoneOTP() {
   const [timer, setTimer] = React.useState(60); // Timer state
   const [isResending, setIsResending] = React.useState(false);
   const navigate = useNavigate();
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
+  const isResendProp =
+    language === "uz"
+      ? "Yuborilmoqda..."
+      : language === "ru"
+      ? "Отправляется..."
+      : "Sending...";
+  const nextProp =
+    language === "uz" ? "Keyingisi" : language === "ru" ? "Далее" : "Next";
   // Countdown Timer
   React.useEffect(() => {
     if (timer > 0) {
@@ -109,7 +121,11 @@ export default function AuthPhoneOTP() {
     >
       <div className="sm:p-10 sm:pb-[100px] p-4">
         <p className="text-base leading-[19px] font-light text-primary opacity-70 sm:mb-[30px] mb-[40px]">
-          Siz kiritgan telefon raqamiga kod yuborildi. Iltimos kodni kiriting!
+          {language === "uz"
+            ? "Siz kiritgan telefon raqamiga kod yuborildi. Iltimos kodni kiriting!"
+            : language === "ru"
+            ? "Код был отправлен на указанный вами номер телефона. Пожалуйста, введите код!"
+            : "A code has been sent to the phone number you entered. Please enter the code!"}
         </p>
         <AuthOTP otp={otp} setOtp={setOtp} />
         {error && <p className="text-red-500 mt-6">{error}</p>}
@@ -120,10 +136,18 @@ export default function AuthPhoneOTP() {
               onClick={resendOTP}
               role="button"
             >
-              Kodni qayta yuborish
+              {language === "uz"
+                ? "Kodni qayta yuborish"
+                : language === "ru"
+                ? "Отправить код повторно"
+                : "Resend code"}
             </span>
-          ) : (
+          ) : language === "uz" ? (
             `Kodni ${timer} sekunddan so'ng qayta yuborish`
+          ) : language === "ru" ? (
+            `Отправить код повторно через ${timer} секунд`
+          ) : (
+            `Resend code in ${timer} seconds`
           )}
         </p>
       </div>
@@ -136,14 +160,14 @@ export default function AuthPhoneOTP() {
           }}
           className="bg-primary bg-opacity-20 py-[18px] text-base leading-[19px]"
         >
-          Orqaga
+          {language === "uz" ? "Orqaga" : language === "ru" ? "Назад" : "Back"}
         </button>
         <button
           type="submit"
           className="bg-primary text-white py-[18px] text-base leading-[19px]"
           disabled={isResending}
         >
-          {isResending ? "Yuborilmoqda..." : "Keyingisi"}
+          {isResending ? isResendProp : nextProp}
         </button>
       </div>
     </form>
