@@ -1,12 +1,22 @@
+import { UpdateProfileProps } from "modules/Auth";
 import PhoneInput from "react-phone-number-input/input";
 
 export default function UpdatingProfileData({
   data,
   setData,
   submit,
-}: any) {
+}: {
+  data: UpdateProfileProps;
+  setData: React.Dispatch<React.SetStateAction<UpdateProfileProps>>;
+  submit: () => void;
+}) {
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+    >
       <ul className="profileWrapper">
         <li>
           <label htmlFor="user_name" className="form_label">
@@ -62,7 +72,7 @@ export default function UpdatingProfileData({
             name="user_phone"
             onChange={(value?: string | undefined) => {
               // bu yerda kichik muammo bulishi mumkun
-              setData({ ...data, phone_number: value });
+              setData({ ...data, phone_number: value as string });
             }}
             className="form_active_input"
             placeholder="+998 99 999 99 99"
@@ -87,10 +97,6 @@ export default function UpdatingProfileData({
         <li className="flex flex-col justify-end">
           <button
             className="rounded w-full py-[18px] px-[35px] bg-primary text-white leading-5"
-            onClick={(e) => {
-              e.preventDefault();
-              submit();
-            }}
             type="submit"
           >
             Yuborish

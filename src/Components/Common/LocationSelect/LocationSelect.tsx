@@ -92,10 +92,20 @@ export default function LocationSelect({
   };
 
   return (
-    <div className={`container ${isForHomePage && "px-0 mt-0"} bg-white ${padding}`}>
+    <div
+      className={`container ${
+        isForHomePage && "px-0 mt-0"
+      } bg-white ${padding}`}
+    >
       {showTitle && (
         <h4 className={stylesForLabel} style={{ marginBottom: "20px" }}>
-          <label htmlFor="location">Manzilni kiriting*</label>
+          <label htmlFor="location">
+            {language === "uz"
+              ? "Manzilni kiriting*"
+              : language === "ru"
+              ? "Введите адрес*"
+              : "Enter address*"}
+          </label>
         </h4>
       )}
 
@@ -121,7 +131,13 @@ export default function LocationSelect({
                 }}
                 value={location}
               >
-                <MenuItem value="Shaharni tanlang" disabled>Shaharni tanlang</MenuItem>
+                <MenuItem value="Shaharni tanlang" disabled>
+                  {language === "uz"
+                    ? "Shaharni tanlang"
+                    : language === "ru"
+                    ? "Выберите город"
+                    : "Select city"}
+                </MenuItem>
                 {cities.map((city) => (
                   <MenuItem key={city.id} value={city.name[language]}>
                     {city.name[language]}
@@ -136,7 +152,11 @@ export default function LocationSelect({
                 sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
               >
                 <InputLabel id="location_district_label">
-                  Tumanni tanlang
+                  {language === "uz"
+                    ? "Tumanini tanlang"
+                    : language === "ru"
+                    ? "Выберите район"
+                    : "Select district"}
                 </InputLabel>
                 <Select
                   labelId="location_district_label"
@@ -167,8 +187,22 @@ export default function LocationSelect({
               id="location"
               value={location}
             >
-              <option value="Shaharni tanlang" disabled hidden>
-                Shaharni tanlang
+              <option
+                value={
+                  language === "uz"
+                    ? "Shaharni tanlang"
+                    : language === "ru"
+                    ? "Выберите город"
+                    : "Select city"
+                }
+                disabled
+                hidden
+              >
+                {language === "uz"
+                  ? "Shaharni tanlang"
+                  : language === "ru"
+                  ? "Выберите город"
+                  : "Select city"}
               </option>
 
               {cities.length > 0 ? (
@@ -178,7 +212,13 @@ export default function LocationSelect({
                   </option>
                 ))
               ) : (
-                <option disabled>No cities available</option>
+                <option disabled>
+                  {language === "uz"
+                    ? "Shaharlar mavjud emas"
+                    : language === "ru"
+                    ? "Города не найдены"
+                    : "No cities available"}
+                </option>
               )}
             </select>
 
@@ -190,7 +230,11 @@ export default function LocationSelect({
                 value={selectedDistrict}
               >
                 <option value="" disabled hidden>
-                  Tumanni tanlang
+                  {language === "uz"
+                    ? "Tumanini tanlang"
+                    : language === "ru"
+                    ? "Выберите район"
+                    : "Select district"}
                 </option>
                 {districtList.length > 0 ? (
                   districtList.map((district) => (
@@ -199,7 +243,13 @@ export default function LocationSelect({
                     </option>
                   ))
                 ) : (
-                  <option disabled>No districts available</option>
+                  <option disabled>
+                    {language === "uz"
+                      ? "Shaharlar mavjud emas"
+                      : language === "ru"
+                      ? "Города не найдены"
+                      : "No cities available"}
+                  </option>
                 )}
               </select>
             )}

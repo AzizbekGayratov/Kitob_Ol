@@ -7,10 +7,13 @@ import {
   VacancyIcon,
 } from "assets/images/svg";
 import { useEffect } from "react";
-
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const location = useLocation();
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,7 +42,11 @@ const Home = () => {
                   className="hidden sm:block"
                 />
               )}
-              Kitoblar
+              {language === "uz"
+                ? "Kitoblar"
+                : language === "ru"
+                ? "Книги"
+                : "Books"}
             </NavLink>
           </button>
           <button>
@@ -60,7 +67,11 @@ const Home = () => {
                   className="hidden sm:block"
                 />
               )}
-              Ish
+              {language === "uz"
+                ? "Ish"
+                : language === "ru"
+                ? "Вакансия"
+                : "Vacancy"}
             </NavLink>
           </button>
         </div>
@@ -71,6 +82,5 @@ const Home = () => {
     </div>
   );
 };
-
 
 export default Home;

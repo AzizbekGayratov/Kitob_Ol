@@ -3,6 +3,7 @@ import { ImagePicker, UpdatingProfileData } from "./components";
 import { UpdateProfileProps } from "..";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ProfileProps } from "modules/Profile/Profile";
 
 export default function UpdateProfileData() {
   const email = window.sessionStorage.getItem("email");
@@ -10,7 +11,7 @@ export default function UpdateProfileData() {
   const { access_token } = JSON.parse(localStorage.getItem("token") || "");
 
   const { image_url: avatar } = useSelector(
-    (state: { project: { profile: any } }) => state.project.profile
+    (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
 
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ export default function UpdateProfileData() {
           window.sessionStorage.clear();
           navigate("/");
         } else {
+          const data = await response.json();
+          alert(data.message);
           throw new Error("Request failed");
         }
       } catch (error) {
@@ -79,12 +82,7 @@ export default function UpdateProfileData() {
           </button>
         </div>
         <ImagePicker data={data} setData={setData} />
-        <UpdatingProfileData
-          data={data}
-          setData={setData}
-          submit={submit}
-          reset={reset}
-        />
+        <UpdatingProfileData data={data} setData={setData} submit={submit} />
       </div>
     </div>
   );

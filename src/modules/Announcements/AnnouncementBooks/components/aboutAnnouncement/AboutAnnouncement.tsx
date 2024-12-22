@@ -254,14 +254,7 @@ export default function AboutAnnouncement({
               placeholder="Narx"
               onChange={handleInputChange}
               required
-              className="col-span-4 lg:col-span-5 form_input"
-            />
-
-            <SelectInput
-              name="bookCurrency"
-              id="bookCurrency"
-              className="px-2 col-span-2 lg:col-span-1"
-              options={customDatas.currencies}
+              className="col-span-6 lg:col-span-6 form_input"
             />
           </div>
         </FormContainer>

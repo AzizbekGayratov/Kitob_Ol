@@ -90,15 +90,15 @@ export default function AboutInfoContent({ data }: { data: Book }) {
             Holati
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.is_new ? "Yangi" : "Eski"}
+            {data.is_new ? "Yangi" : "Foydalanilgan"}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
           <span className="text-[#2F2F2F] sm:text-[13px] text-[11px] leading-4">
-            Holati
+            Qog'oz formati
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.is_new ? "Yangi" : "Eski"}
+            {data.cover_format}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">

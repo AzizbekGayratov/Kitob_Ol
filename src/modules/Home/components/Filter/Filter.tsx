@@ -88,7 +88,13 @@ export default function Filter() {
 
   return (
     <div className="bg-white rounded p-3 sm:p-5 lg:pl-10 lg:pr-[100px] mb-20 lg:pt-[35px] lg:pb-[60px]">
-      <h2 className="text-[28px] font-medium leading-[34px] mb-10">Filter</h2>
+      <h2 className="text-[28px] font-medium leading-[34px] mb-10">
+        {language === "uz"
+          ? "Filtrlash"
+          : language === "ru"
+          ? "Фильтровать"
+          : "Filter"}
+      </h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -98,7 +104,13 @@ export default function Filter() {
       >
         <div className="flex flex-col sm:gap-[34px] gap-2">
           <TextField
-            label="Kitob nomini kiriting"
+            label={
+              language === "uz"
+                ? "Kitob nomini kiriting"
+                : language === "ru"
+                ? "Введите название книги"
+                : "Enter the title of the book."
+            }
             variant="outlined"
             value={data.name}
             onChange={(e) => setData({ ...data, name: e.target.value })}
@@ -110,7 +122,11 @@ export default function Filter() {
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
           >
             <InputLabel id="books-category-select-label">
-              Kitob muallifi kiriting
+              {language === "uz"
+                ? "Kitob muallifi kiriting"
+                : language === "ru"
+                ? "Введите автора книги"
+                : "Enter the book's author."}
             </InputLabel>
             <Select
               labelId="books-author-select-label"
@@ -132,7 +148,13 @@ export default function Filter() {
             fullWidth
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
           >
-            <InputLabel id="books-category-select-label">Kategoriya</InputLabel>
+            <InputLabel id="books-category-select-label">
+              {language === "uz"
+                ? "Kategoriya"
+                : language === "ru"
+                ? "Категория"
+                : "Category"}
+            </InputLabel>
             <Select
               labelId="books-category-select-label"
               id="books-category-select"
@@ -155,7 +177,13 @@ export default function Filter() {
             fullWidth
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
           >
-            <InputLabel id="books-nashriyot-select-label">Nashriyot</InputLabel>
+            <InputLabel id="books-nashriyot-select-label">
+              {language === "uz"
+                ? "Nashriyot"
+                : language === "ru"
+                ? "Издательство"
+                : "Publisher"}
+            </InputLabel>
             <Select
               labelId="books-nashriyot-select-label"
               id="books-nashriyot-select"
@@ -171,14 +199,20 @@ export default function Filter() {
               })}
             </Select>
           </FormControl>
-          <SliderForPrice value={data} setValue={(setData as any)} />
+          <SliderForPrice value={data} setValue={setData as any} />
         </div>
         <div className="flex flex-col sm:gap-[34px] gap-2">
           <FormControl
             fullWidth
             sx={{ backgroundColor: "rgba(44, 48, 51,0.1)" }}
           >
-            <InputLabel id="books-til-select-label">Til</InputLabel>
+            <InputLabel id="books-til-select-label">
+              {language === "uz"
+                ? "Til"
+                : language === "ru"
+                ? "Язык"
+                : "Language"}
+            </InputLabel>
             <Select
               labelId="books-til-select-label"
               id="books-til-select"
@@ -213,7 +247,11 @@ export default function Filter() {
             className="text-white hover:bg-opacity-80 transition-opacity w-full text-center py-4 bg-primary rounded text-[20px] leading-[24px]"
             type="submit"
           >
-            Qidirish
+            {language === "uz"
+              ? "Qidirish"
+              : language === "ru"
+              ? "Поиск"
+              : "Search"}
           </button>
         </div>
       </form>
