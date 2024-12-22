@@ -226,9 +226,9 @@ export default function NavLinks() {
                           <div>
                             <h3 className="text-primary font-Poppins font-medium">
                               {language === "uz"
-                                ? "Noma'lum foydalanuvchi"
+                                ? "Noma'lum"
                                 : language === "ru"
-                                ? "Неизвестный пользователь"
+                                ? "Неизвестный"
                                 : "Anonym user"}
                             </h3>
                             <p className="text-[14px] font-medium leading-4 opacity-80">
@@ -261,7 +261,7 @@ export default function NavLinks() {
                             {language === "uz"
                               ? "Do’kon yoki nashriyot"
                               : language === "ru"
-                              ? "Издательство или магазин"
+                              ? "Издательство"
                               : "Publisher or Shop"}
                           </NavLink>
                         </button>
