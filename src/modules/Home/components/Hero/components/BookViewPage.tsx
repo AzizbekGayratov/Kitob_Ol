@@ -2,43 +2,60 @@ import { BookProps } from "../../Books";
 import { Link } from "react-router-dom";
 import LikeBtn from "../../LikeBtn";
 import { LogoSvg } from "assets/images/svg";
+import "./bookView.css";
+import { Navigation, A11y, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 export default function BookViewPage({ data }: { data: BookProps }) {
+  const image =
+    data.image_url.slice(0, 5) === "https" ? data.image_url : LogoSvg;
+
+  const subImage = data.img_url.slice(0, 5) === "https" ? data.img_url : null;
+
   return (
-    <div className="rounded bg-white flex flex-col justify-between ">
-      <div className="h-[260px]">
-        {data.image_url &&
-        data.image_url[0] +
-          data.image_url[1] +
-          data.image_url[2] +
-          data.image_url[3] +
-          data.image_url[4] ===
-          "https" ? (
-          <img
-            src={data.image_url}
-            alt="oynani oldida ochiq turgan kitob"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="bg-[#2C30330D] h-[260px]">
-            <img src={LogoSvg} alt="logo image"  className="w-full h-full"/>
+    <div className="property-card border shadow-lg">
+      <Link to={`/product/${data.id}`}>
+        <div
+          className="property-image"
+          style={{
+            backgroundImage: `url(${LogoSvg})`,
+          }}
+        >
+          <div className="property-image-title">
+            <Swiper
+              modules={[Navigation, Autoplay, A11y]}
+              spaceBetween={50}
+              slidesPerView={1}
+              navigation
+              style={{ zIndex: 0 }}
+              autoplay={{ delay: 2400 }}
+              // pagination={{ clickable: true }}
+            >
+              <SwiperSlide>
+                <img src={image} alt="img" className="w-full h-full" />
+              </SwiperSlide>
+              {subImage && (
+                <SwiperSlide>
+                  <img src={subImage} alt="img" className="w-full h-full" />
+                </SwiperSlide>
+              )}
+            </Swiper>
           </div>
-        )}
-      </div>
-      <div className="pb-8 pt-4 pl-5 pr-4">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <Link to={`/product/${data.id}`}>
-              <h3 className="text-primary font-medium text-xl leading-5">
-                {data.title}
-              </h3>
-            </Link>
-          </div>
-          <LikeBtn />
         </div>
-        <span className="text-[#CE3738] text-2xl font-semibold leading-7">
-          {data.price} so'm
-        </span>
+      </Link>
+      <div className="property-description">
+        <h5>{data.title}</h5>
+        <p>
+          {String(data.price).replace(/(\d)(?=(\d{3})+$)/g, "$1.")}{""}
+          uzs
+        </p>
+      </div>
+      <div className="property-social-icons">
+        <LikeBtn bookId={data.id} />
       </div>
     </div>
   );
