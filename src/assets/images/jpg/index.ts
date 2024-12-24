@@ -1,4 +1,3 @@
-import perCard from "./perCard.jpg";
-import evenlyCard from "./perCard2.jpg";
+import AnnoymouseUser from "./annoymouse_user.jpg";
 
-export { perCard, evenlyCard };
+export { AnnoymouseUser };

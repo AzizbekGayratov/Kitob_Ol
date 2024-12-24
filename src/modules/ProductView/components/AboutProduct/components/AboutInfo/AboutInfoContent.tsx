@@ -1,3 +1,4 @@
+import { ToCyrillic } from "lib/utils";
 import { Book } from "modules/ProductView/ProductView";
 import { useSelector } from "react-redux";
 
@@ -34,7 +35,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
           {language === "uz" ? "Narx" : language === "ru" ? "Цена" : "Price"}
         </span>
         <p className="text-xl leading-6 font-bold">
-          {String(data.price).replace(/(\d)(?=(\d{3})+$)/g, "$1.")}
+          {String(data?.price).replace(/(\d)(?=(\d{3})+$)/g, "$1.")}
           {""}{" "}
           {language === "uz" ? "so'm" : language === "ru" ? "сум" : "soums"}
         </p>
@@ -48,8 +49,8 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               ? "Автор"
               : "Author"}
           </span>
-          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.author_name} {data.author_surname}
+          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
+            {ToCyrillic(data?.author_name)} {ToCyrillic(data?.author_surname)}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -60,8 +61,8 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               ? "Переводчик"
               : "Translator"}
           </span>
-          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.translator_name} {data.translator_surname}
+          <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
+            {ToCyrillic(data?.translator_name)} {ToCyrillic(data?.translator_surname)}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -73,7 +74,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Language"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.language_name[language]}
+            {data?.language_name[language]}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -85,7 +86,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Category"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.category_name[language]}
+            {data?.category_name[language]}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -93,7 +94,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
             ISBN(ID)
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.shitrix_code}
+            {data?.shitrix_code}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -105,7 +106,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Publisher"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.publisher_name}
+            {data?.publisher_name}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -117,7 +118,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Cover"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {data.cover_type === "hard" ? hard : soft}
+            {data?.cover_type === "hard" ? hard : soft}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -129,7 +130,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Number of pages"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.total_pages}
+            {data?.total_pages}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -141,7 +142,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Type of writing"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {data.writing_type === "latin" ? latin : cyrillic}
+            {data?.writing_type === "latin" ? latin : cyrillic}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -153,7 +154,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Condition"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.is_new ? isNewTrue : isNewFalse}
+            {data?.is_new ? isNewTrue : isNewFalse}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -165,7 +166,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Cover format"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.cover_format}
+            {data?.cover_format}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -173,7 +174,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
             {language === "uz" ? "Yili" : language === "ru" ? "Год" : "Year"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold">
-            {data.published_year}
+            {data?.published_year}
           </p>
         </li>
       </ul>
@@ -183,7 +184,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
           : language === "ru"
           ? "Просмотрено:"
           : "Viewed"}{" "}
-        {data.view_count}
+        {data?.view_count}
       </p>
     </div>
   );

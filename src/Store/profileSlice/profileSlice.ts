@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AnnoymouseUser } from "assets/images/jpg";
 
 const profileSlice = createSlice({
   name: "project",
@@ -8,8 +9,7 @@ const profileSlice = createSlice({
       email: "",
       first_name: "",
       id: "",
-      image_url:
-        "https://images.axadjonovsardorbek.uz/kitobol/annoymouse_user.jpg",
+      image_url: AnnoymouseUser || "",
       last_name: "",
       phone_number: "+998",
       role: "",

@@ -96,14 +96,7 @@ export default function AboutVacancy({
               placeholder="700 dan"
               onChange={handleInputChange}
               required
-              className="col-span-4 lg:col-span-5"
-            />
-
-            <SelectInput
-              name="salary_from"
-              id="salary_from"
-              className="px-2 col-span-2 lg:col-span-1"
-              options={customDatas.currencies}
+              className="col-span-6 lg:col-span-6"
             />
           </div>
         </FormContainer>
@@ -118,14 +111,7 @@ export default function AboutVacancy({
               placeholder="1200 gacha"
               onChange={handleInputChange}
               required
-              className="col-span-4 lg:col-span-5"
-            />
-
-            <SelectInput
-              name="salary_to"
-              id="salary_to"
-              className="px-2 col-span-2 lg:col-span-1"
-              options={customDatas.currencies}
+              className="col-span-6 lg:col-span-6"
             />
           </div>
         </FormContainer>

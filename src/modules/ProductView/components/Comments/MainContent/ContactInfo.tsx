@@ -1,4 +1,5 @@
 import api from "Services/Api";
+import { AnnoymouseUser } from "assets/images/jpg";
 import { languagesType } from "modules/Announcements/types/Types";
 import { PublisherProps } from "modules/ProductView/ProductView";
 import { useEffect, useState } from "react";
@@ -44,19 +45,19 @@ export default function ContactInfo({ data }: { data: PublisherProps }) {
   return (
     <div className="flex flex-col md:flex-row items-center gap-5">
       <div className="sm:size-[120px] size-[100px] overflow-hidden rounded-full">
-        <img src={data.image_url} alt="user avatar" />
+        <img src={data?.image_url || AnnoymouseUser} alt="user avatar" />
       </div>
 
       <address className="flex flex-col pt-[10px] pb-4 gap-[10px] text-center md:text-left">
         <p className="text-[#2C3033] font-semibold text-lg md:text-base">
-          {data.name}
+          {data?.name}
         </p>
         <span className="text-[#2C3033] opacity-70">
           {city?.[language]}, {district?.[language]}
         </span>
 
         <Input
-          value={data.phone_number}
+          value={data?.phone_number}
           disabled
           id="user_phone"
           name="user_phone"

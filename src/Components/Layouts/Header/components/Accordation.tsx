@@ -16,6 +16,7 @@ import { DropDownType } from "modules/Announcements/types/Types";
 import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
 
 export default function Accordation() {
+  // const isAuthorized = Storage.get("token") || Storage.get("publisher_token"); ====> it is for publisher
   const isAuthorized = Storage.get("token");
 
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function Accordation() {
   const { language } = useSelector(
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
+  
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);

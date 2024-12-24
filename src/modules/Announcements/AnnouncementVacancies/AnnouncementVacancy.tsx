@@ -28,7 +28,7 @@ function AnnouncementVacancy() {
   const [reset, setReset] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const token = Storage.get("token");
+  const token = Storage.get("publisher_token");
   let access_token = token ? JSON.parse(token).access_token : "";
   console.log(access_token);
 
@@ -52,9 +52,12 @@ function AnnouncementVacancy() {
         },
       });
 
-      resetForm();
-
-      console.log("Submission successful:", response.data);
+      if (response.data) {
+        resetForm();
+        console.log("Submission successful:", response.data);
+      }else if (response.status === 400) {
+        
+      }
     } catch (error) {
       console.error("Submission failed:", error);
     }
