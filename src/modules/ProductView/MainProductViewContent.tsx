@@ -1,21 +1,22 @@
 import { SwiperComponent } from "./components/SwiperSection";
 import { About } from "./components/AboutProduct";
 import Connect from "./components/Comments/MainContent/Connect";
-import { Book, PublisherProps } from "./ProductView";
+import { Book } from "./ProductView";
+import SellerList from "./components/SellerList/SellerList";
 
 export default function MainProductViewContent({
   data,
-  publisher,
+  list,
 }: {
   data: Book;
-  publisher: PublisherProps;
+  list: Book[];
 }) {
-
   return (
     <>
       <SwiperComponent data={data} />
       <About data={data} />
-      <Connect publisher={publisher} />
+      <Connect publisher={data} />
+      <SellerList data={list} bookId={data?.id} />
     </>
   );
 }

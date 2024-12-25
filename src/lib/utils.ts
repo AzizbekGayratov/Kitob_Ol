@@ -40,6 +40,7 @@ export function ToCyrillic(text: string) {
     { latin: /f/gi, cyrillic: "ф" },
     { latin: /h/gi, cyrillic: "х" },
     { latin: /j/gi, cyrillic: "дж" },
+    // { latin: /hn/gi, cyrillic: " н" },
   ];
 
   // Replace each Latin sequence with its Cyrillic counterpart

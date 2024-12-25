@@ -3,6 +3,7 @@ import { BreadCrumbComponent, MobileBreadCrumb } from "./components/BreadCrumb";
 import { useEffect, useMemo, useState } from "react";
 import api from "Services/Api";
 import MainProductViewContent from "./MainProductViewContent";
+import { Loading } from "Components/Common/Loading";
 
 export interface Book {
   author_id: string;
@@ -58,36 +59,35 @@ export interface Book {
   writing_type: string;
 }
 
-export interface PublisherProps {
-  email: string;
-  id: string;
-  image_url: string;
-  location: {
-    city_id: string;
-    district_id: string;
-  };
-  name: string;
-  phone_number: string;
-  status: boolean;
-  type: string;
-}
+// export interface PublisherProps {
+//   email: string;
+//   id: string;
+//   image_url: string;
+//   location: {
+//     city_id: string;
+//     district_id: string;
+//   };
+//   name: string;
+//   phone_number: string;
+//   status: boolean;
+//   type: string;
+// }
 
 export default function ProductView() {
   const { name } = useParams();
   const [data, setData] = useState<Book | null>(null);
-  const [publisher, setPublisher] = useState<PublisherProps | null>(null);
+  const [list, setList] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const getProductPublisher = async (id: string) => {
+  const GetSellerBookList = async (id: string) => {
     try {
-      const response = await api.get("/publishers/get", {
+      const response = await api.get("/books/list", {
         params: {
-          id,
+          seller_id: id,
         },
       });
-
       if (response.data) {
-        setPublisher(response.data);
+        setList(response.data.books);
       }
     } catch (error) {
       console.error(error);
@@ -106,11 +106,11 @@ export default function ProductView() {
 
         if (response.data) {
           setData(response.data);
-          await getProductPublisher(response.data.publisher_id);
+          await GetSellerBookList(response?.data?.seller_id);
         }
       } catch (error) {
         console.error(error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -118,13 +118,12 @@ export default function ProductView() {
   }, []);
 
   const memoizedData = useMemo(() => data, [data]);
-  const memoizedPublisher = useMemo(() => publisher, [publisher]);
+  const memoizedList = useMemo(() => list, [list]);
   const title = useMemo(() => data?.title || "Loading...", [data?.title]);
-  
-   if (loading) {
-     return <div>Loading...</div>;
-   }
 
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="max-w-[1380px] mx-auto pb-10">
@@ -132,10 +131,7 @@ export default function ProductView() {
         <BreadCrumbComponent name={title as string} />
         <MobileBreadCrumb name={title as string} />
       </>
-      <MainProductViewContent
-        data={memoizedData as Book}
-        publisher={memoizedPublisher as PublisherProps}
-      />
+      <MainProductViewContent data={memoizedData as Book} list={memoizedList} />
     </div>
   );
 }

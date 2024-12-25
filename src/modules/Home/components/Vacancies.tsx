@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { VacancyViewPage } from "./Hero/components";
 import Loading from "./Loading";
-import NotFound from "./NotFound";
+import NotFound from "Components/Common/NotFound/NotFoundItems";
 
 export interface VacancyProps {
   created_at: string;
@@ -64,13 +64,15 @@ export default function Vacancies() {
   }, [dispatch, vacancyFilter, currentPage]); // Re-run when filters or page changes
 
   return (
-    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-4">
+    <div>
       {loading ? (
         <Loading />
       ) : vacancies ? (
-        vacancies.map((vacancy) => (
-          <VacancyViewPage key={vacancy.id} data={vacancy} />
-        ))
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-4">
+          {vacancies.map((vacancy) => (
+            <VacancyViewPage key={vacancy.id} data={vacancy} />
+          ))}
+        </div>
       ) : (
         <NotFound />
       )}

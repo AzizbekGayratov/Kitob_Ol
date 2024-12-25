@@ -1,11 +1,12 @@
+import { Loading } from "Components/Common/Loading";
 import Routes from "./Routes/index";
 import { Suspense } from "react";
-import { Loader } from "./Components/index.ts";
 import { RouterProvider } from "react-router-dom";
+
 
 const App = () => {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loading />}>
       <RouterProvider router={Routes} />
     </Suspense>
   );

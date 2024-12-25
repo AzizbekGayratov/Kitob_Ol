@@ -1,8 +1,8 @@
-import { PublisherProps } from "modules/ProductView/ProductView";
+import { Book } from "modules/ProductView/ProductView";
 import { TitleBar } from "../../../../../Components/Common";
 import MainContent from "../MainContent";
 import { useSelector } from "react-redux";
-export default function Connect({ publisher }: { publisher: PublisherProps }) {
+export default function Connect({ publisher }: { publisher: Book }) {
   const { language } = useSelector(
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
