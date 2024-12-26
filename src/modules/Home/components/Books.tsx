@@ -3,9 +3,8 @@ import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { BookViewPage } from "./Hero/components";
-import Loading from "./Loading";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
-
+import HomePageLoader from "./HomePageLoader";
 
 export interface BookProps {
   author_id: string;
@@ -79,9 +78,9 @@ export default function Books() {
   return (
     <>
       {loading ? (
-        <Loading />
+        <HomePageLoader />
       ) : books ? (
-        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-6">
           {books.map((book) => (
             <BookViewPage key={book.id} data={book} />
           ))}{" "}

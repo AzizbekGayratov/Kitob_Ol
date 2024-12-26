@@ -3,8 +3,8 @@ import api from "Services/Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { VacancyViewPage } from "./Hero/components";
-import Loading from "./Loading";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
+import HomePageLoader from "./HomePageLoader";
 
 export interface VacancyProps {
   created_at: string;
@@ -66,7 +66,7 @@ export default function Vacancies() {
   return (
     <div>
       {loading ? (
-        <Loading />
+        <HomePageLoader />
       ) : vacancies ? (
         <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-4">
           {vacancies.map((vacancy) => (
