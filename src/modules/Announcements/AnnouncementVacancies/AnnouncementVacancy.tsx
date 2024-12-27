@@ -14,8 +14,8 @@ const initialJobForm = {
   salary_from: 0,
   salary_to: 0,
   // typeOfTraining: "",
-  working_types: "",
-  working_styles: "",
+  working_types: "full_time" || "part_time",
+  working_styles: "remote" || "offline" || "hybrid",
   phone_number: "",
   location: {
     city_id: "",
@@ -29,7 +29,7 @@ function AnnouncementVacancy() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const token = Storage.get("publisher_token");
-  let access_token = token ? JSON.parse(token).access_token : "";
+  let access_token = token ? JSON.parse(token).refresh_token : "";
   console.log(access_token);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,8 +55,7 @@ function AnnouncementVacancy() {
       if (response.data) {
         resetForm();
         console.log("Submission successful:", response.data);
-      }else if (response.status === 400) {
-        
+      } else if (response.status === 400) {
       }
     } catch (error) {
       console.error("Submission failed:", error);

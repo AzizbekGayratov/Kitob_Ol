@@ -80,6 +80,8 @@ const navLinksData: Props[] = [
 export default function NavLinks() {
   const location = useLocation();
   const isAuthorized = Storage.get("token");
+  const isPublisher = Storage.get("publisher_token");
+  
 
   const dispatch = useDispatch();
   const { language } = useSelector(
@@ -181,7 +183,7 @@ export default function NavLinks() {
             </>
           ) : (
             <>
-              {isAuthorized ? (
+              {isAuthorized || isPublisher ? (
                 <button className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
                   <NavLink
                     to={item.href}

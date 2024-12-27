@@ -22,7 +22,7 @@
 
 .property-card {
   height: 24em;
-  width: 312px;
+  /* width: 312px; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -46,7 +46,7 @@
 
 .property-image {
   height: 15em;
-  width: 312px;
+  width: 100%;
   /* padding: 1em 2em; */
   position: Absolute;
   top: 0px;
@@ -63,7 +63,7 @@
 .property-description {
   background-color: #f8f8f8;
   height: 160px;
-  width: 312px;
+  width: 100%;
   position: absolute;
   bottom: 0em;
   -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);

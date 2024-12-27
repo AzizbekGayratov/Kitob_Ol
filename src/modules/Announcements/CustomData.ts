@@ -51,32 +51,36 @@ export const customDatas = {
   ],
   working_types: [
     {
+      id: "full_time",
+      name: "Full time",
+    },
+    {
+      id: "part_time",
+      name: "Part time",
+    },
+  ],
+  working_styles: [
+    {
+      id: "remote",
+      name: "Remote",
+    },
+    {
+      id: "offline",
+      name: "Offline",
+    },
+    {
+      id: "hybrid",
+      name: "Hybrid",
+    },
+  ],
+  typeOfTraining: [
+    {
       id: "online",
       name: "Online",
     },
     {
       id: "offline",
       name: "Offline",
-    },
-  ],
-  working_styles: [
-    {
-      id: "doimiy",
-      name: "Doimiy",
-    },
-    {
-      id: "vaqtincha",
-      name: "Vaqtincha",
-    },
-  ],
-  typeOfTraining: [
-    {
-      id: "fullTime",
-      name: "To'liq ish kuni",
-    },
-    {
-      id: "partTime",
-      name: "Ma'lum soatlarda",
     },
   ],
 };
