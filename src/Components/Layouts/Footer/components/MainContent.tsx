@@ -35,10 +35,10 @@ export default function MainContent() {
           <a href="#">
             {" "}
             {language === "uz"
-              ? "Ommaviy oferta"
+              ? "Sayt haqida"
               : language === "ru"
-              ? "Публичная оферта"
-              : "Public offer"}
+              ? "О сайте"
+              : "About the site"}
           </a>
         </li>
         <li>
