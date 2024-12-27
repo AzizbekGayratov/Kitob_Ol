@@ -21,7 +21,7 @@ export interface FormDataType {
   image_url: string;
   img_url: string;
   stock: number; // new field
-  sellerId: string;
+  seller_id: string;
 }
 export interface initialJobForm {
   description: string;

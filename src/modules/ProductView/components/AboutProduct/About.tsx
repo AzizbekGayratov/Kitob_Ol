@@ -22,7 +22,7 @@ export default function About({ data }: { data: Book }) {
           </h3>
         </div>
         <div className="sm:pt-10 pt-5 sm:pl-9 sm:pr-[20px] px-4 sm:pb-[55px] pb-10 flex flex-col sm:gap-9 gap-5">
-          <p className="opacity-80 sm:text-[18px] sm:leading-[28px] text-[15px] leading-6">
+          <p className="opacity-80 sm:text-[18px] sm:leading-[28px] text-[15px] leading-6 overflow-clip">
             {language === "ru"
               ? ToCyrillic(data?.description)
               : data?.description}

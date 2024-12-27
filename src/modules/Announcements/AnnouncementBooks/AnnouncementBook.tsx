@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import AnnouncementPreviewModal from "../components/announcementPreview/AnnouncementPreviewModal";
 import { useSelector } from "react-redux";
 
-
 const initialForm: FormDataType = {
   author_id: "",
   category_id: "",
@@ -32,7 +31,7 @@ const initialForm: FormDataType = {
   total_pages: null,
   translator_id: "",
   writing_type: "",
-  sellerId:  "",
+  seller_id: "",
 };
 
 function AnnouncementBook() {
@@ -61,12 +60,10 @@ function AnnouncementBook() {
     ? JSON.parse(user_token).access_token
     : "";
 
-  const publisherToken = window.sessionStorage.getItem("profile");  
-  formData.sellerId = publisherToken
-    ? JSON.parse(publisherToken).id
-    : "";
+  const publisherToken = window.sessionStorage.getItem("profile");
+  formData.seller_id = publisherToken ? JSON.parse(publisherToken).id : "";
 
-  console.log(`Seller id: ${formData.sellerId}`);
+  console.log(`Seller id: ${formData.seller_id}`);
   console.log(`User id: ${user_access_token}`);
 
   const fetchFromId = async ({

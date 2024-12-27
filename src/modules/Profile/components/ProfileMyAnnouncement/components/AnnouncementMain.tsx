@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import ListOfAnnouncements from "./ListOfAnnouncements";
 import api from "Services/Api";
 import { BookProps } from "modules/Home/components/Books";
-import { useSelector } from "react-redux";
+import { NotFoundItems } from "Components/Common";
 
 export default function AnnouncementMain() {
   const [data, setData] = useState<BookProps[]>([]);
-  const { language } = useSelector(
-    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,13 +39,7 @@ export default function AnnouncementMain() {
             ))}
           </>
         ) : (
-          <p className="text-2xl text-red-500 font-black text-center">
-            {language === "uz"
-              ? "E'lonlar mavjud emas"
-              : language === "ru"
-              ? "Объявления отсутствуют"
-              : "No announcements"}
-          </p>
+          <NotFoundItems />
         )}
       </ul>
     </div>

@@ -126,7 +126,7 @@ export default function ProductView() {
   }
 
   return (
-    <div className="max-w-[1380px] mx-auto pb-10">
+    <div className="max-w-[1380px] mx-auto pb-10 container">
       <>
         <BreadCrumbComponent name={title as string} />
         <MobileBreadCrumb name={title as string} />

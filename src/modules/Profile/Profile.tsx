@@ -18,7 +18,7 @@ export default function Profile() {
   }, []);
   
   return (
-    <div className="py-10">
+    <div className="py-10 container">
       <ProfileForm />
       <MyAnnouncement />
     </div>
