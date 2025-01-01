@@ -45,10 +45,10 @@ export default function MainContent() {
           <a href="#">
             {" "}
             {language === "uz"
-              ? "Sayt haqida"
+              ? "Yo'riqnoma"
               : language === "ru"
-              ? "О сайте"
-              : "About the site"}
+              ? "Инструкция"
+              : "Guide"}
           </a>
         </li>
       </ul>

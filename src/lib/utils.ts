@@ -1,10 +1,9 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
-
 
 export function ToCyrillic(text: string) {
   // Mapping of Latin letters/groups to Cyrillic equivalents
@@ -49,4 +48,11 @@ export function ToCyrillic(text: string) {
   });
 
   return text;
-} 
+}
+
+export const AddDotsToValue = (value: string | number, IsNumber?: boolean) => {
+  if (IsNumber) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};

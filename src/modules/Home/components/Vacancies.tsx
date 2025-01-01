@@ -7,15 +7,24 @@ import NotFound from "Components/Common/NotFound/NotFoundItems";
 import HomePageLoader from "./HomePageLoader";
 
 export interface VacancyProps {
+  city_id: string;
+  city_name: {
+    en: string;
+    ru: string;
+    uz: string;
+  };
   created_at: string;
   description: string;
-  id: string;
-  location: {
-    city_id: string;
-    district_id: string;
+  district_id: string;
+  district_name: {
+    en: string;
+    ru: string;
+    uz: string;
   };
+  id: string;
   phone_number: string;
   publisher_id: string;
+  publisher_name: string;
   salary_from: number;
   salary_to: number;
   status: string;

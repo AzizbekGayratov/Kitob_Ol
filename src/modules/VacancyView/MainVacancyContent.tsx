@@ -1,19 +1,19 @@
-import AboutJob from "./components/AboutJob";
-import AboutPart from "./components/AboutJobPart";
-import Tavsif from "./components/Tavsif";
+import { VacancyProps } from "modules/Home/components/Vacancies";
+import { Description, PublisherInfo, VacancyInfo } from "./components";
 
-export default function MainVacancyContent() {
-  return (
+export default function MainVacancyContent({
+  data,
+}: {
+  data: VacancyProps;
+}) {
+    return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 w-full gap-x-2 mb-10">
-        <div className="col-span-2">
-          <AboutJob />
-        </div>
-        <div className="col-span-1">
-          <AboutPart />
-        </div>
+      <div className="flex gap-2">
+        <VacancyInfo data={data} />
+        <PublisherInfo data={data} isForMobile={false} />
       </div>
-      <Tavsif />
+      {/* <Description data={data} /> */}
+      <PublisherInfo data={data} isForMobile={true} />
     </>
   );
 }

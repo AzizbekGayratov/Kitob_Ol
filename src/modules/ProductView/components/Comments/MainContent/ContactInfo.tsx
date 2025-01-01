@@ -45,8 +45,8 @@ export default function ContactInfo({ data }: { data: Book }) {
   return (
     <div className="flex flex-col md:flex-row items-center gap-5">
       <div className="sm:size-[120px] size-[100px] overflow-hidden rounded-full">
-        {/* <img src={data?.image_url || AnnoymouseUser} alt="user avatar" /> */}
-        <img src={AnnoymouseUser} alt="user avatar" />
+        <img src={data?.image_url || AnnoymouseUser} alt="user avatar" />
+        {/* <img src={AnnoymouseUser} alt="user avatar" /> */}
       </div>
 
       <address className="flex flex-col pt-[10px] pb-4 gap-[10px] text-center md:text-left">

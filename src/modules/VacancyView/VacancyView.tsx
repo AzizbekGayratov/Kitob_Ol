@@ -4,30 +4,35 @@ import { useEffect, useMemo, useState } from "react";
 import { Loading } from "Components/Common/Loading";
 import { VacancyProps } from "modules/Home/components/Vacancies";
 import api from "Services/Api";
+import {
+  BreadCrumbComponent,
+  MobileBreadCrumb,
+} from "modules/ProductView/components/BreadCrumb";
 
 export default function VacancyView() {
   const { name } = useParams();
   const [data, setData] = useState<VacancyProps | null>(null);
-  
-  // List da shu publisherni boshqa e'lonlari chiqadi shu sabab hali qilmay turing, hozircha shu ma'lumotlarni interface'ga chiqarish kerak va stillarni moslab tug'irlab qo'ying
-  // const [list, setList] = useState<VacancyProps[]>([]);
-  
+  const [list, setList] = useState<VacancyProps[]>([]);
+
   const [loading, setLoading] = useState(true);
 
-  // const GetSellerBookList = async (id: string) => {
-  //   try {
-  //     const response = await api.get("/vacancies/list", {
-  //       params: {
-  //         // seller_id: id,
-  //       },
-  //     });
-  //     if (response.data) {
-  //       setList(response.data.books);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const getPublisherOtherVacancies = async (id: string) => {
+    try {
+      const response = await api.get("/vacancies/list", {
+        params: {
+          publisher_id: id,
+          limit: 3,
+        },
+        
+      });
+      
+      if (response.data) {
+        setList(response.data.vacancies);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +46,7 @@ export default function VacancyView() {
 
         if (response.data) {
           setData(response.data);
-          // await GetSellerBookList(response?.data?.seller_id);
+          await getPublisherOtherVacancies(response?.data?.publisher_id);
         }
       } catch (error) {
         console.error(error);
@@ -53,9 +58,11 @@ export default function VacancyView() {
   }, []);
 
   const memoizedData = useMemo(() => data, [data]);
-  // const memoizedList = useMemo(() => list, [list]);
+  const memoizedList = useMemo(() => list, [list]);
   const title = useMemo(() => data?.title || "Loading...", [data?.title]);
 
+  console.log(memoizedList);
+  
   console.log({
     memoizedData,
     title,
@@ -67,8 +74,11 @@ export default function VacancyView() {
 
   return (
     <div className="container">
-      <p className="">{name}</p>
-      <MainVacancyContent />
+      <>
+        <BreadCrumbComponent name={title as string} />
+        <MobileBreadCrumb name={title as string} />
+      </>
+      <MainVacancyContent data={memoizedData as VacancyProps} />
     </div>
   );
 }
