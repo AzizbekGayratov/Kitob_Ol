@@ -12,7 +12,7 @@ export default function MainVacancyContent({
         <VacancyInfo data={data} />
         <PublisherInfo data={data} isForMobile={false} />
       </div>
-      {/* <Description data={data} /> */}
+      <Description data={data} />
       <PublisherInfo data={data} isForMobile={true} />
     </>
   );
