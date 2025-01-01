@@ -1,12 +1,19 @@
 import { VacancyProps } from "modules/Home/components/Vacancies";
-import { Description, PublisherInfo, VacancyInfo } from "./components";
+import {
+  Description,
+  PublisherInfo,
+  PublisherList,
+  VacancyInfo,
+} from "./components";
 
 export default function MainVacancyContent({
   data,
+  list,
 }: {
   data: VacancyProps;
+  list: VacancyProps[];
 }) {
-    return (
+  return (
     <>
       <div className="flex gap-2">
         <VacancyInfo data={data} />
@@ -14,6 +21,7 @@ export default function MainVacancyContent({
       </div>
       <Description data={data} />
       <PublisherInfo data={data} isForMobile={true} />
+      <PublisherList data={list} />
     </>
   );
 }

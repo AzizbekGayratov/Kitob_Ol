@@ -23,9 +23,8 @@ export default function VacancyView() {
           publisher_id: id,
           limit: 3,
         },
-        
       });
-      
+
       if (response.data) {
         setList(response.data.vacancies);
       }
@@ -62,7 +61,7 @@ export default function VacancyView() {
   const title = useMemo(() => data?.title || "Loading...", [data?.title]);
 
   console.log(memoizedList);
-  
+
   console.log({
     memoizedData,
     title,
@@ -78,7 +77,10 @@ export default function VacancyView() {
         <BreadCrumbComponent name={title as string} />
         <MobileBreadCrumb name={title as string} />
       </>
-      <MainVacancyContent data={memoizedData as VacancyProps} />
+      <MainVacancyContent
+        data={memoizedData as VacancyProps}
+        list={memoizedList}
+      />
     </div>
   );
 }
