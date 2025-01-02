@@ -77,7 +77,7 @@ export default function Vacancies() {
       {loading ? (
         <HomePageLoader />
       ) : vacancies ? (
-        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-4">
+        <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-2">
           {vacancies.map((vacancy) => (
             <VacancyViewPage key={vacancy.id} data={vacancy} />
           ))}

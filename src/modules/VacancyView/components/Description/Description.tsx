@@ -7,7 +7,7 @@ export default function Description({ data }: { data: VacancyProps }) {
   );
 
   return (
-    <div className="bg-white mt-10 mb-10 sm:mb-[100px]">
+    <div className="bg-white mt-10 mb-10 desktop:mb-[100px]">
       <div className="px-4 sm:px-10 py-5 sm:py-6 border-b border-b-[rgba(44,48,51,0.5)]">
         <h3 className="text-[#2C3033] text-xl font-bold leading-6">
           {language === "uz"

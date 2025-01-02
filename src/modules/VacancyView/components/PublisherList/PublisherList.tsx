@@ -9,7 +9,7 @@ export default function PublisherList({ data }: { data: VacancyProps[] }) {
   );
     
   return (
-    <div>
+    <div className="my-10">
       <h2 className="font-Inter font-semibold text-[28px] leading-[34px] mb-10 px-4">
         {language === "uz"
           ? "Foydalanuvchining boshqa e’lonlari"
@@ -21,7 +21,7 @@ export default function PublisherList({ data }: { data: VacancyProps[] }) {
         {data.length === 0 ? (
           <NotFoundItems />
         ) : (
-          <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
+          <div className="grid desktop:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-4">
             {data.map((item: VacancyProps) => {
               return <VacancyCard key={item.id} data={item} />;
             })}
