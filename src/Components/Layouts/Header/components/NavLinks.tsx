@@ -89,7 +89,7 @@ export default function NavLinks() {
           <PopoverTrigger>
             <li>
               {isAuthorized ? (
-                <button className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
+                <div className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
                   <NavLink
                     to="/profile"
                     className={
@@ -108,9 +108,9 @@ export default function NavLinks() {
                       </div>
                     )}
                   </NavLink>
-                </button>
+                </div>
               ) : isPublisher ? (
-                <button className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
+                <div className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 rounded">
                   <NavLink
                     to="/profile/publisher"
                     className={
@@ -129,10 +129,10 @@ export default function NavLinks() {
                       </div>
                     )}
                   </NavLink>
-                </button>
+                </div>
               ) : (
                 <>
-                  <button
+                  <div
                     className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
                     style={{ marginTop: "-6px" }}
                     // onClick={() => handleDropdownClick("profile")}
@@ -140,7 +140,7 @@ export default function NavLinks() {
                     <div>
                       <img src={NavLinkIcon3} alt="icon" />
                     </div>
-                  </button>
+                  </div>
                 </>
               )}
             </li>
@@ -202,15 +202,13 @@ export default function NavLinks() {
       <li>
         <Popover>
           <PopoverTrigger>
-            <button
+            <div
               className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
-              style={{ marginTop: "-6px" }}
-              // onClick={() => handleDropdownClick("language")}
             >
               <div>
                 <img src={NavLinkIcon4} alt="icon" />
               </div>
-            </button>
+            </div>
           </PopoverTrigger>
           <PopoverContent className="w-auto">
               <div
