@@ -115,7 +115,7 @@ export default function ProductView() {
       }
     };
     getBooks();
-  }, []);
+  }, [name]);
 
   const memoizedData = useMemo(() => data, [data]);
   const memoizedList = useMemo(() => list, [list]);

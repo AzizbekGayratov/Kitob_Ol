@@ -4,6 +4,7 @@ import { DownloadApp } from "../Components/Layouts";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateProfileData } from "Store/profileSlice/profileSlice";
+import api from "Services/Api";
 // import api from "Services/Api";
 
 interface TokenProps {
@@ -95,33 +96,33 @@ const Layout = () => {
       }
     };
 
-    // const getPublisherData = async () => {
-    //   try {
-    //     const response = await api.get("/publishers/get", {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${publisher_access_token}`,
-    //       },
-    //     });
+    const getPublisherData = async () => {
+      try {
+        const response = await api.get("/publishers/get", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${publisher_access_token}`,
+          },
+        });
 
-    //     if (response.data) {
-    //       // const dataToStore=
+        if (response.data) {
+          // const dataToStore=
           
-    //       dispatch(updateProfileData(response.data));
-    //       window.sessionStorage.setItem(
-    //         "profile",
-    //         JSON.stringify(response.data)
-    //       );
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
+          dispatch(updateProfileData(response.data));
+          window.sessionStorage.setItem(
+            "profile",
+            JSON.stringify(response.data)
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     if (token) {
       getUserProfile();
-    // } else if (publisherToken) {
-    //   getPublisherData();
+    } else if (publisherToken) {
+      getPublisherData();
     }
   }, []);
 

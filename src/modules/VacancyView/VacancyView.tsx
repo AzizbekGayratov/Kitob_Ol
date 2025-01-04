@@ -21,7 +21,6 @@ export default function VacancyView() {
       const response = await api.get("/vacancies/list", {
         params: {
           publisher_id: id,
-          limit: 3,
         },
       });
 
@@ -54,18 +53,11 @@ export default function VacancyView() {
       }
     };
     getVacancies();
-  }, []);
+  }, [name]);
 
   const memoizedData = useMemo(() => data, [data]);
   const memoizedList = useMemo(() => list, [list]);
   const title = useMemo(() => data?.title || "Loading...", [data?.title]);
-
-  console.log(memoizedList);
-
-  console.log({
-    memoizedData,
-    title,
-  });
 
   if (loading) {
     return <Loading />;

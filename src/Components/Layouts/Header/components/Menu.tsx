@@ -1,6 +1,4 @@
 import {
-  activeNavBtn1,
-  activeNavBtn2,
   menuCloseBtn,
   menuLogo,
 } from "../../../../assets/images/svg/HeaderNavLink";
@@ -8,6 +6,8 @@ import { Link } from "react-router-dom";
 import Accordation from "./Accordation";
 import AnnouncementButton from "./AnnouncementButton";
 import { useSelector } from "react-redux";
+import { TfiHome } from "react-icons/tfi";
+import { IoIosHeartEmpty } from "react-icons/io";
 
 export default function Menu({
   onCloseBtn,
@@ -41,27 +41,27 @@ export default function Menu({
                 to="/"
                 className="flex items-center gap-3 text-white text-sm"
               >
-                <img src={activeNavBtn1} alt="icon" />
+                <TfiHome className="w-6 h-6 text-white" />
                 {language === "uz"
-                  ? "Saqlanganlar"
+                  ? "Asosiy sahifa"
                   : language === "ru"
-                  ? "Сохраненные"
-                  : "Saved"}
+                  ? "Главная страница"
+                  : "Home"}
               </Link>
             </button>
           </li>
           <li className="p-4">
             <button>
               <Link
-                to="/1"
+                to="/favourites"
                 className="flex items-center gap-3 text-white text-sm"
               >
-                <img src={activeNavBtn2} alt="icon" />
+                <IoIosHeartEmpty className="w-6 h-6 text-white" />
                 {language === "uz"
-                  ? "Bildirishnomalar"
+                  ? "Saralanganlar"
                   : language === "ru"
-                  ? "Уведомления"
-                  : "Notifications"}
+                  ? "Избранные"
+                  : "Favourites"}
               </Link>
             </button>
           </li>

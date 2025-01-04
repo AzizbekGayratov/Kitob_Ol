@@ -20,6 +20,8 @@ import {
   ProtectedRoute,
   PublisherRoutes,
   VacancyView,
+  PublisherProfile,
+  Favourites,
 } from "../Routes/AppRoutes";
 
 const routes = createBrowserRouter([
@@ -53,6 +55,10 @@ const routes = createBrowserRouter([
             path: "/announcements/book",
             element: <AnnouncementBook />,
           },
+          {
+            path: "/favourites",
+            element: <Favourites />,
+          },
         ],
       },
       {
@@ -62,6 +68,10 @@ const routes = createBrowserRouter([
           {
             path: "/announcements/vacancy",
             element: <AnnouncementVacancy />,
+          },
+          {
+            path: "/profile/publisher",
+            element: <PublisherProfile />,
           },
         ],
       },

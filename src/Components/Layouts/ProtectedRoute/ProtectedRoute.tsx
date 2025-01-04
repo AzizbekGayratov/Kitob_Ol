@@ -6,8 +6,8 @@ export default function ProtectedRoute() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if (!Storage.get("token") && !Storage.get("publisher_token")) {
-    if (!Storage.get("token")) {
+    if (!Storage.get("token") && !Storage.get("publisher_token")) {
+    // if (!Storage.get("token")) {
       navigate("/authorization/phone");
     }
   }, []);

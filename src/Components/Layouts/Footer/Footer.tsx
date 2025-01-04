@@ -13,13 +13,10 @@ const Footer = () => {
         <p className="text-[16px] leading-[19px] opacity-70">
           Designed by: <span className="font-black">Nasibjon</span>
           <br />
-          Fontend developer -{" "}
-          <a
-            href="https://github.com/AzizbekGayratov"
-            target="_blank"
-            className="font-black"
-          >
-            Azizbek G'ayratov
+          Fontend developers -{" "}
+          {/* there is a link to github */}
+          <a href="http://" target="_blank" className="font-black">
+            Team
           </a>
         </p>
       </div>

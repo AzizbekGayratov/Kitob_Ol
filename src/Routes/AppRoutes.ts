@@ -40,6 +40,10 @@ const PublisherRoutes = lazy(
   () => import("Components/Layouts/ProtectedRoute/PublisherRoutes")
 );
 const VacancyView = lazy(() => import("modules/VacancyView/VacancyView"));
+const PublisherProfile = lazy(
+  () => import("modules/PublisherProfile/PublisherProfile")
+);
+const Favourites = lazy(() => import("modules/Favourites/Favourites"));
 
 export {
   Error,
@@ -61,4 +65,6 @@ export {
   ProtectedRoute,
   PublisherRoutes,
   VacancyView,
+  PublisherProfile,
+  Favourites,
 };

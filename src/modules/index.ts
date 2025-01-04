@@ -7,6 +7,7 @@ import ProductView from "./ProductView/ProductView";
 import Authorization from "./Auth/Authorization/Authorization";
 import AnnouncementBook from "./Announcements/AnnouncementBooks/AnnouncementBook";
 import AnnouncementVacancy from "./Announcements/AnnouncementVacancies/AnnouncementVacancy";
+import Favourites from "./Favourites/Favourites";
 
 export {
   Error,
@@ -18,4 +19,5 @@ export {
   Authorization,
   AnnouncementBook,
   AnnouncementVacancy,
+  Favourites,
 };

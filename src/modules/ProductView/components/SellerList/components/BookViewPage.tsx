@@ -11,11 +11,11 @@ import LikeBtn from "modules/Home/components/LikeBtn";
 import { Book } from "modules/ProductView/ProductView";
 
 export default function BookViewPage({ data }: { data: Book }) {
+  
   const image =
-    data.image_url.slice(0, 5) === "https" ? data.image_url : LogoSvg;
-
+  data.image_url.slice(0, 5) === "https" ? data.image_url : LogoSvg;
   const subImage = data.img_url.slice(0, 5) === "https" ? data.img_url : null;
-
+  
   return (
     <div className="property-card border shadow-lg">
       <Link to={`/product/${data.id}`}>

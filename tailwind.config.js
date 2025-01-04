@@ -9,7 +9,7 @@ export default {
         Poppins: ["Poppins", "sans-serif"],
       },
       colors: {
-        rootBg: "rgb(205, 205, 205)",
+        rootBg: "rgb(228, 228, 228)",
         primary: "#2C3033",
       },
       borderRadius: {

@@ -18,6 +18,7 @@ import { toggleDropDown } from "Store/dropDownSlice/dropDownSlice";
 export default function Accordation() {
   // const isAuthorized = Storage.get("token") || Storage.get("publisher_token"); ====> it is for publisher
   const isAuthorized = Storage.get("token");
+  const isPublisher = Storage.get("publisher_token");
 
   const dispatch = useDispatch();
 
@@ -27,7 +28,6 @@ export default function Accordation() {
   const { language } = useSelector(
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
-  
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
@@ -43,7 +43,39 @@ export default function Accordation() {
   return (
     <>
       <li className="py-1">
-        {!isAuthorized ? (
+        {isPublisher ? (
+          <div className="p-4">
+            <button>
+              <Link
+                to="/profile/publisher"
+                className="flex items-center gap-3 text-white text-sm"
+              >
+                <img src={activeNavBtn3} alt="icon" />{" "}
+                {language === "uz"
+                  ? "Mening profilim"
+                  : language === "ru"
+                  ? "Мой профиль"
+                  : "My profile"}
+              </Link>
+            </button>
+          </div>
+        ) : isAuthorized ? (
+          <div className="p-4">
+            <button>
+              <Link
+                to="/profile"
+                className="flex items-center gap-3 text-white text-sm"
+              >
+                <img src={activeNavBtn3} alt="icon" />{" "}
+                {language === "uz"
+                  ? "Mening profilim"
+                  : language === "ru"
+                  ? "Мой профиль"
+                  : "My profile"}
+              </Link>
+            </button>
+          </div>
+        ) : (
           <Accordion
             expanded={selected === "profile"}
             onChange={() => handleDropdownClick("profile")}
@@ -92,22 +124,6 @@ export default function Accordation() {
               </Link>
             </AccordionDetails>
           </Accordion>
-        ) : (
-          <div className="p-4">
-            <button>
-              <Link
-                to="/profile"
-                className="flex items-center gap-3 text-white text-sm"
-              >
-                <img src={activeNavBtn3} alt="icon" />{" "}
-                {language === "uz"
-                  ? "Mening profilim"
-                  : language === "ru"
-                  ? "Мой профиль"
-                  : "My profile"}
-              </Link>
-            </button>
-          </div>
         )}
       </li>
       <li className="py-1">
