@@ -44,8 +44,8 @@ export default function UpdateProfileData() {
           window.sessionStorage.clear();
           navigate("/");
         } else {
-          const data = await response.json();
-          alert(data.message);
+          // const data = await response.json();
+          alert("Bu ma'lumotlar bilan ro'yxatdan o'tgan foydalanuvchi mavjud");
           throw new Error("Request failed");
         }
       } catch (error) {

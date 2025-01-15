@@ -24,7 +24,6 @@ export default function NavLinks() {
     (state: { language: { language: languagesType } }) => state.language
   );
 
-
   const profileData = useSelector(
     (state: { project: { profile: ProfileProps } }) => state.project.profile
   );
@@ -34,7 +33,6 @@ export default function NavLinks() {
 
     dispatch(selectLanguage(e));
   };
-
 
   return (
     <ul className="flex items-center gap-5">
@@ -132,9 +130,7 @@ export default function NavLinks() {
                 </div>
               ) : (
                 <>
-                  <div
-                    className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
-                  >
+                  <div className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded">
                     <div>
                       <img src={NavLinkIcon3} alt="icon" />
                     </div>
@@ -200,51 +196,64 @@ export default function NavLinks() {
       <li>
         <Popover>
           <PopoverTrigger>
-            <div
-              className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
-            >
+            <div className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded">
               <div>
                 <img src={NavLinkIcon4} alt="icon" />
               </div>
             </div>
           </PopoverTrigger>
           <PopoverContent className="w-auto">
-              <div
-                className={`z-50 flex flex-col gap-3  text-[#1C274C] font-Inter font-normal text-base rounded bg-white transition-opacity duration-500 ease-out`}
+            <div
+              className={`z-50 flex flex-col gap-3  text-[#1C274C] font-Inter font-normal text-base rounded bg-white transition-opacity duration-500 ease-out`}
+            >
+              <button
+                className="bg-rootBg rounded z-20 py-3 px-2 w-52"
+                onClick={() => handleLanguageSelect("en")}
+                style={
+                  language === "en"
+                    ? { backgroundColor: "#2C3033", color: "white" }
+                    : {}
+                }
               >
-                <button
-                  className="bg-rootBg rounded z-20 py-3 px-2 w-52"
-                  onClick={() => handleLanguageSelect("en")}
-                >
-                  {language === "uz"
-                    ? "Ingliz tili"
-                    : language === "ru"
-                    ? "Английский"
-                    : "English"}
-                </button>
+                {language === "uz"
+                  ? "Ingliz tili"
+                  : language === "ru"
+                  ? "Английский"
+                  : "English"}
+              </button>
 
-                <button
-                  className="bg-rootBg rounded z-20 py-3 px-2 w-52"
-                  onClick={() => handleLanguageSelect("ru")}
-                >
-                  {language === "uz"
-                    ? "Rus tili"
-                    : language === "ru"
-                    ? "Русский"
-                    : "Russian"}
-                </button>
+              <button
+                className="bg-rootBg rounded z-20 py-3 px-2 w-52"
+                onClick={() => handleLanguageSelect("ru")}
+                style={
+                  language === "ru"
+                    ? { backgroundColor: "#2C3033", color: "white" }
+                    : {}
+                }
+              >
+                {language === "uz"
+                  ? "Rus tili"
+                  : language === "ru"
+                  ? "Русский"
+                  : "Russian"}
+              </button>
 
-                <button
-                  className="bg-rootBg rounded z-10 py-3 px-2 w-52"
-                  onClick={() => handleLanguageSelect("uz")}
-                >
-                  {language === "uz"
-                    ? "O'zbek tili"
-                    : language === "ru"
-                    ? "Узбекский"
-                    : "Uzbek"}
-                </button>
-              </div>
+              <button
+                className="bg-rootBg rounded z-10 py-3 px-2 w-52"
+                onClick={() => handleLanguageSelect("uz")}
+                style={
+                  language === "uz"
+                    ? { backgroundColor: "#2C3033", color: "white" }
+                    : {}
+                }
+              >
+                {language === "uz"
+                  ? "O'zbek tili"
+                  : language === "ru"
+                  ? "Узбекский"
+                  : "Uzbek"}
+              </button>
+            </div>
           </PopoverContent>
         </Popover>
       </li>

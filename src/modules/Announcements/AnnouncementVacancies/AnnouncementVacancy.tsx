@@ -6,6 +6,7 @@ import SubmitForm from "../AnnouncementBooks/components/submitForm/SubmitForm";
 import api from "Services/Api";
 import { Storage } from "Services";
 import AnnouncementPreviewModal from "../components/announcementPreview/AnnouncementPreviewModal";
+import { useNavigate } from "react-router-dom";
 
 const initialJobForm = {
   description: "",
@@ -27,6 +28,7 @@ function AnnouncementVacancy() {
   const [jobFormData, setJobFormData] = useState(initialJobForm);
   const [reset, setReset] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const token = Storage.get("publisher_token");
   let access_token = token ? JSON.parse(token).refresh_token : "";
@@ -55,6 +57,7 @@ function AnnouncementVacancy() {
       if (response.data) {
         resetForm();
         console.log("Submission successful:", response.data);
+        navigate("/profile/publisher");
       } else if (response.status === 400) {
       }
     } catch (error) {

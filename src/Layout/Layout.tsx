@@ -115,7 +115,7 @@ const Layout = () => {
             JSON.stringify(response.data)
           );
         } else if (response.status !== 200) {
-          window.localStorage.removeItem("publisher_token");
+          window.localStorage.clear();
         }
       } catch (error) {
         console.error(error);
