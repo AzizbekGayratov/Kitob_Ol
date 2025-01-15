@@ -5,9 +5,18 @@ import { useEffect } from "react";
 export default function ProtectedRoute() {
   const navigate = useNavigate();
 
+  const rawProfile = sessionStorage.getItem("profile");
+  const profile = rawProfile ? JSON.parse(rawProfile) : null;
+  
+  
+
   useEffect(() => {
-    if (!Storage.get("token") && !Storage.get("publisher_token")) {
-    // if (!Storage.get("token")) {
+    if (
+      !Storage.get("token") ||
+      !Storage.get("publisher_token") &&
+      !profile
+    ) {
+      // if (!Storage.get("token")) {
       navigate("/authorization/phone");
     }
   }, []);

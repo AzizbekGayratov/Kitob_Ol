@@ -11,9 +11,12 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const rawProfile = sessionStorage.getItem("profile");
+  const profile = rawProfile ? JSON.parse(rawProfile) : null;
+
   useEffect(() => {
     const isLogged = localStorage.getItem("publisher_token");
-    if (isLogged) {
+    if (isLogged && profile) {
       navigate("/");
     }
   }, []);

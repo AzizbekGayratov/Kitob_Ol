@@ -3,7 +3,10 @@ import { Footer, Header } from "../Components";
 import { DownloadApp } from "../Components/Layouts";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateProfileData } from "Store/profileSlice/profileSlice";
+import {
+  updateProfileData,
+  updatePublisherProfile,
+} from "Store/profileSlice/profileSlice";
 import api from "Services/Api";
 // import api from "Services/Api";
 
@@ -98,7 +101,7 @@ const Layout = () => {
 
     const getPublisherData = async () => {
       try {
-        const response = await api.get("/publishers/get", {
+        const response = await api.get("/publishers/get/profile", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${publisher_access_token}`,
@@ -106,13 +109,13 @@ const Layout = () => {
         });
 
         if (response.data) {
-          // const dataToStore=
-          
-          dispatch(updateProfileData(response.data));
+          dispatch(updatePublisherProfile(response.data));
           window.sessionStorage.setItem(
             "profile",
             JSON.stringify(response.data)
           );
+        } else if (response.status !== 200) {
+          window.localStorage.removeItem("publisher_token");
         }
       } catch (error) {
         console.error(error);

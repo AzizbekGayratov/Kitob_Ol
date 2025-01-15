@@ -14,11 +14,27 @@ const profileSlice = createSlice({
       phone_number: "+998",
       role: "",
     },
+    publisherProfile: {
+      id: "",
+      name: "",
+      email: "",
+      phone_number: "",
+      location: {
+        city_id: "",
+        district_id: "",
+      },
+      image_url: "",
+      type: "",
+      status: true||false,
+    },
     isProfileUpdating: false,
   },
   reducers: {
     updateProfileData: (state, action) => {
       state.profile = action.payload;
+    },
+    updatePublisherProfile: (state, action) => {
+      state.publisherProfile = action.payload;
     },
     setIsProfileUpdating: (state, action) => {
       state.isProfileUpdating = action.payload;
@@ -27,4 +43,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { updateProfileData, setIsProfileUpdating } = profileSlice.actions;
+export const { updateProfileData, updatePublisherProfile, setIsProfileUpdating } = profileSlice.actions;

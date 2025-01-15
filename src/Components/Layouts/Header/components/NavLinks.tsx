@@ -84,7 +84,7 @@ export default function NavLinks() {
         </button>
       </li>
 
-      <li>
+      <li className="">
         <Popover>
           <PopoverTrigger>
             <li>
@@ -134,8 +134,6 @@ export default function NavLinks() {
                 <>
                   <div
                     className="bg-primary hover:bg-opacity-40 transition-opacity bg-opacity-20 py-4 px-[27px] rounded"
-                    style={{ marginTop: "-6px" }}
-                    // onClick={() => handleDropdownClick("profile")}
                   >
                     <div>
                       <img src={NavLinkIcon3} alt="icon" />

@@ -10,8 +10,11 @@ export default function Authorization() {
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
 
+  const rawProfile = sessionStorage.getItem("profile");
+  const profile = rawProfile ? JSON.parse(rawProfile) : null;
+
   useEffect(() => {
-    if (Storage.get("token")) {
+    if (Storage.get("token") && profile) {
       navigate("/");
     }
   }, []);
