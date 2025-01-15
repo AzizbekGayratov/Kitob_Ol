@@ -1,6 +1,5 @@
 // import api from "Services/Api";
 import { AnnoymouseUser } from "assets/images/jpg";
-import { ToCyrillic } from "lib/utils";
 import { languagesType } from "modules/Announcements/types/Types";
 import { Book } from "modules/ProductView/ProductView";
 // import { useEffect, useState } from "react";
@@ -51,9 +50,7 @@ export default function ContactInfo({ data }: { data: Book }) {
 
       <address className="flex flex-col pt-[10px] pb-4 gap-[10px] text-center md:text-left">
         <p className="text-[#2C3033] font-semibold text-lg md:text-base capitalize">
-          {language === "ru"
-            ? ToCyrillic(data?.seller_name)
-            : data?.seller_name}
+          {data?.seller_name}
         </p>
         <a
           href={`mailto:${data?.seller_email}`}

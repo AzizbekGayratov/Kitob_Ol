@@ -238,6 +238,7 @@ export default function NavLinks() {
                   : "Russian"}
               </button>
 
+
               <button
                 className="bg-rootBg rounded z-10 py-3 px-2 w-52"
                 onClick={() => handleLanguageSelect("uz")}

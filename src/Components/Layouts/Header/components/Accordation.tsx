@@ -22,9 +22,10 @@ export default function Accordation() {
 
   const dispatch = useDispatch();
 
-  const { selected } = useSelector(
-    (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown
+  const selected = useSelector(
+    (state: { dropDown: { selected: DropDownType | "" } }) => state.dropDown.selected
   );
+  
   const { language } = useSelector(
     (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
   );
@@ -35,7 +36,7 @@ export default function Accordation() {
     dispatch(selectLanguage(e));
     dispatch(toggleDropDown("language")); // Close the dropdown after selection
   };
-
+          
   const handleDropdownClick = (dropdownName: DropDownType) => {
     dispatch(toggleDropDown(dropdownName));
   };

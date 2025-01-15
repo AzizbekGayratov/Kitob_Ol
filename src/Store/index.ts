@@ -12,7 +12,7 @@ const reducer = {
   language: languageSlice,
   bookFilter: bookFilterSlice,
   VacancyFilter: vacancyFilterSlice,
-  dropDownValue: dropDownSlice,
+  dropDown: dropDownSlice,
   paginationValue: paginationSlice,
 };
 

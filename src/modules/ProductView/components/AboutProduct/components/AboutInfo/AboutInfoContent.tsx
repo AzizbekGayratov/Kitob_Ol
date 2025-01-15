@@ -1,4 +1,3 @@
-import { ToCyrillic } from "lib/utils";
 import { Book } from "modules/ProductView/ProductView";
 import { useSelector } from "react-redux";
 
@@ -50,12 +49,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Author"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {language === "ru"
-              ? ToCyrillic(data?.author_name)
-              : data?.author_name}{" "}
-            {language === "ru"
-              ? ToCyrillic(data?.author_surname)
-              : data?.author_surname}
+            {`${data?.author_name} ${data?.author_surname}`}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
@@ -67,8 +61,7 @@ export default function AboutInfoContent({ data }: { data: Book }) {
               : "Translator"}
           </span>
           <p className="sm:text-xl text-sm sm:leading-6 leading-4 font-bold capitalize">
-            {language === "ru" ? ToCyrillic(data?.translator_name) : data?.translator_name}{" "}
-            {language === "ru" ? ToCyrillic(data?.translator_surname) : data?.translator_surname}
+            {`${data?.translator_name} ${data?.translator_surname}`}
           </p>
         </li>
         <li className="flex flex-col py-2 gap-1">
