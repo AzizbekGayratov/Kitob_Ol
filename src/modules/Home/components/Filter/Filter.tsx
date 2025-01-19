@@ -122,7 +122,7 @@ export default function Filter() {
       language: "",
       city_id: "",
       district_id: "",
-      value: [25, 75],
+      value: [0, 100],
     });
   }
 
