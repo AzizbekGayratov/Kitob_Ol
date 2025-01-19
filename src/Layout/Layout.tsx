@@ -95,36 +95,40 @@ const Layout = () => {
           }
         }
       } catch (error) {
+        window.localStorage.removeItem("token" || "publisher_token");
         console.error(error);
       }
     };
 
-    const getPublisherData = async () => {
+    const getPublisherData = async () => {      
       try {
         const response = await api.get("/publishers/get/profile", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${publisher_access_token}`,
           },
-        });
-
-        if (response.data) {
+        });        
+        
+        if (response.status === 200) {
+          console.log(response.data);
+          
           dispatch(updatePublisherProfile(response.data));
           window.sessionStorage.setItem(
             "profile",
             JSON.stringify(response.data)
           );
         } else if (response.status !== 200) {
-          window.localStorage.clear();
+          window.localStorage.removeItem("publisher_token");
         }
       } catch (error) {
+        window.localStorage.removeItem("publisher_token");
         console.error(error);
       }
     };
 
     if (token) {
       getUserProfile();
-    } else if (publisherToken) {
+    } else if (publisherToken) {      
       getPublisherData();
     }
   }, []);

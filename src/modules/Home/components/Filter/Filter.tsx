@@ -30,7 +30,7 @@ export default function Filter() {
     language: "",
     city_id: "",
     district_id: "",
-    value: [25, 75],
+    value: [0,100],
   });
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
@@ -38,24 +38,64 @@ export default function Filter() {
   const bookFilter = useSelector((state: any) => state.bookFilter);
   const dispatch = useDispatch();
 
-  const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);
-  const [publishersList, setPublishersList] = useState<PublisherType[]>([]);
-  const [languagesList, setLanguagesList] = useState<LanguageProps[]>([]);
-  const [authorsList, setAuthorsList] = useState<any[]>([]);
+  const rawCategoriesList = sessionStorage.getItem("categories");
+  const rawPublishersList = sessionStorage.getItem("publishers");
+  const rawLanguagesList = sessionStorage.getItem("languages");
+  const rawAuthorsList = sessionStorage.getItem("authors");
+
+  const categoriesInitList = rawCategoriesList
+    ? JSON.parse(rawCategoriesList)
+    : [];
+  const publishersInitList = rawPublishersList
+    ? JSON.parse(rawPublishersList)
+    : [];
+  const languagesInitList = rawLanguagesList
+    ? JSON.parse(rawLanguagesList)
+    : [];
+  const authorsInitList = rawAuthorsList ? JSON.parse(rawAuthorsList) : [];
+
+  const [categoriesList, setCategoriesList] = useState<CategoryType[]>(
+    categoriesInitList || []
+  );
+  const [publishersList, setPublishersList] = useState<PublisherType[]>(
+    publishersInitList || []
+  );
+  const [languagesList, setLanguagesList] = useState<LanguageProps[]>(
+    languagesInitList || []
+  );
+  const [authorsList, setAuthorsList] = useState<any[]>(authorsInitList || []);
 
   useEffect(() => {
-    UseGetList("/categories/list").then((res) => {
-      setCategoriesList(res.Categories.categories);
-    });
-    UseGetList("/publishers/list").then((res) => {
-      setPublishersList(res.publishers);
-    });
-    UseGetList("/languages/list").then((res) => {
-      setLanguagesList(res.languages.languages);
-    });
-    UseGetList("/authors/list").then((res) => {
-      setAuthorsList(res.authors);
-    });
+    if (categoriesList.length === 0) {
+      UseGetList("/categories/list").then((res) => {
+        setCategoriesList(res.Categories.categories);
+        sessionStorage.setItem(
+          "categories",
+          JSON.stringify(res.Categories.categories)
+        );
+      });
+    }
+    if (publishersList.length === 0) {
+      UseGetList("/publishers/list").then((res) => {
+        setPublishersList(res.publishers);
+        sessionStorage.setItem("publishers", JSON.stringify(res.publishers));
+      });
+    }
+    if (languagesList.length === 0) {
+      UseGetList("/languages/list").then((res) => {
+        setLanguagesList(res.languages.languages);
+        sessionStorage.setItem(
+          "languages",
+          JSON.stringify(res.languages.languages)
+        );
+      });
+    }
+    if (authorsList.length === 0) {
+      UseGetList("/authors/list").then((res) => {
+        setAuthorsList(res.authors);
+        sessionStorage.setItem("authors", JSON.stringify(res.authors));
+      });
+    }
   }, []);
 
   function submitData() {
@@ -63,8 +103,8 @@ export default function Filter() {
       setState({
         ...bookFilter,
         title: data.name,
-        price_from: data.value[0] * 1000,
-        price_to: data.value[1] * 1000,
+        price_from: data.value[0] * 5000,
+        price_to: data.value[1] * 5000,
         author_id: data.author,
         category_id: data.category,
         publisher_id: data.nashriyot,

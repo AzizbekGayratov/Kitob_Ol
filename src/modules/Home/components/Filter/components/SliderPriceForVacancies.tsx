@@ -9,7 +9,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<FilterType | VacancyProps>>;
 }
 
-export default function SliderForPrice({ value, setValue }: Props) {
+export default function SliderPriceForVacancies({ value, setValue }: Props) {
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
@@ -55,7 +55,7 @@ export default function SliderForPrice({ value, setValue }: Props) {
         <TextField
           value={`${new Intl.NumberFormat("en-US", {
             useGrouping: true,
-          }).format(value.value[0] * 5000)} so'm`}
+          }).format(value.value[0] * 500000)} so'm`}
           // onChange={(e) => {
           //   setValue({
           //     ...value,
@@ -69,7 +69,7 @@ export default function SliderForPrice({ value, setValue }: Props) {
         <TextField
           value={`${new Intl.NumberFormat("en-US", {
             useGrouping: true,
-          }).format(value.value[1] * 5000)} so'm`}
+          }).format(value.value[1] * 500000)} so'm`}
           // onChange={(e) => {
           //   setValue({
           //     ...value,

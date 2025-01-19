@@ -28,7 +28,13 @@ export default function LocationSelect({
   showTitle = true,
   isForHomePage = false,
 }: LocationSelectProps) {
-  const [cities, setCities] = useState<CityProps[]>([]);
+  const rawCities = sessionStorage.getItem("cities");
+  const citiesList = rawCities ? JSON.parse(rawCities) : [];
+  // const rawDistricts = sessionStorage.getItem("districts");
+  // const districtsList = rawDistricts ? JSON.parse(rawDistricts) : [];
+  // console.log(citiesList, districtsList);
+
+  const [cities, setCities] = useState<CityProps[]>(citiesList || []);
   const [districtList, setDistrictList] = useState<DistrictProps[]>([]);
   const [location, setLocation] = useState("Shaharni tanlang");
   const [city_id, setCity_id] = useState("");
@@ -42,14 +48,28 @@ export default function LocationSelect({
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await api.get("/cities/list");
+        const response = await api.get("/cities/list", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            limit: 100,
+          },
+        });
         setCities(response.data.Cities?.cities || []);
+        sessionStorage.setItem(
+          "cities",
+          JSON.stringify(response.data.Cities?.cities)
+        );
       } catch (error) {
         console.error("Error fetching cities:", error);
         setCities([]);
       }
     };
-    fetchCities();
+
+    if (cities.length === 0) {
+      fetchCities();
+    }
   }, []);
 
   // Reset state based on `reset` prop
@@ -71,9 +91,24 @@ export default function LocationSelect({
       setCity_id(selectedCity.id);
       try {
         const response = await api.get(
-          `/districts/list?city_id=${selectedCity.id}`
+          `/districts/list?city_id=${selectedCity.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            params: {
+              limit: 100,
+            },
+          }
         );
         setDistrictList(response.data.Districts?.districts || []);
+        
+        // Bu datalar city_id o'zgargan sari uzgaradi, shu sabab keshga saqlanmaydi
+        // console.log(response.data.Districts?.districts);
+        // sessionStorage.setItem(
+        //   "districts",
+        //   JSON.stringify(response.data.Districts?.districts)
+        // );
       } catch (error) {
         console.error("Error fetching districts:", error);
         setDistrictList([]);

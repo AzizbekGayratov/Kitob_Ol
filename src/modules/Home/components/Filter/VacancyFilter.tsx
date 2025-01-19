@@ -6,11 +6,11 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import SliderForPrice from "./components/SliderForPrice";
 import LocationSelect from "Components/Common/LocationSelect/LocationSelect";
 import { VacancyProps } from "./FilterTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from "Store/FilterSlice/vacancyFilterSlice";
+import SliderPriceForVacancies from "./components/SliderPriceForVacancies";
 
 export default function VacancyFilter() {
   const [data, setData] = useState<VacancyProps>({
@@ -21,7 +21,7 @@ export default function VacancyFilter() {
     work: "",
     city_id: "",
     district_id: "",
-    value: [25, 75],
+    value: [0, 100],
   });
   const vacancyFilter = useSelector((state: any) => state.VacancyFilter);
   const dispatch = useDispatch();
@@ -36,8 +36,8 @@ export default function VacancyFilter() {
         vacancy_title: data.name,
         city_id: data.city_id,
         district_id: data.district_id,
-        salary_from: data.value[0] * 1000,
-        salary_to: data.value[1] * 1000,
+        salary_from: data.value[0] * 500000,
+        salary_to: data.value[1] * 500000,
         working_types: data.type,
         working_styles: data.graphic,
       })
@@ -177,7 +177,7 @@ export default function VacancyFilter() {
               </MenuItem>
             </Select>
           </FormControl>
-          <SliderForPrice value={data} setValue={setData as any} />
+          <SliderPriceForVacancies value={data} setValue={setData as any} />
         </div>
         <div className="flex flex-col sm:gap-[34px] gap-2">
           <FormControl
