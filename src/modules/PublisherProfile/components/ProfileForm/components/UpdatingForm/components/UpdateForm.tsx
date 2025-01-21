@@ -131,6 +131,7 @@ export default function UpdateProfileInfo({
           <Select
             value={data.type}
             name="type"
+            disabled
             // onValueChange={(value) => setData({ ...data, type: value })}
           >
             <SelectTrigger className="h-[56px] rounded border border-[#2c30331a] text-[16px] py-[18px] px-5 cursor-pointer text-[#2C3033] outline-none leading-5 w-full">

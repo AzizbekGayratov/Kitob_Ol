@@ -17,7 +17,7 @@ const initialJobForm = {
   // typeOfTraining: "",
   working_types: "full_time" || "part_time",
   working_styles: "remote" || "offline" || "hybrid",
-  phone_number: "",
+  phone_number: "+998",
   location: {
     city_id: "",
     district_id: "",
@@ -32,7 +32,6 @@ function AnnouncementVacancy() {
 
   const token = Storage.get("publisher_token");
   let access_token = token ? JSON.parse(token).refresh_token : "";
-  console.log(access_token);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

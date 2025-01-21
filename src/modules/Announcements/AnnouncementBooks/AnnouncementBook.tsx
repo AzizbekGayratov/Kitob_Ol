@@ -46,9 +46,9 @@ function AnnouncementBook() {
   const [category, setCategory] = useState<string>("Unknown");
   const [publisher, setPublisher] = useState<string>("Unknown");
   const [bookLanguage, setBookLanguage] = useState<string>("Unknown");
+  const [translator, setTranslator] = useState<string>("Unknown");
   const [city, setCity] = useState<string>("Unknown");
   const [district, setDistrict] = useState<string>("Unknown");
-  const [translator, setTranslator] = useState<string>("Unknown");
 
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
@@ -63,8 +63,6 @@ function AnnouncementBook() {
   const publisherToken = window.sessionStorage.getItem("profile");
   formData.seller_id = publisherToken ? JSON.parse(publisherToken).id : "";
 
-  console.log(`Seller id: ${formData.seller_id}`);
-  console.log(`User id: ${user_access_token}`);
 
   const fetchFromId = async ({
     apiPath,
@@ -94,7 +92,6 @@ function AnnouncementBook() {
     }
   };
 
-  console.log(formData);
 
   useEffect(() => {
     if (modalOpen) {

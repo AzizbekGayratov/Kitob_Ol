@@ -2,10 +2,11 @@ import TextInput from "modules/Announcements/components/textInput/TextInput";
 import FormContainer from "modules/Announcements/components/formContainer/FormContainer";
 import Label from "modules/Announcements/components/label/Label";
 import { ComponentPropsTypeJob } from "modules/Announcements/types/Types";
-import Input from "react-phone-number-input/input";
 import SelectInput from "modules/Announcements/components/selectInput/SelectInput";
 import { customDatas } from "modules/Announcements/CustomData";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import PhoneInput from "react-phone-number-input/input";
 
 export default function AboutVacancy({
   jobFormData,
@@ -18,7 +19,6 @@ export default function AboutVacancy({
 
     setJobFormData({ ...jobFormData, [name]: value });
   };
-  console.log(jobFormData);
 
   const [status, setStatus] = useState("");
 
@@ -26,17 +26,31 @@ export default function AboutVacancy({
     setStatus(e.target.value);
   };
 
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
+
   const [typeOfTraining, setTypeOfTraining] = useState("");
 
   return (
     <div className="container bg-white p-7">
       <h2 className="font-semibold text-[32px] text-primary">
-        Ish haqida ma'lumotlar kiriting
+        {language === "uz"
+          ? "Ish haqida ma'lumotlar kiriting"
+          : language === "ru"
+          ? "Введите информацию о работе"
+          : "Enter information about work"}
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-16 mt-7">
         <FormContainer>
-          <h3 className="font-Inter font-normal text-2xl">Kimsiz*</h3>
+          <h3 className="font-Inter font-normal text-2xl">
+            {language === "uz"
+              ? "Kimsiz*"
+              : language === "ru"
+              ? "Вы кто*"
+              : "Who are you*"}
+          </h3>
 
           <div className="flex gap-7 flex-col lg:flex-row">
             <div className="flex gap-4 items-center">
@@ -50,7 +64,13 @@ export default function AboutVacancy({
                 className="size-5 accent-primary"
                 required
               />
-              <Label htmlFor="employer">Ish beruvchiman</Label>
+              <Label htmlFor="employer">
+                {language === "uz"
+                  ? "Ish beruvchiman"
+                  : language === "ru"
+                  ? "Работодатель"
+                  : "Employer"}
+              </Label>
             </div>
 
             <div className="flex gap-4 items-center">
@@ -64,13 +84,25 @@ export default function AboutVacancy({
                 className="size-5 accent-primary"
                 required
               />
-              <Label htmlFor="jobSeeker">Ish izlayapman</Label>
+              <Label htmlFor="jobSeeker">
+                {language === "uz"
+                  ? "Ish izlayapman"
+                  : language === "ru"
+                  ? "Ищу работу"
+                  : "Job Seeker"}
+              </Label>
             </div>
           </div>
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="title">Ish nomi*</Label>
+          <Label htmlFor="title">
+            {language === "uz"
+              ? "Ish nomi"
+              : language === "ru"
+              ? "Название работы"
+              : "Job title"}
+          </Label>
 
           <TextInput
             type="text"
@@ -84,7 +116,13 @@ export default function AboutVacancy({
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="salary_from">Maosh*</Label>
+          <Label htmlFor="salary_from">
+            {language === "uz"
+              ? "Maosh"
+              : language === "ru"
+              ? "Зарплата"
+              : "Salary"}
+          </Label>
 
           <div className="grid grid-cols-6 gap-2">
             <TextInput
@@ -93,7 +131,13 @@ export default function AboutVacancy({
               value={
                 jobFormData.salary_from === 0 ? null : jobFormData.salary_from
               }
-              placeholder="700 dan"
+              placeholder={
+                language === "uz"
+                  ? "... dan"
+                  : language === "ru"
+                  ? "от ..."
+                  : "from ..."
+              }
               onChange={handleInputChange}
               required
               className="col-span-6 lg:col-span-6"
@@ -108,7 +152,13 @@ export default function AboutVacancy({
               type="number"
               name="salary_to"
               value={jobFormData.salary_to === 0 ? null : jobFormData.salary_to}
-              placeholder="1200 gacha"
+              placeholder={
+                language === "uz"
+                  ? "... gacha"
+                  : language === "ru"
+                  ? "до ..."
+                  : "to ..."
+              }
               onChange={handleInputChange}
               required
               className="col-span-6 lg:col-span-6"
@@ -117,7 +167,13 @@ export default function AboutVacancy({
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="working_types">Ish turi</Label>
+          <Label htmlFor="working_types">
+            {language === "uz"
+              ? "Ish turi"
+              : language === "ru"
+              ? "Тип работы"
+              : "Working type"}
+          </Label>
 
           <SelectInput
             name="working_types"
@@ -126,12 +182,24 @@ export default function AboutVacancy({
             options={customDatas.working_types}
             onChange={handleInputChange}
             value={jobFormData.working_types}
-            defaultValue="Ish turi"
+            defaultValue={
+              language === "uz"
+                ? "Ish turi"
+                : language === "ru"
+                ? "Тип работы"
+                : "Working type"
+            }
           />
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="typeOfTraining">Mashg'ulot turi</Label>
+          <Label htmlFor="typeOfTraining">
+            {language === "uz"
+              ? "Mashg'ulot turi"
+              : language === "ru"
+              ? "Тип занятости"
+              : "Type of training"}
+          </Label>
 
           <SelectInput
             name="typeOfTraining"
@@ -142,12 +210,24 @@ export default function AboutVacancy({
               setTypeOfTraining(e.target.value);
             }}
             value={typeOfTraining}
-            defaultValue="Mashg'ulot turi"
+            defaultValue={
+              language === "uz"
+                ? "Mashg'ulot turi"
+                : language === "ru"
+                ? "Тип занятости"
+                : "Type of training"
+            }
           />
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="working_styles">Ish tarzi</Label>
+          <Label htmlFor="working_styles">
+            {language === "uz"
+              ? "Ish tarzi"
+              : language === "ru"
+              ? "График работы"
+              : "Working graphic"}
+          </Label>
 
           <SelectInput
             name="working_styles"
@@ -161,9 +241,29 @@ export default function AboutVacancy({
         </FormContainer>
 
         <FormContainer>
-          <Label htmlFor="phone_number">Telefon raqam*</Label>
+          <Label htmlFor="phone_number">
+            {language === "uz"
+              ? "Telefon raqami"
+              : language === "ru"
+              ? "Номер телефона"
+              : "Phone number"}
+          </Label>
 
-          <Input
+          {/* <Input
+            name="phone_number"
+            id="phone_number"
+            className="form_input"
+            placeholder="+998 99 999 99 99"
+            value={jobFormData.phone_number}
+            onChange={(value) => {
+              setJobFormData({
+                ...jobFormData,
+                phone_number: value,
+              });
+            }}
+            required
+          /> */}
+          <PhoneInput
             name="phone_number"
             id="phone_number"
             className="form_input"

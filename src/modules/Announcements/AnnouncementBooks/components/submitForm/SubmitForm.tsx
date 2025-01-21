@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 interface SubmitFormPropsType {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -7,6 +9,10 @@ export default function SubmitForm({
   modalOpen,
   setModalOpen,
 }: SubmitFormPropsType) {
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
+
   return (
     <div className="container bg-white p-7 flex flex-col sm:flex-row sm:justify-end gap-4 -mt-5 ">
       <button
@@ -16,14 +22,22 @@ export default function SubmitForm({
           setModalOpen(!modalOpen);
         }}
       >
-        Tekshirib ko'rish
+        {language === "uz"
+          ? "Tekshirib ko'rish"
+          : language === "ru"
+          ? "Проверить"
+          : "Check"}
       </button>
 
       <button
         type="submit"
         className="bg-primary rounded text-base leading-[19px] text-white py-4 px-3 sm:px-5"
       >
-        E'lonni joylashtirish
+        {language === "uz"
+          ? "E'lonni joylashtirish"
+          : language === "ru"
+          ? "Опубликовать"
+          : "Publish"}
       </button>
     </div>
   );

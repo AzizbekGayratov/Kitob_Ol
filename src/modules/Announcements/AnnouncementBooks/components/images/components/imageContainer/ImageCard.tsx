@@ -1,6 +1,7 @@
 import { ComponentPropsType } from "modules/Announcements/types/Types";
 import React, { useEffect, useState } from "react";
 import { TbTrash } from "react-icons/tb";
+import { useSelector } from "react-redux";
 import api from "Services/Api";
 
 export interface ImageCardProps extends ComponentPropsType {
@@ -14,6 +15,9 @@ export default function ImageCard({
   reset,
 }: ImageCardProps) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const { language } = useSelector(
+    (state: { language: { language: "uz" | "ru" | "en" } }) => state.language
+  );
 
   useEffect(() => {
     if (reset === "resetted") removeImage();
@@ -86,7 +90,11 @@ export default function ImageCard({
           </>
         ) : (
           <div className="text-primary font-Inter text-2xl font-semibold h-full flex items-center justify-center">
-            Rasm qo'shish
+            {language === "uz"
+              ? "Rasm qo'shish"
+              : language === "ru"
+              ? "Добавить изображение"
+              : "Add image"}
           </div>
         )}
         <input

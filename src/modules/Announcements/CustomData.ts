@@ -45,8 +45,8 @@ export const customDatas = {
       name: "Latin",
     },
     {
-      id: "cryllic",
-      name: "Cryllic",
+      id: "cyrillic",
+      name: "Cyrillic",
     },
   ],
   working_types: [

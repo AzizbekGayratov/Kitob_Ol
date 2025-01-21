@@ -124,6 +124,7 @@ export default function UpdateForm({
           </label>
           <Select
             value={data.role}
+            disabled
             name="user_gender"
             // onValueChange={(value) => {
             //   // #problem
