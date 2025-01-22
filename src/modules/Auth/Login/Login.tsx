@@ -96,6 +96,7 @@ export default function Login() {
               </div>
             </div>
             <Link
+              // to="/password/reset/phone"
               to="/"
               className="text-[#0066FF] text-[16px] hover:underline font-light leading-[19px] inline-block mt-10 sm:mb-20"
             >

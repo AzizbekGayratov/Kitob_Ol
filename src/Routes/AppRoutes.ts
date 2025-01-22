@@ -44,6 +44,21 @@ const PublisherProfile = lazy(
   () => import("modules/PublisherProfile/PublisherProfile")
 );
 const Favourites = lazy(() => import("modules/Favourites/Favourites"));
+const PublisherPasswordForget = lazy(
+  () => import("modules/Auth/PublisherPasswordForget/PublisherPasswordForget")
+)
+const EmailReset = lazy(
+  () => import("modules/Auth/PublisherPasswordForget/components/EmailReset")
+)
+const PhoneReset = lazy(
+  () => import("modules/Auth/PublisherPasswordForget/components/PhoneReset")
+)
+const ResetEmailOTP = lazy(
+  () => import("modules/Auth/PublisherPasswordForget/components/AuthOTP/ResetEmailOTP")
+)
+const ResetPhoneOTP = lazy(
+  () => import("modules/Auth/PublisherPasswordForget/components/AuthOTP/ResetPhoneOTP")
+)
 
 export {
   Error,
@@ -67,4 +82,9 @@ export {
   VacancyView,
   PublisherProfile,
   Favourites,
+  PublisherPasswordForget,
+  EmailReset,
+  PhoneReset,
+  ResetEmailOTP,
+  ResetPhoneOTP
 };

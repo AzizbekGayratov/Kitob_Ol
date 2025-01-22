@@ -22,6 +22,11 @@ import {
   VacancyView,
   PublisherProfile,
   Favourites,
+  PublisherPasswordForget,
+  EmailReset,
+  PhoneReset,
+  ResetEmailOTP,
+  ResetPhoneOTP
 } from "../Routes/AppRoutes";
 
 const routes = createBrowserRouter([
@@ -109,6 +114,21 @@ const routes = createBrowserRouter([
     ],
   },
   {
+    path: "/password/reset",
+    element: <PublisherPasswordForget />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "email",
+        element: <EmailReset />,
+      },
+      {
+        path: "phone",
+        element: <PhoneReset />,
+      },
+    ],
+  },
+  {
     path: "/authorization/user/register",
     element: <UpdateProfileData />,
     errorElement: <Error />,
@@ -132,6 +152,28 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: <AuthPhoneOTP />,
+      },
+    ],
+  },
+  {
+    path: "/password/reset/email/otp",
+    element: <PublisherPasswordForget />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: <ResetEmailOTP />,
+      },
+    ],
+  },
+  {
+    path: "/password/reset/phone/otp",
+    element: <PublisherPasswordForget />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "",
+        element: <ResetPhoneOTP />,
       },
     ],
   },

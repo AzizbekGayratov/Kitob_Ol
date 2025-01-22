@@ -8,8 +8,11 @@ import Authorization from "./Auth/Authorization/Authorization";
 import AnnouncementBook from "./Announcements/AnnouncementBooks/AnnouncementBook";
 import AnnouncementVacancy from "./Announcements/AnnouncementVacancies/AnnouncementVacancy";
 import Favourites from "./Favourites/Favourites";
+import PublisherPasswordForget from "./Auth/PublisherPasswordForget/PublisherPasswordForget";
+
 
 export {
+  PublisherPasswordForget,
   Error,
   Home,
   Login,
