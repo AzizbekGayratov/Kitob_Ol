@@ -1,3 +1,4 @@
+import { AnnoymouseUser } from "assets/images/jpg";
 import { ProfileProps } from "modules/Profile/Profile";
 import { useSelector } from "react-redux";
 
@@ -13,7 +14,11 @@ export default function ImageContainer() {
   return (
     <div className="w-[120px] h-[120px] mx-auto overflow-hidden rounded-full cursor-pointer mb-10">
       <img
-        src={profile.image_url}
+        src={
+          profile.image_url.includes("http")
+            ? profile.image_url
+            : AnnoymouseUser
+        }
         className="w-full h-full object-cover"
         alt="user avatar"
       />

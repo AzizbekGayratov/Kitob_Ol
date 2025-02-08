@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import LogOutButton from "./LogOutButton";
 import MobileFormTopBtn from "./MobileFormTopBtn";
-import ProfileDelete from "./profileDelete/ProfileDelete";
+// import ProfileDelete from "./profileDelete/ProfileDelete";
 
 export default function FormTop() {
   const { language } = useSelector(
@@ -21,7 +21,7 @@ export default function FormTop() {
           <LogOutButton />
           <MobileFormTopBtn />
         </>
-        <ProfileDelete />
+        {/* <ProfileDelete /> */}
       </div>
     </div>
   );

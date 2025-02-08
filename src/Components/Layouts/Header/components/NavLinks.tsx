@@ -9,10 +9,10 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLanguage } from "Store/languageSlice/languageSlice";
 import { languagesType } from "modules/Announcements/types/Types";
-import { ProfileProps } from "modules/Profile/Profile";
 import { TfiHome } from "react-icons/tfi";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { Popover, PopoverContent, PopoverTrigger } from "Components/Ui/popover";
+import { AnnoymouseUser } from "assets/images/jpg";
 
 export default function NavLinks() {
   const location = useLocation();
@@ -24,9 +24,6 @@ export default function NavLinks() {
     (state: { language: { language: languagesType } }) => state.language
   );
 
-  const profileData = useSelector(
-    (state: { project: { profile: ProfileProps } }) => state.project.profile
-  );
 
   const handleLanguageSelect = (e: string) => {
     localStorage.setItem("language", e);
@@ -147,7 +144,7 @@ export default function NavLinks() {
               <div className="flex items-center gap-4 z-40">
                 <div className="rounded-full overflow-hidden">
                   <img
-                    src={profileData.image_url}
+                    src={AnnoymouseUser}
                     alt="user avatar"
                     className="h-[50px]"
                   />

@@ -39,14 +39,34 @@ function AnnouncementBook() {
   const [reset, setReset] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(loading);
+  console.log("Loading ==>", loading);
+
+  // const rawPublishersList = sessionStorage.getItem("publishers");
+  // const rawTranslatorsList = sessionStorage.getItem("translators");
+  // const rawCategoriesList = sessionStorage.getItem("categories");
+  // const rawAuthorsList = sessionStorage.getItem("authors");
+  // const rawLanguagesList = sessionStorage.getItem("languages");
+
+  // const publishersInitList = rawPublishersList
+  //   ? JSON.parse(rawPublishersList)
+  //   : [];
+  // const translatorsInitList = rawTranslatorsList
+  //   ? JSON.parse(rawTranslatorsList)
+  //   : [];
+  // const categoriesInitList = rawCategoriesList
+  //   ? JSON.parse(rawCategoriesList)
+  //   : [];
+  // const authorsInitList = rawAuthorsList ? JSON.parse(rawAuthorsList) : [];
+  // const languagesInitList = rawLanguagesList
+  //   ? JSON.parse(rawLanguagesList)
+  //   : [];
 
   // State to store fetched data
-  const [author, setAuthor] = useState<string>("Unknown");
-  const [category, setCategory] = useState<string>("Unknown");
-  const [publisher, setPublisher] = useState<string>("Unknown");
-  const [bookLanguage, setBookLanguage] = useState<string>("Unknown");
-  const [translator, setTranslator] = useState<string>("Unknown");
+  const [author, setAuthor] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [publisher, setPublisher] = useState<string>("");
+  const [bookLanguage, setBookLanguage] = useState<string>("");
+  const [translator, setTranslator] = useState<string>("");
   const [city, setCity] = useState<string>("Unknown");
   const [district, setDistrict] = useState<string>("Unknown");
 
@@ -59,10 +79,15 @@ function AnnouncementBook() {
   const user_access_token = user_token
     ? JSON.parse(user_token).access_token
     : "";
+  const publisher_token = Storage.get("publisher_token");
+  const publisher_access_token = publisher_token
+    ? JSON.parse(publisher_token).access_token
+    : "";
+
+  const token = user_access_token ? user_access_token : publisher_access_token;
 
   const publisherToken = window.sessionStorage.getItem("profile");
   formData.seller_id = publisherToken ? JSON.parse(publisherToken).id : "";
-
 
   const fetchFromId = async ({
     apiPath,
@@ -91,7 +116,6 @@ function AnnouncementBook() {
       setLoading(false);
     }
   };
-
 
   useEffect(() => {
     if (modalOpen) {
@@ -161,7 +185,7 @@ function AnnouncementBook() {
       };
 
       const response = await api.post("/books/create", submissionData, {
-        headers: { Authorization: `Bearer ${user_access_token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       console.log("Submission successful:", response.data);

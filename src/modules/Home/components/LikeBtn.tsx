@@ -6,8 +6,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useState } from "react";
 
 export default function LikeBtn({ bookId }: { bookId: string }) {
-  console.log(bookId);
   const [like, setLike] = useState(false);
+  console.log(bookId);
+  
 
   // const navigate = useNavigate();
   // const token = localStorage.getItem("token") || null;

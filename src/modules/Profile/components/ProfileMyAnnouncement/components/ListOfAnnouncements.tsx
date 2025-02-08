@@ -24,7 +24,7 @@ export default function ListOfAnnouncements({
         </div>
         <div className="flex items-center gap-[32px]">
           <span className="hidden md:block text-textColor text-[20px] font-Poppins font-light leading-[30px]">
-            {data.description}
+            {data.description.length > 100 ? `${data.description.slice(0, 100)}...` : data.description}
           </span>
           <RiArrowRightWideFill className="text-textColor" size={20} />
         </div>

@@ -8,7 +8,8 @@ import {
   updatePublisherProfile,
 } from "Store/profileSlice/profileSlice";
 import api from "Services/Api";
-// import api from "Services/Api";
+import { Storage } from "Services";
+// import { Storage } from "Services";
 
 interface TokenProps {
   access_token: string;
@@ -62,12 +63,9 @@ const Layout = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     const access_token = token?.access_token;
-    // const refresh_token = token?.refresh_token;
     const publisher_access_token = publisherToken?.access_token;
 
-    const responseToken = publisherRawToken
-      ? publisher_access_token
-      : access_token;
+    const responseToken = publisher_access_token || access_token;
 
     const getUserProfile = async () => {
       try {
@@ -86,50 +84,41 @@ const Layout = () => {
           const data = await response.json();
           dispatch(updateProfileData(data));
           window.sessionStorage.setItem("profile", JSON.stringify(data));
-        } else {
-          const data = await response.json();
-          if (data.details.includes("Token is expired")) {
-            // refreshToken(access_token);
-            window.localStorage.removeItem("token" || "publisher_token");
-            window.location.reload();
-          }
         }
       } catch (error) {
-        window.localStorage.removeItem("token" || "publisher_token");
         console.error(error);
       }
     };
 
-    const getPublisherData = async () => {      
+    const getPublisherData = async () => {
       try {
         const response = await api.get("/publishers/get/profile", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${publisher_access_token}`,
           },
-        });        
-        
+        });
+
         if (response.status === 200) {
-          console.log(response.data);
-          
           dispatch(updatePublisherProfile(response.data));
           window.sessionStorage.setItem(
             "profile",
             JSON.stringify(response.data)
           );
-        } else if (response.status !== 200) {
-          window.localStorage.removeItem("publisher_token");
+          Storage.remove("token");
+        } else if (response.status === 403) {
+          console.log("403");
         }
       } catch (error) {
-        window.localStorage.removeItem("publisher_token");
         console.error(error);
+        Storage.remove("publisher_token");
       }
     };
 
-    if (token) {
-      getUserProfile();
-    } else if (publisherToken) {      
+    if (publisherToken) {
       getPublisherData();
+    } else if (token) {
+      getUserProfile();
     }
   }, []);
 

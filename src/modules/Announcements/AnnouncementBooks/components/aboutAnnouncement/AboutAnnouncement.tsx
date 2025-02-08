@@ -26,6 +26,22 @@ export default function AboutAnnouncement({
   const [translators, setTranslators] = useState<BookTranslatorsType[]>([]);
   const [languages, setLanguages] = useState<BookLanguagesType[]>([]);
 
+  const [publishersList, setPublishersList] = useState<PublishersType[]>(
+    JSON.parse(sessionStorage.getItem("publishers") as any) || []
+  );
+  const [categoriesList, setCategoriesList] = useState<BookCategoriesType[]>(
+    JSON.parse(sessionStorage.getItem("categories") as any) || []
+  );
+  const [authorsList, setAuthorsList] = useState<BookAuthorsType[]>(
+    JSON.parse(sessionStorage.getItem("authors") as any) || []
+  );
+  const [translatorsList, setTranslatorsList] = useState<BookTranslatorsType[]>(
+    JSON.parse(sessionStorage.getItem("translators") as any) || []
+  );
+  const [languagesList, setLanguagesList] = useState<BookLanguagesType[]>(
+    JSON.parse(sessionStorage.getItem("languages") as any) || []
+  );
+
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
   );
@@ -47,11 +63,50 @@ export default function AboutAnnouncement({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const publishersRes = await api.get("/publishers/list");
-        const translatorsRes = await api.get("/translators/list");
-        const categoriesRes = await api.get("/categories/list");
-        const authorsRes = await api.get("/authors/list");
-        const languagesRes = await api.get("/languages/list");
+        if (publishersList.length === 0) {
+          const publishersRes = await api.get("/publishers/list");
+          setPublishersList(publishersRes.data.publishers || []);
+          window.sessionStorage.setItem(
+            "publishers",
+            JSON.stringify(publishersRes.data.publishers)
+          );
+        }
+
+        if (categoriesList.length === 0) {
+          const categoriesRes = await api.get("/categories/list");
+          setCategoriesList(categoriesRes.data.categories || []);
+          window.sessionStorage.setItem(
+            "categories",
+            JSON.stringify(categoriesRes.data.categories)
+          );
+        }
+
+        if (authorsList.length === 0) {
+          const authorsRes = await api.get("/authors/list");
+          setAuthorsList(authorsRes.data.authors || []);
+          window.sessionStorage.setItem(
+            "authors",
+            JSON.stringify(authorsRes.data.authors)
+          );
+        }
+
+        if (translatorsList.length === 0) {
+          const translatorsRes = await api.get("/translators/list");
+          setTranslatorsList(translatorsRes.data.translators || []);
+          window.sessionStorage.setItem(
+            "translators",
+            JSON.stringify(translatorsRes.data.translators)
+          );
+        }
+
+        if (languagesList.length === 0) {
+          const languagesRes = await api.get("/languages/list");
+          setLanguagesList(languagesRes.data.languages || []);
+          window.sessionStorage.setItem(
+            "languages",
+            JSON.stringify(languagesRes.data.languages)
+          );
+        }
 
         const parseNames = (items: any[], key: string) => {
           return (
@@ -66,19 +121,13 @@ export default function AboutAnnouncement({
           );
         };
 
-        const parsedCategories = parseNames(
-          categoriesRes?.data?.Categories?.categories || [],
-          "Categories"
-        );
+        const parsedCategories = parseNames(categoriesList || [], "Categories");
 
-        const parsedLanguages = parseNames(
-          languagesRes?.data?.languages?.languages || [],
-          "Languages"
-        );
+        const parsedLanguages = parseNames(languagesList || [], "Languages");
 
-        setPublishers(publishersRes.data.publishers || []);
-        setTranslators(translatorsRes.data.translators || []);
-        setAuthors(authorsRes.data.authors || []);
+        setPublishers(publishersList || []);
+        setTranslators(translatorsList || []);
+        setAuthors(authorsList || []);
         setCategories(parsedCategories);
         setLanguages(parsedLanguages);
       } catch (error) {
@@ -214,9 +263,9 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="language_id">
-            {language
+            {language === "uz"
               ? "Kitob tili*"
-              : language
+              : language === "ru"
               ? "Язык книги*"
               : "Language of the book*"}
           </Label>
@@ -239,9 +288,9 @@ export default function AboutAnnouncement({
 
         <FormContainer>
           <Label htmlFor="writing_type">
-            {language
+            {language === "uz"
               ? "Yozuv turi*"
-              : language
+              : language === "ru"
               ? "Тип написания*"
               : "Writing type*"}
           </Label>

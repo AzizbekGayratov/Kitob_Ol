@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import LogOutButton from "./LogOutButton";
-import MobileFormTopBtn from "./MobileFormTopBtn";
-import ProfileDelete from "./ProfileDelete";
+import PublisherLogOutButton from "./PublisherLogOutButton";
+import PublisherMobileFormTopBtn from "./PublisherMobileFormTopBtn";
+// import ProfileDelete from "./ProfileDelete";
 import { PublisherProfileProps } from "modules/PublisherProfile/PublisherProfile";
 
 export default function FormTop() {
@@ -35,10 +35,10 @@ export default function FormTop() {
       </h2>
       <div className="flex gap-2 items-center">
         <>
-          <LogOutButton />
-          <MobileFormTopBtn />
+          <PublisherLogOutButton />
+          <PublisherMobileFormTopBtn />
         </>
-        <ProfileDelete />
+        {/* <ProfileDelete /> */}
       </div>
     </div>
   );

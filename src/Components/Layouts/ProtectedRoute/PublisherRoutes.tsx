@@ -5,12 +5,12 @@ import { useEffect } from "react";
 export default function PublisherRoutes() {
   const navigate = useNavigate();
 
-  // const rawProfile = sessionStorage.getItem("profile");
-  // const profile = rawProfile ? JSON.parse(rawProfile) : null;
+  const rawProfile = sessionStorage.getItem("profile");
+  const profile = rawProfile ? JSON.parse(rawProfile) : null;
 
   useEffect(() => {
-    // if (!Storage.get("publisher_token") || !profile) {
-    if (!Storage.get("publisher_token")) {
+    if (!Storage.get("publisher_token") || !profile) {
+    // if (!Storage.get("publisher_token")) {
       navigate("/login");
     }
   }, []);
