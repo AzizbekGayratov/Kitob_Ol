@@ -12,3 +12,12 @@ export const AddDotsToValue = (value: string | number, IsNumber?: boolean) => {
   }
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
+
+export const safeParse = (data: string | null) => {
+  try {
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error("Invalid JSON data:", error);
+    return [];
+  }
+};

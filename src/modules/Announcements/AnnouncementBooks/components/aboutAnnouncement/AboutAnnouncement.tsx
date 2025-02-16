@@ -15,6 +15,9 @@ import api from "Services/Api";
 import { useSelector } from "react-redux";
 import SelectInput from "modules/Announcements/components/selectInput/SelectInput";
 import { customDatas } from "../../../CustomData";
+import { AuthorCreate, TranslatorCreate } from "./components";
+import { safeParse } from "lib/utils";
+
 
 export default function AboutAnnouncement({
   formData,
@@ -26,21 +29,22 @@ export default function AboutAnnouncement({
   const [translators, setTranslators] = useState<BookTranslatorsType[]>([]);
   const [languages, setLanguages] = useState<BookLanguagesType[]>([]);
 
-  const [publishersList, setPublishersList] = useState<PublishersType[]>(
-    JSON.parse(sessionStorage.getItem("publishers") as any) || []
-  );
-  const [categoriesList, setCategoriesList] = useState<BookCategoriesType[]>(
-    JSON.parse(sessionStorage.getItem("categories") as any) || []
-  );
-  const [authorsList, setAuthorsList] = useState<BookAuthorsType[]>(
-    JSON.parse(sessionStorage.getItem("authors") as any) || []
-  );
-  const [translatorsList, setTranslatorsList] = useState<BookTranslatorsType[]>(
-    JSON.parse(sessionStorage.getItem("translators") as any) || []
-  );
-  const [languagesList, setLanguagesList] = useState<BookLanguagesType[]>(
-    JSON.parse(sessionStorage.getItem("languages") as any) || []
-  );
+  const cashedPublishers = safeParse(sessionStorage.getItem("publishers"));
+  const cashedCategories = safeParse(sessionStorage.getItem("categories"));
+  const cashedAuthors = safeParse(sessionStorage.getItem("authors"));
+  const cashedTranslators = safeParse(sessionStorage.getItem("translators"));
+  const cashedLanguages = safeParse(sessionStorage.getItem("languages"));
+
+  const [publishersList, setPublishersList] =
+    useState<PublishersType[]>(cashedPublishers);
+  const [categoriesList, setCategoriesList] =
+    useState<BookCategoriesType[]>(cashedCategories);
+  const [authorsList, setAuthorsList] =
+    useState<BookAuthorsType[]>(cashedAuthors);
+  const [translatorsList, setTranslatorsList] =
+    useState<BookTranslatorsType[]>(cashedTranslators);
+  const [languagesList, setLanguagesList] =
+    useState<BookLanguagesType[]>(cashedLanguages);
 
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
@@ -59,6 +63,12 @@ export default function AboutAnnouncement({
       [name]: inputValue,
     });
   };
+
+  const handleAdditionOfCreatedProp = (name: string, id: string) =>
+    setFormData({
+      ...formData,
+      [name]: id,
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,36 +117,44 @@ export default function AboutAnnouncement({
             JSON.stringify(languagesRes.data.languages)
           );
         }
-
-        const parseNames = (items: any[], key: string) => {
-          return (
-            items &&
-            items.map((item: any) => {
-              const parsedNames = item.name;
-              return {
-                ...item,
-                name: parsedNames[language] || `Unknown ${key}`,
-              };
-            })
-          );
-        };
-
-        const parsedCategories = parseNames(categoriesList || [], "Categories");
-
-        const parsedLanguages = parseNames(languagesList || [], "Languages");
-
-        setPublishers(publishersList || []);
-        setTranslators(translatorsList || []);
-        setAuthors(authorsList || []);
-        setCategories(parsedCategories);
-        setLanguages(parsedLanguages);
       } catch (error) {
-        console.error("Error fetching data", error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, [language]);
+
+  useEffect(() => {
+    const parseNames = (items: any[], key: string) => {
+      return (
+        items &&
+        items.map((item: any) => {
+          const parsedNames = item.name;
+          return {
+            ...item,
+            name: parsedNames[language] || `Unknown ${key}`,
+          };
+        })
+      );
+    };
+
+    const parsedCategories = parseNames(categoriesList, "Categories");
+    const parsedLanguages = parseNames(languagesList, "Languages");
+
+    setPublishers(publishersList);
+    setTranslators(translatorsList);
+    setAuthors(authorsList);
+    setCategories(parsedCategories);
+    setLanguages(parsedLanguages);
+  }, [
+    language,
+    publishersList,
+    categoriesList,
+    authorsList,
+    translatorsList,
+    languagesList,
+  ]);
 
   return (
     <div className="container bg-white p-7">
@@ -198,6 +216,7 @@ export default function AboutAnnouncement({
           />
         </FormContainer>
 
+        {/*  */}
         <FormContainer>
           <Label htmlFor="author_id">
             {language === "uz"
@@ -206,20 +225,13 @@ export default function AboutAnnouncement({
               ? "Введите автора книги*"
               : "Enter the author of the book*"}
           </Label>
-
-          <SelectInput
-            name="author_id"
-            id="author_id"
+          <AuthorCreate
+            handleInputChange={handleInputChange}
+            handleAdditionOfCreatedProp={handleAdditionOfCreatedProp}
+            authors={authors}
             value={formData.author_id}
-            onChange={handleInputChange}
-            defaultValue={
-              language === "uz"
-                ? "Muallif"
-                : language === "ru"
-                ? "Автор"
-                : "Author"
-            }
-            options={authors}
+            list={translatorsList}
+            setList={setTranslatorsList}
           />
         </FormContainer>
 
@@ -311,6 +323,7 @@ export default function AboutAnnouncement({
           />
         </FormContainer>
 
+        {/*  */}
         <FormContainer>
           <Label htmlFor="translator_id">
             {language === "uz"
@@ -320,19 +333,13 @@ export default function AboutAnnouncement({
               : "Enter the translator of the book*"}
           </Label>
 
-          <SelectInput
-            name="translator_id"
-            id="translator_id"
-            onChange={handleInputChange}
+          <TranslatorCreate
+            handleInputChange={handleInputChange}
+            handleAdditionOfCreatedProp={handleAdditionOfCreatedProp}
+            translators={translators}
             value={formData.translator_id}
-            defaultValue={
-              language === "uz"
-                ? "Tarjimon"
-                : language === "ru"
-                ? "Переводчик"
-                : "Translator"
-            }
-            options={translators}
+            list={translatorsList}
+            setList={setTranslatorsList}
           />
         </FormContainer>
 

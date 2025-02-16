@@ -126,7 +126,7 @@ export interface BookTranslatorsType {
   id: string;
   name: string;
   surname: string;
-  biography: string;
+  biography?: string;
 }
 
 export interface BookLanguagesType {

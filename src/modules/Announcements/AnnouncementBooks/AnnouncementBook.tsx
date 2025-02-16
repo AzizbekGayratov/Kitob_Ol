@@ -41,25 +41,6 @@ function AnnouncementBook() {
   const [loading, setLoading] = useState<boolean>(false);
   console.log("Loading ==>", loading);
 
-  // const rawPublishersList = sessionStorage.getItem("publishers");
-  // const rawTranslatorsList = sessionStorage.getItem("translators");
-  // const rawCategoriesList = sessionStorage.getItem("categories");
-  // const rawAuthorsList = sessionStorage.getItem("authors");
-  // const rawLanguagesList = sessionStorage.getItem("languages");
-
-  // const publishersInitList = rawPublishersList
-  //   ? JSON.parse(rawPublishersList)
-  //   : [];
-  // const translatorsInitList = rawTranslatorsList
-  //   ? JSON.parse(rawTranslatorsList)
-  //   : [];
-  // const categoriesInitList = rawCategoriesList
-  //   ? JSON.parse(rawCategoriesList)
-  //   : [];
-  // const authorsInitList = rawAuthorsList ? JSON.parse(rawAuthorsList) : [];
-  // const languagesInitList = rawLanguagesList
-  //   ? JSON.parse(rawLanguagesList)
-  //   : [];
 
   // State to store fetched data
   const [author, setAuthor] = useState<string>("");

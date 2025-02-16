@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UseGetList from "Hooks/UseGetList/UseGetList";
 import LocationSelect from "Components/Common/LocationSelect/LocationSelect";
 import { setState } from "Store/FilterSlice/bookFilterSlice";
+import { safeParse } from "lib/utils";
 
 export type languagesType = "uz" | "ru" | "en";
 
@@ -30,7 +31,7 @@ export default function Filter() {
     language: "",
     city_id: "",
     district_id: "",
-    value: [0,100],
+    value: [0, 100],
   });
   const { language } = useSelector(
     (state: { language: { language: languagesType } }) => state.language
@@ -38,32 +39,18 @@ export default function Filter() {
   const bookFilter = useSelector((state: any) => state.bookFilter);
   const dispatch = useDispatch();
 
-  const rawCategoriesList = sessionStorage.getItem("categories");
-  const rawPublishersList = sessionStorage.getItem("publishers");
-  const rawLanguagesList = sessionStorage.getItem("languages");
-  const rawAuthorsList = sessionStorage.getItem("authors");
+  const rawCategoriesList = safeParse(sessionStorage.getItem("categories"));
+  const rawPublishersList = safeParse(sessionStorage.getItem("publishers"));
+  const rawLanguagesList = safeParse(sessionStorage.getItem("languages"));
+  const rawAuthorsList = safeParse(sessionStorage.getItem("authors"));
 
-  const categoriesInitList = rawCategoriesList
-    ? JSON.parse(rawCategoriesList)
-    : [];
-  const publishersInitList = rawPublishersList
-    ? JSON.parse(rawPublishersList)
-    : [];
-  const languagesInitList = rawLanguagesList
-    ? JSON.parse(rawLanguagesList)
-    : [];
-  const authorsInitList = rawAuthorsList ? JSON.parse(rawAuthorsList) : [];
-
-  const [categoriesList, setCategoriesList] = useState<CategoryType[]>(
-    categoriesInitList || []
-  );
-  const [publishersList, setPublishersList] = useState<PublisherType[]>(
-    publishersInitList || []
-  );
-  const [languagesList, setLanguagesList] = useState<LanguageProps[]>(
-    languagesInitList || []
-  );
-  const [authorsList, setAuthorsList] = useState<any[]>(authorsInitList || []);
+  const [categoriesList, setCategoriesList] =
+    useState<CategoryType[]>(rawCategoriesList);
+  const [publishersList, setPublishersList] =
+    useState<PublisherType[]>(rawPublishersList);
+  const [languagesList, setLanguagesList] =
+    useState<LanguageProps[]>(rawLanguagesList);
+  const [authorsList, setAuthorsList] = useState<any[]>(rawAuthorsList);
 
   useEffect(() => {
     if (categoriesList.length === 0) {
