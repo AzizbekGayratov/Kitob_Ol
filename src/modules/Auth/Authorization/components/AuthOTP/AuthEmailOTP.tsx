@@ -88,7 +88,9 @@ export default function AuthEmailOTP() {
 
         if (response.ok) {
           const data = await response.json();
+          Storage.remove("publisher_token");
           Storage.set("token", data);
+          
 
           if (requestType === "register") {
             navigate("/authorization/user/register", {

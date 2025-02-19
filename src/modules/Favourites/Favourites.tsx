@@ -2,6 +2,7 @@ import api from "Services/Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Wrapper } from "./components";
 
 export interface Book {
   user_id: string;
@@ -48,11 +49,7 @@ export default function Favourites() {
   return (
     <div className="container">
       {rawToken ? (
-        <ul className="">
-          {favourites?.map((book: Book) => (
-            <li key={book.id}>{book.book_id}</li>
-          ))}
-        </ul>
+        <Wrapper favourites={favourites} />
       ) : (
         <div className="min-h-[60vh] flex flex-col items-center justify-center">
           <h2 className="text-4xl font-Poppins font-semibold text-primary">

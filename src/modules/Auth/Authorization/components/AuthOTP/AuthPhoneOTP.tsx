@@ -90,6 +90,7 @@ export default function AuthPhoneOTP() {
 
         if (response.ok) {
           const data = await response.json();
+          Storage.remove("publisher_token");
           Storage.set("token", data);
 
           if (requestType === "register") {
