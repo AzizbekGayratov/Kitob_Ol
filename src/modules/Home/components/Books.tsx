@@ -5,6 +5,7 @@ import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { BookViewPage } from "./Hero/components";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
 import HomePageLoader from "./HomePageLoader";
+import { safeParse } from "lib/utils";
 
 export interface BookProps {
   author_id: string;
@@ -16,6 +17,7 @@ export interface BookProps {
   id: string;
   image_url: string;
   img_url: string;
+  is_favorite: boolean;
   is_new: true;
   language_id: string;
   location: {
@@ -46,6 +48,9 @@ export default function Books() {
   const [books, setBooks] = useState<BookProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const token=safeParse(window.localStorage.getItem("token"));
+  
+  
   const fetchBooks = async () => {
     setLoading(true);
     try {
@@ -55,6 +60,10 @@ export default function Books() {
           limit: itemsPerPage,
           offset: (currentPage - 1) * itemsPerPage, // Calculate offset based on page
         },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token.access_token}`,
+        },
       });
 
       if (!response.data) {
@@ -63,6 +72,7 @@ export default function Books() {
 
       dispatch(setTotalItems(response.data.count)); // Update total items for pagination
       setBooks(response.data.books); // Set the fetched books
+      // console.log(response.data.min_price,response.data.max_price);
     } catch (error) {
       console.error(error);
     } finally {
@@ -79,14 +89,15 @@ export default function Books() {
     <>
       {loading ? (
         <HomePageLoader />
-      ) : books ? (
-        <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-2">
-          {books.map((book) => (
-            <BookViewPage key={book.id} data={book} />
-          ))}{" "}
-        </div>
       ) : (
-        <NotFound />
+        <>
+          {books.length === 0 && <NotFound />}
+          <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-2">
+            {books.map((book) => (
+              <BookViewPage key={book.id} data={book}  />
+            ))}{" "}
+          </div>
+        </>
       )}
     </>
   );

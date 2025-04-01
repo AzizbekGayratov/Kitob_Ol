@@ -5,6 +5,7 @@ import { setTotalItems } from "Store/paginationSlice/paginationSlice";
 import { VacancyViewPage } from "./Hero/components";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
 import HomePageLoader from "./HomePageLoader";
+import { safeParse } from "lib/utils";
 
 export interface VacancyProps {
   city_id: string;
@@ -22,6 +23,7 @@ export interface VacancyProps {
     uz: string;
   };
   id: string;
+  is_favorite:boolean;
   phone_number: string;
   publisher_id: string;
   publisher_name: string;
@@ -43,6 +45,8 @@ export default function Vacancies() {
   const dispatch = useDispatch();
   const [vacancies, setVacancies] = useState<VacancyProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  
+  const token=safeParse(window.localStorage.getItem("token"));
 
   const fetchVacancies = async () => {
     setLoading(true);
@@ -52,6 +56,10 @@ export default function Vacancies() {
           ...vacancyFilter, // Include filter criteria
           limit: itemsPerPage,
           offset: (currentPage - 1) * itemsPerPage, // Calculate offset based on the current page
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token.access_token}`,
         },
       });
 
@@ -76,14 +84,15 @@ export default function Vacancies() {
     <div>
       {loading ? (
         <HomePageLoader />
-      ) : vacancies ? (
-        <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-2">
-          {vacancies.map((vacancy) => (
-            <VacancyViewPage key={vacancy.id} data={vacancy} />
-          ))}
-        </div>
       ) : (
-        <NotFound />
+        <>
+          {vacancies.length === 0 && <NotFound />}
+          <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-10 lg:gap-y-6 gap-4 px-2">
+            {vacancies.map((vacancy) => (
+              <VacancyViewPage key={vacancy.id} data={vacancy} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

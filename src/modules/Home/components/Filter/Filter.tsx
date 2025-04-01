@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import SliderForPrice from "./components/SliderForPrice";
 import {
+  AuthorProps,
   CategoryType,
   FilterType,
   LanguageProps,
@@ -39,10 +40,10 @@ export default function Filter() {
   const bookFilter = useSelector((state: any) => state.bookFilter);
   const dispatch = useDispatch();
 
-  const rawCategoriesList = safeParse(sessionStorage.getItem("categories"));
-  const rawPublishersList = safeParse(sessionStorage.getItem("publishers"));
-  const rawLanguagesList = safeParse(sessionStorage.getItem("languages"));
-  const rawAuthorsList = safeParse(sessionStorage.getItem("authors"));
+  const rawCategoriesList: CategoryType[] = safeParse(sessionStorage.getItem("categories"));
+  const rawPublishersList: PublisherType[] = safeParse(sessionStorage.getItem("publishers"));
+  const rawLanguagesList:LanguageProps[] = safeParse(sessionStorage.getItem("languages")); 
+  const rawAuthorsList:AuthorProps[] = safeParse(sessionStorage.getItem("authors"));
 
   const [categoriesList, setCategoriesList] =
     useState<CategoryType[]>(rawCategoriesList);
@@ -90,8 +91,8 @@ export default function Filter() {
       setState({
         ...bookFilter,
         title: data.name,
-        price_from: data.value[0] * 5000,
-        price_to: data.value[1] * 5000,
+        price_from: data.value[0] * 50000,
+        price_to: data.value[1] * 50000,
         author_id: data.author,
         category_id: data.category,
         publisher_id: data.nashriyot,

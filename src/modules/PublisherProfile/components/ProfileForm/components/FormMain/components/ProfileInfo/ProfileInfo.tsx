@@ -25,7 +25,7 @@ export default function ProfileInfo() {
             : "Organization name"}
         </label>
         <input
-          value={profile.name}
+          value={profile?.name}
           disabled
           id="user_name"
           name="user_name"
@@ -37,7 +37,7 @@ export default function ProfileInfo() {
           {language === "uz" ? "Shahri" : language === "ru" ? "Город" : "City"}
         </label>
         <input
-          value={profile.location.city_id}
+          value={profile?.location?.city_id}
           disabled
           id="user_birthDate"
           name="user_birthDate"
@@ -53,7 +53,7 @@ export default function ProfileInfo() {
             : "District"}
         </label>
         <input
-          value={profile.location.district_id}
+          value={profile?.location?.district_id}
           disabled
           id="user_lastName"
           name="user_lastName"
@@ -69,7 +69,7 @@ export default function ProfileInfo() {
             : "Phone number"}
         </label>
         <Input
-          value={profile.phone_number}
+          value={profile?.phone_number}
           disabled
           id="user_phone"
           name="user_phone"
@@ -88,7 +88,7 @@ export default function ProfileInfo() {
             : "Email address"}
         </label>
         <input
-          value={profile.email}
+          value={profile?.email}
           disabled
           id="user_email"
           name="user_email"
@@ -104,7 +104,7 @@ export default function ProfileInfo() {
             : "Who is registered as"}
         </label>
         <input
-          value={profile.type}
+          value={profile?.type}
           disabled
           id="user_gender"
           name="user_gender"

@@ -8,6 +8,7 @@ import {
   BreadCrumbComponent,
   MobileBreadCrumb,
 } from "modules/ProductView/components/BreadCrumb";
+import { safeParse } from "lib/utils";
 
 export default function VacancyView() {
   const { name } = useParams();
@@ -15,6 +16,7 @@ export default function VacancyView() {
   const [list, setList] = useState<VacancyProps[]>([]);
 
   const [loading, setLoading] = useState(true);
+  const token = safeParse(window.localStorage.getItem("token"));
 
   const getPublisherOtherVacancies = async (id: string) => {
     try {
@@ -22,6 +24,10 @@ export default function VacancyView() {
         params: {
           publisher_id: id,
         },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token.access_token}`,
+        }
       });
 
       if (response.data) {

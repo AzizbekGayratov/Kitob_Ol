@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Wrapper } from "./components";
+import { safeParse } from "lib/utils";
 
 export interface Book {
   user_id: string;
@@ -12,7 +13,8 @@ export interface Book {
 
 export default function Favourites() {
   const rawToken = window.localStorage.getItem("token");
-  const access_token = rawToken ? JSON.parse(rawToken).access_token : "";
+  // const access_token = safeParse(rawToken)?.access_token;
+  const refresh_token = safeParse(rawToken)?.refresh_token;
 
   const [favourites, setFavourites] = useState<Book[]>([]);
   const { language } = useSelector(
@@ -28,9 +30,10 @@ export default function Favourites() {
             limit: 100,
             offset: 0,
           },
+          // I did not write there `Bearer` cuz it had been a reason of error
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `${refresh_token}`,
           },
         });
 

@@ -4,56 +4,87 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import api from "Services/Api";
 // import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import api from "Services/Api";
+import { useNavigate } from "react-router-dom";
+import { safeParse } from "lib/utils";
 
-export default function LikeBtn({ bookId }: { bookId: string }) {
-  const [like, setLike] = useState(false);
-  console.log(bookId);
-  
+export default function LikeBtn({
+  bookId,
+  isFavorite,
+  isBook,
+}: {
+  bookId: string;
+  isFavorite: boolean;
+  isBook: boolean;
+}) {
+  const [like, setLike] = useState(isFavorite);
+  console.log(like);
 
-  // const navigate = useNavigate();
-  // const token = localStorage.getItem("token") || null;
-  // const access_token = token ? JSON.parse(token).access_token : "";
-  // const deleteFavourite = async () => {
-  //   try {
-  //     await api.delete(`/favourites/delete`, {
-  //       data: { book_id: bookId },
-  //       headers: {
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //     });
-  //     setLike(false);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const handleLike = async () => {
-  //   try {
-  //     const response = await api.post(
-  //       `/favourites/create`,
-  //       { book_id: bookId },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${access_token}`,
-  //         },
-  //       }
-  //     );
+  const navigate = useNavigate();
+  const token = safeParse(window.localStorage.getItem("token"));
+  const access_token = token?.access_token;
 
-  //     if (response.status === 200) {
-  //       setLike(true);
-  //     } else if (response.status === 500) {
-  //       alert("error");
-  //       await deleteFavourite();
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const responseData = isBook
+    ? {
+        book_id: bookId,
+      }
+    : { vacancy_id: bookId };
+        
+
+  const deleteFavourite = async () => {
+    try {
+      const response = await api.delete(`/favourites/delete`, {
+        data: responseData,
+        headers: {
+          Authorization: `${access_token}`,
+        },
+      });
+      if (response.status === 200) {
+        setLike(false);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLike(false);
+    }
+  };
+  const handleLike = async () => {
+    try {
+      const response = await api.post(
+        `/favourites/create`,
+        responseData,
+        {
+          headers: {
+            Authorization: `${access_token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setLike(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <button
       className="py-[14px] px-4 rounded bg-[#dedddd] hover:shadow-md transition-shadow"
-      // onClick={!token ? () => navigate("/authorization/phone") : handleLike}
-      onClick={() => setLike(!like)}
+      onClick={
+        !token
+          ? () => navigate("/authorization/phone")
+          : like
+          ? deleteFavourite
+          : handleLike
+      }
+      // onClick={() => {
+      //   if (like === "true") {
+      //     setLike("false");
+      //   } else {
+      //     setLike("true");
+      //   }
+      // }}
     >
       {like ? (
         <FavoriteIcon sx={{ color: "#CE3738" }} />

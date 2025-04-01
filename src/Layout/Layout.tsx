@@ -28,45 +28,63 @@ const Layout = () => {
     ? JSON.parse(publisherRawToken)
     : null;
 
-  // const refreshToken = async (refresh_token: string | undefined) => {
-  //   try {
-  //     const response = await fetch(
-  //       `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/refresh/token`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ token: refresh_token }),
-  //       }
-  //     );
+  const access_token = token?.access_token;
+  // const access_token = token?.refresh_token;
+  const publisher_access_token = publisherToken?.access_token;
 
-  //     if (!response.ok) {
-  //       throw new Error("Request failed");
-  //     }
+  // const responseToken = publisher_access_token || access_token;
 
-  //     const data = await response.json();
+  const refresh_token = token?.refresh_token;
 
-  //     window.localStorage.setItem(
-  //       "token",
-  //       JSON.stringify({
-  //         access_token: data.access_token,
-  //         refresh_token: data.refresh_token,
-  //         role: data.role,
-  //       })
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const reGetUserData = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/profile`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${access_token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(updateProfileData(data));
+        window.sessionStorage.setItem("profile", JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_AUTH_URL}/auth/user/refresh/token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${refresh_token}`,
+          },
+          body: JSON.stringify({
+            token: refresh_token,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      await localStorage.setItem("token", JSON.stringify(data));
+      await reGetUserData();
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("token");
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const access_token = token?.access_token;
-    const publisher_access_token = publisherToken?.access_token;
-
-    const responseToken = publisher_access_token || access_token;
-
     const getUserProfile = async () => {
       try {
         const response = await fetch(
@@ -75,7 +93,7 @@ const Layout = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${responseToken}`,
+              Authorization: `${access_token}`,
             },
           }
         );
@@ -84,8 +102,8 @@ const Layout = () => {
           const data = await response.json();
           dispatch(updateProfileData(data));
           window.sessionStorage.setItem("profile", JSON.stringify(data));
-        }else if (response.status === 401) {
-          Storage.remove("token");
+        } else if (response.status === 401) {
+          await refreshToken();
         }
       } catch (error) {
         console.error(error);

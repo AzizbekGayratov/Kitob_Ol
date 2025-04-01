@@ -60,7 +60,8 @@ export default function TranslatorCreate({
           },
           {
             headers: {
-              Authorization: `Bearer ${token.access_token}`,
+              // Authorization: `${token.access_token}`,
+              Authorization: `${token.refresh_token}`,
             },
           }
         );

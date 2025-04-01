@@ -41,7 +41,6 @@ function AnnouncementBook() {
   const [loading, setLoading] = useState<boolean>(false);
   console.log("Loading ==>", loading);
 
-
   // State to store fetched data
   const [author, setAuthor] = useState<string>("");
   const [category, setCategory] = useState<string>("");
@@ -81,7 +80,14 @@ function AnnouncementBook() {
   }) => {
     try {
       setLoading(true);
-      const response = await api.get(`${apiPath}?id=${id}`);
+      const response = await api.get(`${apiPath}?id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          limit: 100,
+        },
+      });
 
       setValue(
         response.data[language]

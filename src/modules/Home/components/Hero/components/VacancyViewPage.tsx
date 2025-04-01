@@ -16,7 +16,7 @@ export default function VacancyViewPage({ data }: { data: VacancyProps }) {
             {data.title}
           </h3>
         </Link>
-        <LikeBtn bookId={data.id} />
+        <LikeBtn isFavorite={data.is_favorite} bookId={data.id} isBook={false} />
       </div>
       <p className="text-[12px] leading-[15px] text-primary opacity-80">
         {data.city_name[language]}

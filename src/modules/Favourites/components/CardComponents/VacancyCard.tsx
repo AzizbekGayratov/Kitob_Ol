@@ -16,7 +16,7 @@ export default function VacancyCard({ data }: { data: Vacancy }) {
             {data.vacancy_id}
           </h3>
         </Link>
-        <LikeBtn bookId={data.id} />
+        <LikeBtn bookId={data.id} isFavorite={data.is_favorite} />
       </div>
       <p className="text-[12px] leading-[15px] text-primary opacity-80">
         {data.vacancy_city_name[language]}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import api from "Services/Api";
 import MainProductViewContent from "./MainProductViewContent";
 import { Loading } from "Components/Common/Loading";
+import { safeParse } from "lib/utils";
 
 export interface Book {
   author_id: string;
@@ -78,12 +79,17 @@ export default function ProductView() {
   const [data, setData] = useState<Book | null>(null);
   const [list, setList] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
+  const token= safeParse(window.localStorage.getItem("token"));
 
   const GetSellerBookList = async (id: string) => {
     try {
       const response = await api.get("/books/list", {
         params: {
           seller_id: id,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token.access_token}`,
         },
       });
       if (response.data) {
