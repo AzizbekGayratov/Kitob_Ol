@@ -32,6 +32,7 @@ export interface Book {
     ru: string;
     uz: string;
   };
+  is_favorite: boolean;
   id: string;
   image_url: string;
   img_url: string;
