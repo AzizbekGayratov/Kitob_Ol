@@ -37,7 +37,7 @@ export interface Book {
     uz: string;
   };
   price: number;
-  is_favorite: string;
+  is_favorite: boolean;
   published_year: string;
   publisher_name: string;
   seller_email: string;
@@ -77,7 +77,7 @@ export interface Vacancy {
     uz: string;
   };
   vacancy_created_at: string;
-  is_favorite: string;
+  is_favorite: boolean;
   vacancy_description: string;
   vacancy_district_id: string;
   vacancy_id: string;

@@ -55,7 +55,7 @@ export default function BookCard({ data }: { data: Book }) {
         </p>
       </div>
       <div className="property-social-icons">
-        <LikeBtn bookId={data.id}  isFavorite={data.is_favorite}/>
+        <LikeBtn bookId={data.id}  isFavorite={data.is_favorite} isBook={true} />
       </div>
     </div>
   );
