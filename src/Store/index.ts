@@ -3,7 +3,7 @@ import { profileSlice } from "./profileSlice";
 import { registerSlice } from "./registerSlice";
 import {dropDownSlice} from "./dropDownSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import { bookFilterSlice, vacancyFilterSlice } from "./FilterSlice/index.ts";
+import { bookFilterSlice, vacancyFilterSlice, minMaxPriceSlice } from "./FilterSlice/index.ts";
 import { paginationSlice } from "./paginationSlice/index.ts";
 
 const reducer = {
@@ -14,6 +14,7 @@ const reducer = {
   VacancyFilter: vacancyFilterSlice,
   dropDown: dropDownSlice,
   paginationValue: paginationSlice,
+  minMaxPrice: minMaxPriceSlice
 };
 
 export const store = configureStore({

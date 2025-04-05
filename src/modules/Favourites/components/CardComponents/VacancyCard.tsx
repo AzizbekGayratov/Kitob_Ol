@@ -11,12 +11,12 @@ export default function VacancyCard({ data }: { data: Vacancy }) {
   return (
     <div className="rounded bg-white pt-6 pb-12 px-4">
       <div className="flex items-center justify-between mb-4">
-        <Link to={`/vacancy/${data.id}`}>
+        <Link to={`/vacancy/${data?.vacancy_id}`}>
           <h3 className="text-primary font-medium text-xl leading-5">
-            {data.vacancy_id}
+            {data?.vacancy_title}
           </h3>
         </Link>
-        <LikeBtn bookId={data.id} isFavorite={data.is_favorite} isBook={false} />
+        <LikeBtn bookId={data.vacancy_id} isFavorite={true} isBook={false} />
       </div>
       <p className="text-[12px] leading-[15px] text-primary opacity-80">
         {data.vacancy_city_name[language]}

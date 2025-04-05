@@ -1,16 +1,21 @@
 import axios from "axios";
-import Storage from "../Storage";
+import { safeParse } from "lib/utils";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_REACT_API_URL,
 });
 
-const token = (Storage.get("token") as unknown | string) || "";
+const token = safeParse(window.localStorage.getItem("token"));
 
 api.defaults.timeout = 2500;
 api.defaults.headers.post["Content-Type"] = "application/json";
-// api.defaults.headers.post["Content-Type"] = "multipart/form-data";
-api.defaults.headers.common["Authorization"] = `Bearer ${
+// // api.defaults.headers.post["Content-Type"] = "multipart/form-data";
+// api.defaults.headers.common["Authorization"] = `Bearer ${
+//   // JSON.parse(token as any).access_token
+//   token
+// }`;
+
+api.defaults.headers.common["Authorization"] = `${
   // JSON.parse(token as any).access_token
   token
 }`;

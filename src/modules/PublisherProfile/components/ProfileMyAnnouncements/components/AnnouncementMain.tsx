@@ -3,9 +3,12 @@ import ListOfAnnouncements from "./ListOfAnnouncements";
 import api from "Services/Api";
 import { BookProps } from "modules/Home/components/Books";
 import { NotFoundItems } from "Components/Common";
+import { safeParse } from "lib/utils";
 
 export default function AnnouncementMain() {
   const [data, setData] = useState<BookProps[]>([]);
+  const token=safeParse(window.localStorage.getItem("publisher_token"));
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +19,10 @@ export default function AnnouncementMain() {
         const response = await api.get("/books/list", {
           params: {
             seller_id: sellerId,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token.resresh_token}`,
           },
         });
 

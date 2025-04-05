@@ -6,6 +6,7 @@ import { BookViewPage } from "./Hero/components";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
 import HomePageLoader from "./HomePageLoader";
 import { safeParse } from "lib/utils";
+import { setMinMaxPrice } from "Store/FilterSlice/minMaxPriceSlice";
 
 export interface BookProps {
   author_id: string;
@@ -48,11 +49,11 @@ export default function Books() {
   const [books, setBooks] = useState<BookProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const token=safeParse(window.localStorage.getItem("token"));
-  
-  
+  const token = safeParse(window.localStorage.getItem("token"));
+
   const fetchBooks = async () => {
     setLoading(true);
+
     try {
       const response = await api.get("/books/list", {
         params: {
@@ -62,7 +63,7 @@ export default function Books() {
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${token.access_token}`,
+          Authorization: `${token?.access_token || ""}`,
         },
       });
 
@@ -70,8 +71,12 @@ export default function Books() {
         throw new Error("Data not found");
       }
 
-      dispatch(setTotalItems(response.data.count)); // Update total items for pagination
-      setBooks(response.data.books); // Set the fetched books
+      dispatch(setTotalItems(response?.data?.count)); // Update total items for pagination
+      setMinMaxPrice({
+        minPrice: response?.data?.min_price,
+        maxPrice: response?.data?.max_price,
+      });
+      setBooks(response?.data?.books); // Set the fetched books
       // console.log(response.data.min_price,response.data.max_price);
     } catch (error) {
       console.error(error);
@@ -91,10 +96,10 @@ export default function Books() {
         <HomePageLoader />
       ) : (
         <>
-          {books.length === 0 && <NotFound />}
+          {books?.length === 0 && <NotFound />}
           <div className="grid desktop:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-10 gap-4 px-2">
-            {books.map((book) => (
-              <BookViewPage key={book.id} data={book}  />
+            {books?.map((book) => (
+              <BookViewPage key={book.id} data={book} />
             ))}{" "}
           </div>
         </>

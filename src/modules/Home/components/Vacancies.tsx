@@ -6,6 +6,7 @@ import { VacancyViewPage } from "./Hero/components";
 import NotFound from "Components/Common/NotFound/NotFoundItems";
 import HomePageLoader from "./HomePageLoader";
 import { safeParse } from "lib/utils";
+import { setMinMaxPrice } from "Store/FilterSlice/minMaxPriceSlice";
 
 export interface VacancyProps {
   city_id: string;
@@ -59,7 +60,7 @@ export default function Vacancies() {
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${token.access_token}`,
+          Authorization: `${token?.access_token || ""}`,
         },
       });
 
@@ -68,6 +69,10 @@ export default function Vacancies() {
       }
 
       dispatch(setTotalItems(response.data.count)); // Update total items for pagination
+      setMinMaxPrice({
+        minPrice: response?.data?.min_price,
+        maxPrice: response?.data?.max_price,
+      });
       setVacancies(response.data.vacancies); // Set the fetched vacancies
     } catch (error) {
       console.error(error);

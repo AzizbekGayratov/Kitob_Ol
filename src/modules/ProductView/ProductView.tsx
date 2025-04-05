@@ -61,19 +61,6 @@ export interface Book {
   writing_type: string;
 }
 
-// export interface PublisherProps {
-//   email: string;
-//   id: string;
-//   image_url: string;
-//   location: {
-//     city_id: string;
-//     district_id: string;
-//   };
-//   name: string;
-//   phone_number: string;
-//   status: boolean;
-//   type: string;
-// }
 
 export default function ProductView() {
   const { name } = useParams();
@@ -108,6 +95,10 @@ export default function ProductView() {
         const response = await api.get("/books/get/full", {
           params: {
             book_id: name,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token.access_token}`,
           },
         });
 

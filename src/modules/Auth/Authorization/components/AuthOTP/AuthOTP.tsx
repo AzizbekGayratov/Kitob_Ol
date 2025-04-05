@@ -15,12 +15,12 @@ export default function OTP({
   return (
     <>
       <InputOTP
-        maxLength={6}
+        maxLength={10}
         pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
         value={otp}
         onChange={setOtp}
         required
-        className="w-full flex items-center justify-center"
+        className="w-full flex items-center justify-between"
       >
         <InputOTPGroup className="flex space-x-4">
           <InputOTPSlot

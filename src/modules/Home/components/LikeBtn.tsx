@@ -18,7 +18,6 @@ export default function LikeBtn({
   isBook: boolean;
 }) {
   const [like, setLike] = useState(isFavorite);
-  console.log(like);
 
   const navigate = useNavigate();
   const token = safeParse(window.localStorage.getItem("token"));

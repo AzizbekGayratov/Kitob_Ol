@@ -39,6 +39,7 @@ export default function Filter() {
   );
   const bookFilter = useSelector((state: any) => state.bookFilter);
   const dispatch = useDispatch();
+  
 
   const rawCategoriesList: CategoryType[] = safeParse(sessionStorage.getItem("categories"));
   const rawPublishersList: PublisherType[] = safeParse(sessionStorage.getItem("publishers"));
@@ -83,7 +84,7 @@ export default function Filter() {
         setAuthorsList(res.authors);
         sessionStorage.setItem("authors", JSON.stringify(res.authors));
       });
-    }
+    }    
   }, []);
 
   function submitData() {

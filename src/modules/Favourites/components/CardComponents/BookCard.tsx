@@ -18,7 +18,7 @@ export default function BookCard({ data }: { data: Book }) {
 
   return (
     <div className="property-card border shadow-lg">
-      <Link to={`/product/${data.id}`}>
+      <Link to={`/product/${data?.book_id}`}>
         <div
           className="property-image"
           style={{
@@ -47,7 +47,7 @@ export default function BookCard({ data }: { data: Book }) {
         </div>
       </Link>
       <div className="property-description">
-        <h5>{data.book_id}</h5>
+        <h5>{data?.district_name}</h5>
         <p>
           {String(data.price).replace(/(\d)(?=(\d{3})+$)/g, "$1.")}
           {""}
@@ -55,7 +55,7 @@ export default function BookCard({ data }: { data: Book }) {
         </p>
       </div>
       <div className="property-social-icons">
-        <LikeBtn bookId={data.id}  isFavorite={data.is_favorite} isBook={true} />
+        <LikeBtn bookId={data.book_id}  isFavorite={true} isBook={true} />
       </div>
     </div>
   );
